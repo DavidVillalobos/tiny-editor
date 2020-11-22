@@ -2,18 +2,18 @@
     position: absolute;
     top: 25%;
     right: 50.3%;
-    bottom: 20%;
-    left: 5%;
+    bottom: 10%;
+    left: 1%;
 }
 
 #terminal { 
     position: absolute;
     top: 25%;
-    right: 5%;
-    bottom: 20%;
+    right: 1%;
+    bottom: 10%;
     left: 50.3%;
 }
 
 #body{
-    height: 540px;
+    height: 529px;
 }
