@@ -1,0 +1,19 @@
+#editor { 
+    position: absolute;
+    top: 25%;
+    right: 50.3%;
+    bottom: 20%;
+    left: 5%;
+}
+
+#terminal { 
+    position: absolute;
+    top: 25%;
+    right: 5%;
+    bottom: 20%;
+    left: 50.3%;
+}
+
+#body{
+    height: 540px;
+}

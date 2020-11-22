@@ -1,0 +1,73 @@
+<!-- 
+File: Index.html
+Author: Luis David Villalobos Gonzalez
+Date: 01/11/2020
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <!-- Bulma -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <!-- Ace Editor -->  
+    <script src="https://pagecdn.io/lib/ace/1.4.12/ace.js" type="text/javascript" charset="utf-8"></script>
+    <!-- Other Styles -->  
+    <link rel="stylesheet" href="css/style.css">
+    <title>Tiny editor</title>
+  </head>
+  <body>
+    <div class="hero is-link is-small has-background-info">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Tiny editor
+            <i class="fas fa-feather"></i>
+          </h1>
+          <div class="subtitle is-6">
+            Lightweight simple editor for small projects.
+          </div> 
+        </div>
+      </div>
+    </div>
+    <div id="body" class="has-background-info">
+      <div class="columns">
+        <div class="column">
+          <div id="editor">  
+lenguages = ['C\C++','Java','Python']
+print('You can write code in:')
+for lenguage in lenguages:
+print(' -> ', lenguage)
+</div>
+        </div>
+        <div class="column">
+          <div id="terminal">  
+You can write code in:
+->  C\C++
+->  Java
+->  Python
+</div>
+        </div>
+      </div>
+    </div>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+      editor.session.setMode("ace/mode/python");
+      editor.session.setTabSize(2);
+      document.getElementById('editor').style.fontSize='16px';
+    </script>
+    <script>
+      var editor = ace.edit("terminal");
+      editor.setTheme("ace/theme/terminal");
+      editor.session.setMode("ace/mode/python");
+      document.getElementById('terminal').style.fontSize='16px';
+      editor.setReadOnly(true);
+      editor.setHighlightActiveLine(false);
+      editor.renderer.setShowGutter(false);
+    </script>
+  </body>
+</html>
