@@ -1,0 +1,16 @@
+{
+  "name": "TinyEditor",
+  "version": "1.0.0",
+  "description": "Lightweight simple editor for little projects and tasks.",
+  "main": "main.js",
+  "scripts": {
+	"start" : "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["text editor"],
+  "author": "David Villalobos",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^11.0.3"
+  }
+}
