@@ -1,7 +1,7 @@
 <!-- 
 File: index.html
 Author: Luis David Villalobos Gonzalez
-Date: 14/12/2020
+Date: 15/12/2020
 -->
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ Date: 14/12/2020
     <title>Tiny editor</title>
   </head>
   <body>
-    <div class="hero is-link is-small has-background-info">
+    <div class="hero is-link is-small">
       <div class="hero-body">
         <div class="container is-fluid">
           <h1 class="title">
@@ -28,54 +28,41 @@ Date: 14/12/2020
             <i class="fas fa-feather"></i>
           </h1>
           <div class="subtitle is-6">
-            Lightweight simple editor for small projects.
+            Lightweight simple editor for small projects
           </div> 
         </div>
       </div>
     </div>
-    <div id="body" class="has-background-info">
-      <!--<div class="columns">
-        <div class="column">
-          <div id="editor">  
-            lenguages = ['C\C++','Java','Python']
-            print('You can write code in:')
-            for lenguage in lenguages:
-            print(' -> ', lenguage)
-          </div>
-        </div>
-        <div class="column">
-          <div id="terminal">  
-            You can write code in:
-            ->  C\C++
-            ->  Java
-            ->  Python
-          </div>
-        </div>
-      </div>-->
-      <div class="columns">
-        <div class="column">
-          <a class="button is-dark" id="compile-button">Compile</a>
-        </div>
-        <div class="column">
-          <a class="button is-success" id="run-button">Run</a>
-        </div>
-      </div>
+    <div id="editor">  
+      lenguages = ['C\C++','Java','Python']
+      print('You can write code in:')
+      for lenguage in lenguages:
+      print(' -> ', lenguage)
     </div>
-    <script>
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-      editor.session.setMode("ace/mode/python");
-      editor.session.setTabSize(2);
-      document.getElementById('editor').style.fontSize='16px';
-    </script>
-    <script>
-      var editor = ace.edit("terminal");
-      editor.setTheme("ace/theme/terminal");
-      editor.session.setMode("ace/mode/python");
-      document.getElementById('terminal').style.fontSize='16px';
-      editor.setReadOnly(true);
-      editor.setHighlightActiveLine(false);
-      editor.renderer.setShowGutter(false);
-    </script>
+    <div id="terminal">  
+      You can write code in:
+      ->  C\C++
+      ->  Java
+      ->  Python
+    </div>
+    <a class="button is-dark" id="compile-button">Compile</a>
+    <a class="button is-dark" id="run-button">Run</a>
   </body>
 </html>
+
+<script>
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/monokai");
+  editor.session.setMode("ace/mode/python");
+  editor.session.setTabSize(2);
+  document.getElementById('editor').style.fontSize='16px';
+</script>
+<script>
+  var editor = ace.edit("terminal");
+  editor.setTheme("ace/theme/terminal");
+  editor.session.setMode("ace/mode/python");
+  document.getElementById('terminal').style.fontSize='16px';
+  editor.setReadOnly(true);
+  editor.setHighlightActiveLine(false);
+  editor.renderer.setShowGutter(false);
+</script>

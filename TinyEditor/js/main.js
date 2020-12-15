@@ -1,7 +1,7 @@
 /* 
 File: main.js
 Author: Luis David Villalobos Gonzalez
-Date: 14/12/2020
+Date: 15/12/2020
 */
 
 const { app, BrowserWindow } = require('electron')
@@ -16,7 +16,7 @@ function createWindow () {
   })
 
   win.loadFile('index.html')
-  win.webContents.openDevTools()
+  //win.webContents.openDevTools()
 }
 
 app.whenReady().then(createWindow)
