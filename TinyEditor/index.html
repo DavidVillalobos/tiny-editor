@@ -18,52 +18,51 @@ Date: 15/12/2020
     <script src="https://pagecdn.io/lib/ace/1.4.12/ace.js" type="text/javascript" charset="utf-8"></script>
     <!-- Other Styles -->  
     <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
     <title>Tiny editor</title>
   </head>
   <body>
-    <div class="hero is-link is-small">
-      <div class="hero-body">
-        <div class="container is-fluid">
-          <h1 class="title">
-            Tiny editor
-            <i class="fas fa-feather"></i>
-          </h1>
-          <div class="subtitle is-6">
-            Lightweight simple editor for small projects
-          </div> 
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item">
+          <div class="title is-4 has-text-light">
+            <span> Tiny editor </span> 
+            <span class="fas fa-feather"></span>
+          </div>
+        </a>
+      </div>
+      <div class="navbar-menu navbar-end">
+        <div class="navbar-item">
+          <div class="buttons field is-grouped">
+            <div class="button is-warning">
+              <span class="icon">
+                <i class="fas fa-hammer"></i>
+              </span>
+            </div>
+            <div class="button is-success">
+              <span class="icon">
+                <i class="fas fa-play"></i>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
+    </nav>
+    <div id="editor">#include
+using namespace std;
+int main(){
+  cout << "Hello World" << endl;
+}
     </div>
-    <div id="editor">  
-      lenguages = ['C\C++','Java','Python']
-      print('You can write code in:')
-      for lenguage in lenguages:
-      print(' -> ', lenguage)
-    </div>
-    <div id="terminal">  
-      You can write code in:
-      ->  C\C++
-      ->  Java
-      ->  Python
-    </div>
-    <a class="button is-dark" id="compile-button">Compile</a>
-    <a class="button is-dark" id="run-button">Run</a>
   </body>
 </html>
 
 <script>
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
-  editor.session.setMode("ace/mode/python");
+  editor.session.setMode("ace/mode/c_cpp");
   editor.session.setTabSize(2);
+  editor.setAutoScrollEditorIntoView(true);
+  editor.setShowPrintMargin(false);
   document.getElementById('editor').style.fontSize='20px';
-</script>
-<script>
-  var editor = ace.edit("terminal");
-  editor.setTheme("ace/theme/terminal");
-  editor.session.setMode("ace/mode/python");
-  document.getElementById('terminal').style.fontSize='20px';
-  editor.setReadOnly(true);
-  editor.setHighlightActiveLine(false);
-  editor.renderer.setShowGutter(false);
 </script>
