@@ -2,7 +2,7 @@
   "name": "TinyEditor",
   "version": "1.0.0",
   "description": "Lightweight simple editor for little projects and tasks.",
-  "main": "main.js",
+  "main": "js/main.js",
   "scripts": {
 	"start" : "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
