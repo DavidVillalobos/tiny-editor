@@ -1,7 +1,7 @@
 /* 
 File: main.js
 Author: Luis David Villalobos Gonzalez
-Date: 24/11/2020
+Date: 14/12/2020
 */
 
 const { app, BrowserWindow } = require('electron')
