@@ -4,13 +4,20 @@
   "description": "Lightweight simple editor for little projects and tasks.",
   "main": "js/main.js",
   "scripts": {
-	"start" : "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": ["text editor"],
+  "start": "electron .",
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "css-build": "node-sass --omit-source-map-url sass/mystyles.scss css/mystyles.css",
+  "css-watch": "npm run css-build -- --watch",
+  "run-css": "npm run css-watch"
+},
+  "keywords": [
+    "text editor"
+  ],
   "author": "David Villalobos",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^11.0.3"
+    "bulma": "^0.7.5",
+    "electron": "^11.0.3",
+    "node-sass": "^5.0.0"
   }
 }
