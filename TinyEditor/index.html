@@ -10,8 +10,7 @@ Date: 15/12/2020
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <!-- Bulma -->
-     <link rel="stylesheet" href="css/mystyles.css">
-	<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"> -->
+    <link rel="stylesheet" href="css/bulma.css">
     <!-- Fontawesome -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <!-- Ace Editor -->  
@@ -48,7 +47,7 @@ Date: 15/12/2020
         </div>
       </div>
     </nav>
-    <div id="editor">#include
+    <div id="editor">#include< iostream>
 using namespace std;
 int main(){
   cout << "Hello World" << endl;
@@ -57,12 +56,4 @@ int main(){
   </body>
 </html>
 
-<script>
-  var editor = ace.edit("editor");
-  editor.setTheme("ace/theme/monokai");
-  editor.session.setMode("ace/mode/c_cpp");
-  editor.session.setTabSize(2);
-  editor.setAutoScrollEditorIntoView(true);
-  editor.setShowPrintMargin(false);
-  document.getElementById('editor').style.fontSize='20px';
-</script>
+<script src="js/Editor.js"></script>
