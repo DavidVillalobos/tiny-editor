@@ -12,6 +12,14 @@ body{
     position: absolute;
     top: 50px;
     right: 0%;
+    bottom: 25%;
+    left: 0%;
+}
+
+#terminal{ 
+    position: absolute;
+    top: 75%;
+    right: 0%;
     bottom: 0%;
     left: 0%;
 }
