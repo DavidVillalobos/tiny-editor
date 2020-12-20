@@ -17,7 +17,7 @@ main.o: main.cpp
 	$(CC) $(FLAGS) main.cpp
 
 clean:
-	rm -f $(OBJS) $(OUT)
+	del -f $(OBJS) $(OUT)
 
 run: $(OUT)
 	./$(OUT)
