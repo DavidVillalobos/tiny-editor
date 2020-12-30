@@ -1,7 +1,7 @@
 <!-- 
 File: index.html
 Author: Luis David Villalobos Gonzalez
-Date: 15/12/2020
+Date: 29/12/2020
 -->
 
 <!DOCTYPE html>
@@ -30,21 +30,39 @@ Date: 15/12/2020
           </div>
         </a>
         <div aria-label="menu" aria-expanded="false">
-            <div class="navbar-item">
-              <div class="buttons field is-grouped">
-                <div id="button-compiler" class="button is-warning" >
-                  <span class="icon">
-                    <i class="fas fa-hammer"></i>
-                  </span>
-                </div>
-                <div id="button-run" class="button is-success">
-                  <span class="icon">
-                    <i class="fas fa-play"></i>
-                  </span>
-                </div>
+          <div class="navbar-item">
+            <div class="buttons field is-grouped">
+              <div id="button-compiler" class="button is-warning" >
+                <span>Build</span>
+                <span class="icon">
+                  <i class="fas fa-hammer"></i>
+                </span>
+              </div>
+              <div id="button-run" class="button is-success">
+                <span>Run</span>
+                <span class="icon">
+                  <i class="fas fa-play"></i>
+                </span>
               </div>
             </div>
           </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Lenguages
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              C/C++
+            </a>
+            <a class="navbar-item">
+              Java
+            </a>
+            <a class="navbar-item">
+              Python
+            </a>
+          </div>
+        </div>
       </div>
     </nav>
     <div id="editor">#include< iostream>
