@@ -16,15 +16,15 @@ function changeEditor(){
   this.compiled = false
 }
 
-// editor.session.setValue('#include<iostream>\nusing namespace std;\nint main(){\n\tcout<<"Hello World"<<endl;\n\tsystem("pause");\n}\n');
+editor.session.setValue('#include<iostream>\nusing namespace std;\nint main(){\n\tcout<<"Hello World"<<endl;\n\tsystem("pause");\n}\n');
 
-editor.session.setValue('import java.util.Scanner;\nimport java.io.*;\npublic class Prueba{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println("Hello World");\n\t\tSystem.out.println("Press Any Key To Continue...");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n');
+// editor.session.setValue('import java.util.Scanner;\nimport java.io.*;\npublic class Prueba{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println("Hello World");\n\t\tSystem.out.println("Press Any Key To Continue...");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n');
 
 function compile(){
   var language = document.getElementById("lenguages").value
   fs.writeFile('File/' + language +'/Prueba' + extensions[language], editor.session.getValue(), 'UTF-8', function(err){console.log(err)})
   console.log(editor.session.getValue())
-  var command = 'cd File/' + language +' &&  make'
+  var command = 'cd File/' + language +' &&  mingw32-make'
   exec(command, (err, stdout, stderr) => {
     if(err){
       console.log(stderr)
@@ -44,7 +44,7 @@ function compile(){
 
 function run(){
   var language = document.getElementById("lenguages").value
-  var command = 'cd File/' + language + ' && start make run'
+  var command = 'cd File/' + language + ' && start mingw32-make run'
   exec(command, (err, stdout, stderr) => {
     if(err){
       console.log(`stderr: ${stderr}`)
