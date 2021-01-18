@@ -1,21 +1,7 @@
-JFLAGS = -g
-JC = javac 
+PYTHON = python
+MAINCLASS = Prueba.py
 
-.SUFFIXES: .java .class
-
-.java.class:
-	$(JC) $(JFLAGS) $*.java
-
-CLASSES = \
-        main.java 
-
-MAINCLASS = \
-		main
-
-all: $(CLASSES:.java=.class)
-
+all: 
+	
 run: 
-	cls && python
-
-clean:
-	del $(CLASSES:.java=.class)
+	cls && $(PYTHON) $(MAINCLASS)

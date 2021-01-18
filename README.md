@@ -4,6 +4,7 @@ Lightweight simple editor for little projects and tasks.
 The purpose of this project is create a desktop application that works as a simple text editor, 
 with the easy of running code in java, python, c++, all this without the need to save the files of program.  
 It also gives the possibility of having an integrated console to show errors but execute code in external console
+
 ## Pre-requirements 📋
 * 	[Node](https://nodejs.org/es/) Need install npm too 
 * 	[Electron](https://nodejs.org/es/) Installing in the next step  
