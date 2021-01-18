@@ -3,3 +3,5 @@ TinyEditor/node_modules
 *.exe
 *.o
 *.class
+*.java
+*.cpp
