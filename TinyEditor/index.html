@@ -1,7 +1,7 @@
 <!-- 
 File: index.html
 Author: Luis David Villalobos Gonzalez
-Date: 29/12/2020
+Date: 18/01/2021
 -->
 
 <!DOCTYPE html>
@@ -48,28 +48,17 @@ Date: 29/12/2020
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            Lenguages
-          </a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item">
-              C/C++
-            </a>
-            <a class="navbar-item">
-              Java
-            </a>
-            <a class="navbar-item">
-              Python
-            </a>
+          <div class="select">
+            <select id="lenguages">
+              <option>C++</option>
+              <option>Java</option>
+              <option>Python</option>
+            </select>
           </div>
         </div>
       </div>
     </nav>
-    <div id="editor">#include< iostream>
-using namespace std;
-int main(){
-  cout << "Hello World" << endl;
-}
+    <div id="editor" onchange="changeEditor()">      
     </div>
     <div id="terminal"></div>
   </body>

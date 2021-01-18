@@ -1,5 +1,5 @@
-OBJS	= main.o
-SOURCE	= main.cpp
+OBJS	= Prueba.o
+SOURCE	= Prueba.cpp
 HEADER	= 
 OUT	= run.exe
 CC	 = g++
@@ -10,11 +10,11 @@ LFLAGS	 =
 all: $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
 
-main.o: main.cpp
-	$(CC) $(FLAGS) main.cpp
+Prueba.o: Prueba.cpp
+	$(CC) $(FLAGS) Prueba.cpp
 
+run:
+	cls && $(OUT)
+	
 clean:
 	del $(OBJS) $(OUT)
-
-run: $(OUT)
-	$(OUT)

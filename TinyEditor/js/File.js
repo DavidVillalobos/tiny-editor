@@ -1,59 +1,74 @@
-var fs = require('fs');
-const { exec } = require('child_process');
-var compiled = false;
+/* 
+File: File.js
+Author: Luis David Villalobos Gonzalez
+Date: 18/01/2021
+*/
+
+var fs = require('fs')
+const { exec } = require('child_process')
+
+var compiled = false
+let extensions = { "C++":".cpp", 
+                   "Java":".java",
+                   "Python":".py"}
+
+function changeEditor(){
+  this.compiled = false
+}
+
+// editor.session.setValue('#include<iostream>\nusing namespace std;\nint main(){\n\tcout<<"Hello World"<<endl;\n\tsystem("pause");\n}\n');
+
+editor.session.setValue('import java.util.Scanner;\nimport java.io.*;\npublic class Prueba{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println("Hello World");\n\t\tSystem.out.println("Press Any Key To Continue...");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n');
 
 function compile(){
-  fs.writeFile('File/main.cpp', editor.session.getValue(), 'UTF-8', function(err){console.log(err)})
-  console.log(editor.session.getValue());
-  var command = 'cd File && make';
-  compiled = false;
+  var language = document.getElementById("lenguages").value
+  fs.writeFile('File/' + language +'/Prueba' + extensions[language], editor.session.getValue(), 'UTF-8', function(err){console.log(err)})
+  console.log(editor.session.getValue())
+  var command = 'cd File/' + language +' &&  make'
   exec(command, (err, stdout, stderr) => {
     if(err){
-      //console.log(stderr);
-      console.log(`stderr: ${stderr}`); // this go to output error
-      terminal.session.setValue(stderr);
-      //console.error(`err: ${err}`);
+      console.log(stderr)
+      console.log(`stderr: ${stderr}`) // this go to output error
+      terminal.session.setValue(stderr)
+      console.error(`err: ${err}`)
+      compiled = false
     }else{
-      //console.log(`stderr: ${stderr}`)
-      //console.log(`stdout: ${stdout}`);
-      //console.log(`stderr: ${stderr}`);
-      terminal.session.setValue('Compilation success');
-      compiled = true;
+      console.log(`stderr: ${stderr}`)
+      console.log(`stdout: ${stdout}`)
+      console.log(`stderr: ${stderr}`)
+      terminal.session.setValue('Compilation success')
+      compiled = true
     }
   });
 }
 
-function run_program(){
-  exec('start File/run.exe', (err, stdout, stderr) => {
+function run(){
+  var language = document.getElementById("lenguages").value
+  var command = 'cd File/' + language + ' && start make run'
+  exec(command, (err, stdout, stderr) => {
     if(err){
       console.log(`stderr: ${stderr}`)
-      //console.error(err)
+      console.error(`err: ${err}`)
     }else{
       console.log(stdout);
-      //console.log(`stdout: ${stdout}`);
-      //console.log(`stderr: ${stderr}`);
+      console.log(`stdout: ${stdout}`)
+      console.log(`stderr: ${stderr}`)
     }
   });
 }
 
 document.getElementById("button-compiler").onclick = function(event) {
-  compile();
+  compile()
 }
 
 
 document.getElementById("button-run").onclick = function(event) {
   if(compiled){
-    run_program();
+    run()
   }else{
-    compile();
+    compile()
     if(compiled){
-      run_program();
+      run()
     }
   }
 }
-
-
-
-
-
-
