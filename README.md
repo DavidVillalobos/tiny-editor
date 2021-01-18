@@ -8,10 +8,10 @@ is automatically reloaded and rerunning every time when file is saved.
 ### Pre-requirements 📋
 * 	[Node](https://nodejs.org/es/) Need install npm too 
 * 	[Electron](https://nodejs.org/es/) Installing in the next step
-* 	[Mingw](https://osdn.net/projects/mingw/releases/) Need install g++.exe from basic setup  
+* 	[Mingw](https://osdn.net/projects/mingw/releases/) Need install g++.exe from basic setup and mingw32-make.exe from all packages.
 * 	[Java](https://www.oracle.com/java/technologies/javase-downloads.html)
 * 	[Python](https://www.python.org/) Need minimum the third version
-	and mingw32-make.exe from all packages.
+
 
 ## Installation
 Download and extract the code  
