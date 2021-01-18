@@ -1,5 +1,5 @@
 TinyEditor/node_modules
 .vscode/settings.json
-.exe
-.o
-.class
+*.exe
+*.o
+*.class
