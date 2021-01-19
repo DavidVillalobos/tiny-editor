@@ -33,24 +33,22 @@ function compile(){
   var language = document.getElementById("lenguages").value
   fs.writeFile('File/' + language +'/Prueba' + extensions[language], editor.session.getValue(), 'UTF-8', function(err){console.log(err)})
   console.log(editor.session.getValue())
-  if(language != "Python"){
-    var command = 'cd File/' + language +' &&  mingw32-make'
-    exec(command, (err, stdout, stderr) => {
-      if(err){
-        console.log(stderr)
-        console.log(`stderr: ${stderr}`) // this go to output error
-        terminal.session.setValue(stderr)
-        console.error(`err: ${err}`)
-        compiled = false
-      }else{
-        console.log(`stderr: ${stderr}`)
-        console.log(`stdout: ${stdout}`)
-        console.log(`stderr: ${stderr}`)
-        terminal.session.setValue('Compilation success')
-        compiled = true
-      }
-    })
-  }
+  var command = 'cd File/' + language +' &&  mingw32-make'
+  exec(command, (err, stdout, stderr) => {
+    if(err){
+      console.log(stderr)
+      console.log(`stderr: ${stderr}`) // this go to output error
+      terminal.session.setValue(stderr)
+      console.error(`err: ${err}`)
+      compiled = false
+    }else{
+      console.log(`stderr: ${stderr}`)
+      console.log(`stdout: ${stdout}`)
+      console.log(`stderr: ${stderr}`)
+      terminal.session.setValue('Compilation success')
+      compiled = true
+    }
+  })
 }
 
 function run(){
