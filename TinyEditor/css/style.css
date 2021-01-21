@@ -1,7 +1,7 @@
 /* 
 File: style.css
 Author: Luis David Villalobos Gonzalez
-Date: 15/12/2020
+Date: 21/01/2021
 */
 
 body{
@@ -11,17 +11,25 @@ body{
 #editor { 
     position: absolute;
     top: 50px;
-    right: 0%;
-    bottom: 25%;
-    left: 0%;
+    right: 40%;
+    bottom: 0%;
+    left: 4%;
 }
 
 #terminal{ 
     position: absolute;
-    top: 75.2%;
-    right: 0.1%;
-    bottom: 0.1%;
-    left: 0.1%;
+    top: 50px;
+    right: 0%;
+    bottom: 0%;
+    left: 60%;
+}
+
+#settings{ 
+    position: absolute;
+    top: 50px;
+    right: 96%;
+    bottom: 0%;
+    left: 0%;
 }
 
 html{

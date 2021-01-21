@@ -22,17 +22,16 @@ Date: 18/01/2021
   </head>
   <body>
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item">
-          <div class="title is-4 has-text-light">
-            <span> Tiny editor </span> 
-            <span class="fas fa-feather"></span>
-          </div>
-        </a>
         <div aria-label="menu" aria-expanded="false">
           <div class="navbar-item">
             <div class="buttons field is-grouped">
-              <div id="button-compiler" class="button is-warning" >
+              <div class ="button is-static has-background-dark is-dark is-outlined">
+                <div class="title is-4 has-text-light">
+                  <span> Tiny editor </span> 
+                  <span class="fas fa-feather"></span>
+                </div>
+              </div>
+              <div id="button-compiler" class="button is-link" >
                 <span>Build</span>
                 <span class="icon">
                   <i class="fas fa-hammer"></i>
@@ -44,27 +43,29 @@ Date: 18/01/2021
                   <i class="fas fa-play"></i>
                 </span>
               </div>
+              <div class="button is-dark">
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <div class="select">
+                    <select id="languages">
+                      <option>Choose a language</option>
+                      <option>C++</option>
+                      <option>Java</option>
+                      <option>Python</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <div class="select">
-            <select id="lenguages" onchange="changeLanguage()">
-              <option>Choose a language</option>
-              <option>C++</option>
-              <option>Java</option>
-              <option>Python</option>
-            </select>
-          </div>
-        </div>
-      </div>
     </nav>
-    <div id="editor" onchange="changeEditor()">      
-    </div>
+    <div id="editor"></div>
     <div id="terminal"></div>
+    <div id="settings"></div>
   </body>
 </html>
 
 <script src="js/Editor.js"></script>
 <script src="js/Terminal.js"></script>
-<script src="js/File.js"></script>
+<script src="js/Coder.js"></script>
+<script src="js/Settings.js"></script>
