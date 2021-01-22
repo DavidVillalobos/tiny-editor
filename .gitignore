@@ -1,4 +1,4 @@
-TinyEditor/node_modules
+src/node_modules
 .vscode/settings.json
 *.exe
 *.o
