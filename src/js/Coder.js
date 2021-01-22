@@ -14,6 +14,7 @@ var extensions = { "C++":".cpp", "Java":".java", "Python":".py"}
 var language = ''
 var file_name = ''
 var button_compiler = document.getElementById("button-compiler");
+var button_runner = document.getElementById("button-run");
 
 // Onchange editor
 document.getElementById("editor").onchange= function(event){
@@ -98,7 +99,7 @@ function generate_makefile(){
 }
 
 // COMPILE CODE
-document.getElementById("button-compiler").onclick = function(event){
+button_compiler.onclick = function(event){
   if(language != "Choose a language"){
     if(language != "Python"){
       button_compiler.setAttribute("class", "button is-link is-loading")
@@ -140,7 +141,7 @@ document.getElementById("button-compiler").onclick = function(event){
 }
 
 // RUN CODE
-document.getElementById("button-run").onclick = function(event) {
+button_runner.onclick = function(event) {
   if(language == "Python"){
     button_compiler.click()
     compiled = true
@@ -150,14 +151,14 @@ document.getElementById("button-run").onclick = function(event) {
     terminal.session.setValue('')
     exec(command, (err, stdout, stderr) => {
       if(err){
-        console.log(stderr)
+        console.error(`err: ${err}`)
+        console.log(`stdout: ${stdout}`)
         console.log(`stderr: ${stderr}`) // this go to output and show the error
         terminal.session.setValue(stderr)
-        console.error(`err: ${err}`)
       }else{
-        console.log(stdout);
         console.log(`stdout: ${stdout}`)
         console.log(`stderr: ${stderr}`)
+        terminal.session.setValue(stderr)
       }
     });
   }else{

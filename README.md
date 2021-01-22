@@ -7,13 +7,12 @@ It also gives the possibility of having an integrated console to show errors but
 
 ## Pre-requirements 📋
 * 	[Node](https://nodejs.org/es/) Need install npm too 
-* 	[Electron](https://nodejs.org/es/) Installing in the next step  
 * 	[Mingw](https://osdn.net/projects/mingw/releases/) Need install mingw32-make.exe from all packages.
+* 	[Electron](https://nodejs.org/es/) Installing in the next step  
 ### These are needed so that you can program in them, if for example you are not going to program in python you do not need to install it 
 *   [C++](https://osdn.net/projects/mingw/releases/) You can install it from MingW
 * 	[Java](https://www.oracle.com/java/technologies/javase-downloads.html)
 * 	[Python](https://www.python.org/)
-
 
 ## Installation
 Download and extract the code  

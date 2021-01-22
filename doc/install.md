@@ -20,10 +20,8 @@
 	The g ++ command also has its particular syntax that we must know and respect in order to write and execute the compilation   
 	commands correctly.  
 
-# MinGW installation
-
->	We start the Mingw program, it probably already starts by itself, but you can search for it in Windows as "MINGW".   
-	We proceed to install the C++ compiler (G++).  
+We start the Mingw program, it probably already starts by itself, but you can search for it in Windows as "MINGW".   
+We proceed to install the C++ compiler (G++).  
 
 	1. Select the Basic Setup category.  
 	2. We mark the option of mingw32-gcc-g ++ - bin, selecting "Mark for Installation"  
