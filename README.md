@@ -27,21 +27,35 @@ Now i'am working in:
 Make sure that the programs **can be located from the system   
 variables in PATH**, javac, java, mingw32-make, g++ and python 
 
-## Installation
-Download and extract the code
+---
+
+## Installation pre-realease
+Download the first version [here](https://github.com/DavidVillalobos/Tiny_Editor/releases)
+
+## Usage pre-realease
+
+Start TinyEditor.exe from project folder  
+
+Choose a language between C++, Java and Python.  
+That's it, program!  
+Press Build to compile code, and run to execute!
+
+---
+
+## Installation of last version
+Download code [here](https://github.com/DavidVillalobos/Tiny_Editor/archive/master.zip) and extract where you prefer  
+If you have git installed, you can clone it like
 ~~~cmd
 git clone https://github.com/DavidVillalobos/Tiny_Editor
 ~~~  
-
 Open terminal in tinyEditor project folder  
 Install Electron
 ~~~cmd
 cd src
 npm install electron
 ~~~
-
-## Usage  
-Once electron is installed, go back to the root folder of the project and run the file init.bat  
+## Usage of last version
+Once electron is installed, go back to the root folder of the project and run the file init.bat to start TinyEditor  
 ~~~cmd
 cd ..
 init.bat
@@ -49,6 +63,8 @@ init.bat
 Choose a language between C++, Java and Python.  
 That's it, program!  
 Press Build to compile code, and run to execute!
+
+---
 
 ## Author 
 * **[Luis David Villalobos González](https://github.com/DavidVillalobos)** 
