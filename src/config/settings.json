@@ -1,0 +1,8 @@
+{
+    "language" : "text",
+    "theme" : "monokai",
+    "fontSize" : 18,
+    "tabSize" : 4,
+    "color" : "dark",
+    "fontSize-terminal" : 18
+}
