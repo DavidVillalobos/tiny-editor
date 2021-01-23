@@ -28,7 +28,10 @@ Make sure that the programs **can be located from the system
 variables in PATH**, javac, java, mingw32-make, g++ and python 
 
 ## Installation
-Download and extract the code
+Download the first version here
+## Installation of last version
+Download code [here](https://github.com/DavidVillalobos/Tiny_Editor/archive/master.zip) and extract where you prefer  
+If you have git installed, you can clone it like
 ~~~cmd
 git clone https://github.com/DavidVillalobos/Tiny_Editor
 ~~~  
