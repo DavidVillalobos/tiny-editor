@@ -1,10 +1,10 @@
 /* 
-File: Coder.js
+File: coder.js
 Author: Luis David Villalobos Gonzalez
-Date: 22/01/2021
+Date: 23/01/2021
 */
 
-var fs = require('fs')
+const fs = require('fs');
 const { exec } = require('child_process')
 
 var compiled = false
@@ -14,7 +14,8 @@ var extensions = { "C++":".cpp", "Java":".java", "Python":".py"}
 var language = ''
 var file_name = ''
 var button_compiler = document.getElementById("button-compiler");
-var button_runner = document.getElementById("button-run");
+var button_runner = document.getElementById("button-runner");
+var button_settings = document.getElementById("button-settings");
 
 // Onchange editor
 document.getElementById("editor").onchange= function(event){
@@ -32,15 +33,19 @@ document.getElementById("languages").onchange= function(event){
   // Update language
   language = document.getElementById("languages").value
   button_compiler.setAttribute("class", "button is-link")
+  button_settings.click()
   // Update text in editor
   switch(languages[language]){
     case 1:
+      editor.session.setMode("ace/mode/c_cpp")
       editor.session.setValue('#include<iostream>\nusing namespace std;\nint main(){\n\tcout<<"Thank you very much for using Tiny Editor"<<endl;\n\tsystem("pause");\n}\n')
       break
     case 2:  
-      editor.session.setValue('import java.util.Scanner;\nimport java.io.*;\npublic class Prueba{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println("Thank you very much for using Tiny Editor");\n\t\tSystem.out.println("Press Any Key To Continue...");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n')
+    editor.session.setMode("ace/mode/java")  
+    editor.session.setValue('import java.util.Scanner;\nimport java.io.*;\npublic class Prueba{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println("Thank you very much for using Tiny Editor");\n\t\tSystem.out.println("Press Any Key To Continue...");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n')
       break
     case 3:
+      editor.session.setMode("ace/mode/python")
       button_compiler.setAttribute("class", "button is-dark is-static")
       editor.session.setValue('print("Thank you very much for using Tiny Editor")\ninput("Press Any Key To Continue...")\n')
       break
@@ -154,11 +159,11 @@ button_runner.onclick = function(event) {
         console.error(`err: ${err}`)
         console.log(`stdout: ${stdout}`)
         console.log(`stderr: ${stderr}`) // this go to output and show the error
-        terminal.session.setValue(stderr)
+        terminal.session.setValue(stdout)
       }else{
         console.log(`stdout: ${stdout}`)
         console.log(`stderr: ${stderr}`)
-        terminal.session.setValue(stderr)
+        terminal.session.setValue(stdout)
       }
     });
   }else{
