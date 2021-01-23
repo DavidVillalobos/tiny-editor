@@ -5,6 +5,16 @@ The purpose of this project is create a desktop application that works as a simp
 with the easy of running code in java, python, c++, all this without the need to save the files of program.  
 It also gives the possibility of having an integrated console to show errors but execute code in external console
 
+## Notes
+This is a simple first simple version
+
+Now i'am working in: 
+* Create tutorials to install and configure, java, python and g++
+* Allow to configurate enviroment of the TinyEditor
+* Allow multiple files for edit.
+* Option to configure the makefiles.  
+
+
 ## Pre-requirements 📋
 * 	[Node](https://nodejs.org/es/) Need install npm too 
 * 	[Mingw](https://osdn.net/projects/mingw/releases/) Need install mingw32-make.exe from all packages.
@@ -14,21 +24,28 @@ It also gives the possibility of having an integrated console to show errors but
 * 	[Java](https://www.oracle.com/java/technologies/javase-downloads.html)
 * 	[Python](https://www.python.org/)
 
-## Installation
-Download and extract the code  
-Open terminal in tinyEditor project folder  
-Install Electron
-~~~cmd
-cd TinyEditor
-npm install electron
-~~~
-
-## Configuration
 Make sure that the programs **can be located from the system   
 variables in PATH**, javac, java, mingw32-make, g++ and python 
 
+## Installation
+Download and extract the code
+~~~cmd
+git clone https://github.com/DavidVillalobos/Tiny_Editor
+~~~  
+
+Open terminal in tinyEditor project folder  
+Install Electron
+~~~cmd
+cd src
+npm install electron
+~~~
+
 ## Usage  
-run the file init.bat  
+Once electron is installed, go back to the root folder of the project and run the file init.bat  
+~~~cmd
+cd ..
+init.bat
+~~~
 Choose a language between C++, Java and Python.  
 That's it, program!  
 Press Build to compile code, and run to execute!
@@ -36,12 +53,9 @@ Press Build to compile code, and run to execute!
 ## Author 
 * **[Luis David Villalobos González](https://github.com/DavidVillalobos)** 
 
-## Notes
-This is a first version, I am working to allow multiple   
-files, in addition to the option to configure the makefiles.  
-
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+You can contact me at villalobosgonzalezluisdavid@gmail.com  
 
 ## License
 ![License](https://img.shields.io/bower/l/bootstrap)
