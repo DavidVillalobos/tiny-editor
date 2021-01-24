@@ -14,8 +14,8 @@ function createWindow () {
       nodeIntegration: true
     }
   })
-
   win.loadFile('index.html')
+  win.maximize();
   //win.webContents.openDevTools()
 }
 

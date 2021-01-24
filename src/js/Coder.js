@@ -1,160 +1,126 @@
 /* 
-File: coder.js
-Author: Luis David Villalobos Gonzalez
-Date: 23/01/2021
+  File:   coder.js
+  Author: Luis David Villalobos Gonzalez
+  Date:   24/01/2021
 */
 
+// =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
 const fs = require('fs');
 const { exec } = require('child_process')
 
-var compiled = false
-var makefile = false
-var languages = { "C++":1, "Java":2, "Python":3}
-var extensions = { "C++":".cpp", "Java":".java", "Python":".py"}
-var language = ''
-var file_name = ''
+// =/=/=/=/=/=/=/=/ EDITOR =/=/=/=/=/=/=/=/=/
+var editor = ace.edit("editor")
+editor.setReadOnly(false);
+editor.setHighlightActiveLine(true);
+editor.renderer.setShowGutter(true);
+editor.setAutoScrollEditorIntoView(false);
+editor.setShowPrintMargin(true);
+
+// =/=/=/=/=/=/=/ TERMINAL =/=/=/=/=/=/=/=/=/
+var terminal = ace.edit("terminal");
+terminal.setTheme("ace/theme/terminal");
+terminal.session.setMode("ace/mode/python");
+document.getElementById('terminal').style.fontSize='14px';
+terminal.setReadOnly(true);
+terminal.setHighlightActiveLine(false);
+terminal.renderer.setShowGutter(false);
+terminal.setAutoScrollEditorIntoView(true);
+terminal.setShowPrintMargin(false);
+
+// =/=/=/=/=/=/= BUTTONS =/=/=/=/=/=/=/=/=/=/
 var button_compiler = document.getElementById("button-compiler");
 var button_runner = document.getElementById("button-runner");
 var button_settings = document.getElementById("button-settings");
 
-// Onchange editor
-document.getElementById("editor").onchange= function(event){
+// =/=/=/=/= SELECT LANGUAGE =/=/=/=/=/=/=/=/
+var select_language = document.getElementById("languages")
+
+// =/=/=/=/= EDITOR PANEL =/=/=/=/=/=/=/=/=/
+var editor_panel =  document.getElementById("editor")
+
+// =/=/=/=/=/=/= VARIABLES =/=/=/=/=/=/=/=/=/
+var compiled = false
+var makefile = false
+var file_name = ''
+
+// =/=/=/=/=/=/= CONFIGURATION DATA =/=/=/=/=/=/=/=/=/
+var data = JSON.parse(fs.readFileSync('config/data.json'));
+
+// =/=/=/=/=/=/= FUNCTIONS =/=/=/=/=/=/=/=/
+
+// Onchange text in editor
+editor_panel.onchange = function(event){
   compiled = false
 }
 
-// Onchange language
-document.getElementById("languages").onchange= function(event){
-  if(language != "Choose a language"){
-    var command = 'cd codes && mingw32-make clean && del makefile && del ' + file_name + extensions[language]
-    exec(command, (err, stdout, stderr) => {});
-  }
+// Onchange programming language
+select_language.onchange = function(event){
+  if(select_language.value != "Choose a language") exec(data['command']['clean'] + file_name + '.*', (err, stdout, stderr) => {});
   terminal.session.setValue('')
   compiled = makefile = false
-  // Update language
-  language = document.getElementById("languages").value
-  button_compiler.setAttribute("class", "button is-link")
-  button_settings.click()
-  // Update text in editor
-  switch(languages[language]){
-    case 1:
-      editor.session.setMode("ace/mode/c_cpp")
-      editor.session.setValue('#include<iostream>\nusing namespace std;\nint main(){\n\tcout<<"Thank you very much for using Tiny Editor"<<endl;\n\tsystem("pause");\n}\n')
-      break
-    case 2:  
-    editor.session.setMode("ace/mode/java")  
-    editor.session.setValue('import java.util.Scanner;\nimport java.io.*;\npublic class Prueba{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println("Thank you very much for using Tiny Editor");\n\t\tSystem.out.println("Press Any Key To Continue...");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n')
-      break
-    case 3:
-      editor.session.setMode("ace/mode/python")
-      button_compiler.setAttribute("class", "button is-dark is-static")
-      editor.session.setValue('print("Thank you very much for using Tiny Editor")\ninput("Press Any Key To Continue...")\n')
-      break
-    default:
-      editor.session.setValue('\n\n\t\tThank you very much for using Tiny Editor\n\t\t\t Choose a language, write code, build and run\n\n')
-      break
-    }
+  editor.session.setMode(data[select_language.value]['syntax'])
+  editor.session.setValue(data[select_language.value]['example'])
+  if(select_language.value == 'Python')  button_compiler.setAttribute("class", "button is-dark is-static")
+  else  button_compiler.setAttribute("class", "button is-link")
 }
 
-// Returns the makefile for language
 function generate_makefile(){
-    let result = ''
-    switch(languages[language]){
-      case 1:
-        result ="OBJS	= " + file_name + ".o\n" +
-        "SOURCE	= " + file_name + ".cpp\n" +
-        "HEADER	=\n"  +
-        "OUT	= run.exe\n"  +
-        "CC	 = g++\n"  +
-        "FLAGS	 = -g -c -Wall\n"  +
-        "LFLAGS	 =\n"  +
-        "all: $(OBJS)\n"  +
-        "\t$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)\n"  +
-        "Prueba.o: Prueba.cpp\n"  +
-        "\t$(CC) $(FLAGS) Prueba.cpp\n"  +
-        "run:\n" +
-        "\tcls && $(OUT)\n" +
-        "clean:\n" +
-        "\tdel $(OBJS) $(OUT)\n" 
-        break
-      case 2:  
-        result ="JFLAGS = -g\n" +
-        "JC = javac \n" +
-        ".SUFFIXES: .java .class\n" +
-        ".java.class:\n" +
-        "\t$(JC) $(JFLAGS) $*.java\n" +
-        "CLASSES = \\\n" +
-        "\t" + file_name + ".java \n" +
-        "MAINCLASS = \\\n" +
-        "\t" + file_name + "\n" +
-        "all: $(CLASSES:.java=.class)\n" +
-        "run: \n" +
-        "\tcls && java -cp . $(MAINCLASS)\n" +
-        "clean:\n" +
-        "\tdel $(CLASSES:.java=.class)\n"
-        break
-      case 3:
-        result = "all:\n" +
-        "run:\n" +
-        "\tcls && python " + file_name + ".py\n" +
-        "clean:\n"
-        break
-      default: break
-    }
-    return result
+  if(select_language.value == "C++")
+      return "OBJS	= " + file_name + ".o\n" +
+      "SOURCE	= " + file_name + ".cpp\n" + "HEADER	=\n"  + "OUT	= run.exe\n"  +
+      "CC	 = g++\n" + "FLAGS	 = -g -c -Wall\n" + "LFLAGS	 =\n" + "all: $(OBJS)\n"  +
+      "\t$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)\n" + "Prueba.o: Prueba.cpp\n"  +
+      "\t$(CC) $(FLAGS) " + file_name + ".cpp\n" + "run:\n" +
+      "\tcls && $(OUT)\n" + "clean:\n" + "\tdel $(OBJS) $(OUT)\n"
+  else if (select_language.value == "Java") 
+      return "JFLAGS = -g\n" + "JC = javac \n" + ".SUFFIXES: .java .class\n" +
+      ".java.class:\n" + "\t$(JC) $(JFLAGS) $*.java\n" + "CLASSES = \\\n" +
+      "\t" + file_name + ".java \n" + "MAINCLASS = \\\n" + "\t" + file_name + "\n" + 
+      "all: $(CLASSES:.java=.class)\n" + "run: \n" + "\tcls && java -cp . $(MAINCLASS)\n" +
+      "clean:\n" + "\tdel $(CLASSES:.java=.class)\n"
+  else if (select_language.value == "Python")
+      return "all:\n" + "run:\n" + "\tcls && python " + file_name + ".py\n" + "clean:\n"
 }
 
-// COMPILE CODE
+// Compile code (Save file, create makefile and compile file)
 button_compiler.onclick = function(event){
-  if(language != "Choose a language"){
-    if(language != "Python"){
-      button_compiler.setAttribute("class", "button is-link is-loading")
-    }
-    file_name = 'Prueba'
-    if(makefile == false){
-      // generate makefile and save makefile 
-      fs.writeFile('codes/makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
-      makefile = true
-    }
-    // Save main file
-    fs.writeFile('codes/' + file_name + extensions[language], editor.session.getValue(), 'UTF-8', function(err){console.log(err)})
-    var command = 'cd codes &&  mingw32-make'
-    exec(command, (err, stdout, stderr) => {
-      if(err){
-        console.log(stderr)
-        console.log(`stderr: ${stderr}`) // this go to output and show the error
-        terminal.session.setValue(stderr)
-        console.error(`err: ${err}`)
-        compiled = false
-      }else{
-        console.log(`stderr: ${stderr}`)
-        console.log(`stdout: ${stdout}`)
-        console.log(`stderr: ${stderr}`)
-        if(language == "Python"){
-          terminal.session.setValue('')
-        }else{
-          terminal.session.setValue('Compilation success')
-        }
-        compiled = true
+  if(select_language.value == "Choose a language") return
+  if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link is-loading")
+  file_name = 'Prueba'
+  if(!makefile) fs.writeFile('codes/makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
+  makefile = true
+  fs.writeFile('codes/' + file_name + data[select_language.value]['extension'], editor.session.getValue(), 'UTF-8', function(err){console.log(err)})
+  exec(data['command']['compile'], (err, stdout, stderr) => {
+    if(err){
+      console.log(stderr)
+      console.log(`stderr: ${stderr}`) // this go to output and show the error
+      terminal.session.setValue(stderr)
+      console.error(`err: ${err}`)
+      compiled = false
+    }else{
+      console.log(`stderr: ${stderr}`)
+      console.log(`stdout: ${stdout}`)
+      console.log(`stderr: ${stderr}`)
+      if(select_language.value != "Python"){
+        terminal.session.setValue('Compilation success')
       }
-      if(language != "Python"){
-        button_compiler.setAttribute("class", "button is-link")
-      }
-    })
-  }else{
-    terminal.session.setValue('Choose a language!!!')
-  }
+      compiled = true
+    }
+    if(select_language.value != "Python"){
+      button_compiler.setAttribute("class", "button is-link")
+    }
+  })
 }
 
-// RUN CODE
+// Run code (Run makefile)
 button_runner.onclick = function(event) {
-  if(language == "Python"){
+  if(select_language.value == "Python"){
     button_compiler.click()
     compiled = true
-  }
+  } 
   if(compiled){
-    var command = 'cd codes && start mingw32-make run'
     terminal.session.setValue('')
-    exec(command, (err, stdout, stderr) => {
+    exec(data['command']['run'], (err, stdout, stderr) => {
       if(err){
         console.error(`err: ${err}`)
         console.log(`stdout: ${stdout}`)
@@ -171,6 +137,20 @@ button_runner.onclick = function(event) {
   }
 }
 
-// Default message
-editor.session.setValue('\n\n\t\tThank you very much for using Tiny Editor\n\t\t\t Choose a language, write code, build and run\n\n')
-language = document.getElementById("languages").value
+// Apply settings
+button_settings.onclick = function(event) {
+    // "color" : "dark"
+    settings = JSON.parse(fs.readFileSync('config/settings.json'));
+    console.log(settings);
+    document.getElementById('editor').style.fontSize = settings.fontSize + "px"
+    document.getElementById('terminal').style.fontSize = settings.fontSize-terminal + "px"
+    editor.session.setTabSize(settings.tabSize)
+    editor.setTheme("ace/theme/" + settings.theme)
+    editor.session.setMode("ace/mode/" + settings.language)
+}
+
+// Load current settings
+button_settings.click()
+
+// Load current settings for language
+select_language.onchange()
