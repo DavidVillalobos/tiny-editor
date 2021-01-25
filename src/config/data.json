@@ -1,42 +1,49 @@
 {
-    "themes" : [ "ambiance", "chaos", "chrome", "clouds", "clouds_midnight", 
-    "cobalt", "crimson_editor", "dawn", "dracula", "dreamweaver", "eclipse", 
-    "github", "gob", "gruvbox", "idle_fingers", "iplastic", "katzenmilch", 
-    "kr_theme", "kuroir", "merbivore", "merbivore_soft", "mono_industrial", 
-    "monokai", "nord_dark", "pastel_on_dark", "solarized_dark", "solarized_light", 
-    "sqlserver", "terminal", "textmate", "tomorrow", "tomorrow_night", 
-    "tomorrow_night_blue", "tomorrow_night_bright", "tomorrow_night_eighties", 
-    "twilight", "vibrant_ink", "xcode" ],
-
-    "color-tiny-editor" : ["white", "dark", "grey"],
-
+    "themes" : [ 
+        "ambiance", "chaos", "chrome", "clouds", "clouds_midnight", 
+        "cobalt", "crimson_editor", "dawn", "dracula", "dreamweaver", 
+        "eclipse", "github", "gob", "gruvbox", "idle_fingers", "iplastic", 
+        "katzenmilch", "kr_theme", "kuroir", "merbivore", "merbivore_soft", 
+        "mono_industrial", "monokai", "nord_dark", "pastel_on_dark", 
+        "solarized_dark", "solarized_light", "sqlserver", "terminal", 
+        "textmate", "tomorrow", "tomorrow_night", "tomorrow_night_blue", 
+        "tomorrow_night_bright", "tomorrow_night_eighties", "twilight", 
+        "vibrant_ink", "xcode" 
+    ],
+    
+    "color-tiny-editor" : ["white", "black", "light", "dark", "primary", "link", "info", "success", "warning", "danger"],
+    
     "command" : {
         "clean" : "cd codes && mingw32-make clean && del makefile && del ",
         "compile" : "cd codes &&  mingw32-make" ,
         "run" : "cd codes && start mingw32-make run"
     },
 
-    "C++" : {
-        "syntax" : "ace/mode/c_cpp",
-        "example" : "#include<iostream>\nusing namespace std;\nint main(){\n\tcout<<\"Thank you very much for using Tiny Editor\"<<endl;\n\tsystem(\"pause\");\n}\n",
-        "extension" : ".cpp"
-    },
+    "language" : {
+        
+        "C++" : {
+            "extension" : ".cpp",
+            "syntax" : "ace/mode/c_cpp",
+            "example" : "#include<iostream>\nusing namespace std;\nint main(){\n\tcout<<\"Thank you very much for using Tiny Editor\"<<endl;\n\tsystem(\"pause\");\n}\n"
+        },
 
-    "Java" : {
-        "syntax" : "ace/mode/java",
-        "example" : "import java.util.Scanner;\nimport java.io.*;\npublic class Prueba{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println(\"Thank you very much for using Tiny Editor\");\n\t\tSystem.out.println(\"Press Any Key To Continue...\");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n",
-        "extension" : ".java" 
-    },
-    
-    "Python" : {
-        "syntax" : "ace/mode/python",
-        "example" : "print(\"Thank you very much for using Tiny Editor\")\ninput(\"Press Any Key To Continue...\")\n",
-        "extension" : ".py" 
-    },
+        "Java" : {
+            "extension" : ".java",
+            "syntax" : "ace/mode/java",
+            "example" : "import java.util.Scanner;\nimport java.io.*;\npublic class Prueba{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println(\"Thank you very much for using Tiny Editor\");\n\t\tSystem.out.println(\"Press Any Key To Continue...\");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n"
+        },
 
-    "Choose a language" : {
-        "syntax" : "ace/mode/text",
-        "example" : "thank you very much for using tiny editor\n. . . . choose a language, write code, build and run :D",
-        "extension" : ".txt" 
+        "Python" : {
+            "extension" : ".py",
+            "syntax" : "ace/mode/python",
+            "example" : "print(\"Thank you very much for using Tiny Editor\")\ninput(\"Press Any Key To Continue...\")\n"
+        },
+        
+        "Choose a language" : {
+            "extension" : ".txt",
+            "syntax" : "ace/mode/text",
+            "example" : "thank you very much for using tiny editor\n. . . . choose a language, write code, build and run :D"
+        }
+
     }
 }
