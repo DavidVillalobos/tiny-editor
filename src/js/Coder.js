@@ -1,7 +1,7 @@
 /* 
   File:   coder.js
   Author: Luis David Villalobos Gonzalez
-  Date:   24/01/2021
+  Date:   25/01/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
@@ -55,11 +55,12 @@ editor_panel.onchange = function(event){
 
 // Onchange programming language
 select_language.onchange = function(event){
-  if(select_language.value != "Choose a language") exec(data['command']['clean'] + file_name + '.*', (err, stdout, stderr) => {});
+  if(select_language.value != "Choose a language") 
+    exec(data['command']['clean'] + file_name + '.*', (err, stdout, stderr) => {});
   terminal.session.setValue('')
   compiled = makefile = false
-  editor.session.setMode(data[select_language.value]['syntax'])
-  editor.session.setValue(data[select_language.value]['example'])
+  editor.session.setMode(data['language'][select_language.value]['syntax'])
+  editor.session.setValue(data['language'][select_language.value]['example'])
   if(select_language.value == 'Python')  button_compiler.setAttribute("class", "button is-dark is-static")
   else  button_compiler.setAttribute("class", "button is-link")
 }
@@ -89,7 +90,8 @@ button_compiler.onclick = function(event){
   file_name = 'Prueba'
   if(!makefile) fs.writeFile('codes/makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
   makefile = true
-  fs.writeFile('codes/' + file_name + data[select_language.value]['extension'], editor.session.getValue(), 'UTF-8', function(err){console.log(err)})
+  fs.writeFile('codes/' + file_name + data['language'][select_language.value]['extension'], 
+  editor.session.getValue(), 'UTF-8', function(err){console.log(err)})
   exec(data['command']['compile'], (err, stdout, stderr) => {
     if(err){
       console.log(stderr)
@@ -101,14 +103,10 @@ button_compiler.onclick = function(event){
       console.log(`stderr: ${stderr}`)
       console.log(`stdout: ${stdout}`)
       console.log(`stderr: ${stderr}`)
-      if(select_language.value != "Python"){
-        terminal.session.setValue('Compilation success')
-      }
+      if(select_language.value != "Python") terminal.session.setValue('Compilation success')
       compiled = true
     }
-    if(select_language.value != "Python"){
-      button_compiler.setAttribute("class", "button is-link")
-    }
+    if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link")
   })
 }
 
@@ -154,3 +152,11 @@ button_settings.click()
 
 // Load current settings for language
 select_language.onchange()
+
+button_settings.onclick = function() {
+	document.getElementById("modal").setAttribute("class", "modal is-active")
+}
+
+document.getElementById("button-close").onclick = function() {
+	document.getElementById("modal").setAttribute("class", "modal")
+}
