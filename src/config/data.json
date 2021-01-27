@@ -11,10 +11,12 @@
         "vibrant_ink", "xcode" 
     ],
     
-    "color-tiny-editor" : ["white", "black", "light", "dark", "primary", "link", "info", "success", "warning", "danger"],
+    "mode" : ["white", "black", "light", "dark", "primary", "link", "info", "success", "warning", "danger"],
     
+    "terminal-position" : [ "left", "right", "up", "down"],
+
     "command" : {
-        "clean" : "cd codes && mingw32-make clean && del makefile && del ",
+        "clean" : "cd codes && mingw32-make clean && del makefile",
         "compile" : "cd codes &&  mingw32-make" ,
         "run" : "cd codes && start mingw32-make run"
     },

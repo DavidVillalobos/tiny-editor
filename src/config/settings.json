@@ -1,8 +1,9 @@
 {
+    "fontSize" : 18,
+    "fontSize-terminal" : 18,
+    "tabSize" : 4,
     "language" : "text",
     "theme" : "monokai",
-    "fontSize" : 18,
-    "tabSize" : 4,
     "color" : "dark",
-    "fontSize-terminal" : 18
+    "terminal-position" : "left"
 }
