@@ -11,7 +11,7 @@
         "vibrant_ink", "xcode" 
     ],
     
-    "mode" : ["white", "black", "light", "dark", "primary", "link", "info", "success", "warning", "danger"],
+    "mode" : ["light", "dark"],
     
     "terminal-position" : [ "left", "right", "up", "down"],
 
@@ -22,29 +22,27 @@
     },
 
     "language" : {
-        
+        "Choose a language" : {
+            "extension" : ".txt",
+            "highlighter" : "text",
+            "example" : "thank you very much for using tiny editor\n. . . . choose a language, write code, build and run :D"
+        },
         "C++" : {
             "extension" : ".cpp",
-            "syntax" : "ace/mode/c_cpp",
+            "highlighter" : "c_cpp",
             "example" : "#include<iostream>\nusing namespace std;\nint main(){\n\tcout<<\"Thank you very much for using Tiny Editor\"<<endl;\n\tsystem(\"pause\");\n}\n"
         },
 
         "Java" : {
             "extension" : ".java",
-            "syntax" : "ace/mode/java",
+            "highlighter" : "java",
             "example" : "import java.util.Scanner;\nimport java.io.*;\npublic class Prueba{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println(\"Thank you very much for using Tiny Editor\");\n\t\tSystem.out.println(\"Press Any Key To Continue...\");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n"
         },
 
         "Python" : {
             "extension" : ".py",
-            "syntax" : "ace/mode/python",
+            "highlighter" : "python",
             "example" : "print(\"Thank you very much for using Tiny Editor\")\ninput(\"Press Any Key To Continue...\")\n"
-        },
-        
-        "Choose a language" : {
-            "extension" : ".txt",
-            "syntax" : "ace/mode/text",
-            "example" : "thank you very much for using tiny editor\n. . . . choose a language, write code, build and run :D"
         }
 
     }
