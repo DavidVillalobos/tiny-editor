@@ -10,7 +10,7 @@ body{
 
 #editor { 
     position: absolute;
-    top: 50px;
+    top: 52px;
     right: 40%;
     bottom: 0%;
     left: 0%;
@@ -18,7 +18,7 @@ body{
 
 #terminal{ 
     position: absolute;
-    top: 50px;
+    top: 52px;
     right: 0%;
     bottom: 0%;
     left: 60%;
