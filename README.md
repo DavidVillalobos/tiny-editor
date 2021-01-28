@@ -2,10 +2,21 @@
 Lightweight **simple editor** for little projects and tasks.
 The purpose of this project is create a desktop application that works as a simple text editor, with the easy of running code in java, python, c++, all this without the need to save the files of program. It also gives the possibility of having an integrated console to show errors but execute code in external console.
 
+---
+
+### Built with 🛠️
+This project was built with:
+
+* [Electron](https://www.electronjs.org/)
+* [Bulma](https://bulma.io/)
+* [Ace editor](https://ace.c9.io/)
+
+---
+
 ### 📃 Notes
 
 This is a simple first simple version, now i'am working in:
-* Create tutorials to install and configure, java, python and g++
+* Create tutorials to install and configure, java, python and c++
 * Allow to configurate enviroment of the TinyEditor
 * Allow multiple files for edit.
 * Option to configure the makefiles.  
@@ -20,7 +31,7 @@ This is a simple first simple version, now i'am working in:
 
 These are needed so that you can program in them, if for example you are not going to program in python you do not need to install it:  
 
-▶️ [C++](https://osdn.net/projects/mingw/releases/) You can install it from MingW  
+▶️ [C++](https://osdn.net/projects/mingw/releases/) You can install it from MinGW  
 ▶️ [Java](https://www.oracle.com/java/technologies/javase-downloads.html)  
 ▶️ [Python](https://www.python.org/)  
 Make sure that the programs **can be located from the system   
@@ -73,6 +84,9 @@ That's it, program!
 Press Build to compile code, and run to execute!
 
 ---
+
+### Inspired by 💭
+* [vscode](https://code.visualstudio.com/)
 
 ### Author 
 
