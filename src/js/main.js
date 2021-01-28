@@ -1,7 +1,7 @@
 /* 
 File: main.js
 Author: Luis David Villalobos Gonzalez
-Date: 27/01/2021
+Date: 28/01/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
@@ -22,6 +22,7 @@ function createWindow () {
   win.loadFile('index.html')
   win.maximize();
   //win.webContents.openDevTools()
+  // CD resources/app &&
   exec('MD codes', (err, stdout, stderr) => {});
 }
 
@@ -31,6 +32,7 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }  
+  // CD resources/app && 
   exec('RD /S/Q codes', (err, stdout, stderr) => {});
 })
 

@@ -51,8 +51,6 @@ var select_language = document.getElementById("languages")
 // =/=/=/=/=/=/= MODE =/=/=/=/=/=/=/=/
 var radio_mode = document.getElementById("mode");
 
-
-
 // =/=/=/=/= EDITOR PANEL =/=/=/=/=/=/=/=/=/
 var editor_panel =  document.getElementById("editor")
 editor_panel.style.position = "absolute"
@@ -63,9 +61,14 @@ terminal_panel.style.position = "absolute"
 var compiled = false
 var makefile = false
 var file_name = ''
+// =/=/=/=/=/=/= PATHS =/=/=/=/=/=/=/=/=/
+// final path: resources/app/
+var path_data = 'config/data.json'
+var path_codes = 'codes/'
+var path_settings = 'config/settings.json'
 
 // =/=/=/=/=/=/= CONFIGURATION DATA =/=/=/=/=/=/=/=/=/
-var data = JSON.parse(fs.readFileSync('config/data.json'));
+var data = JSON.parse(fs.readFileSync(path_data));
 
 // =/=/=/=/=/=/= FUNCTIONS =/=/=/=/=/=/=/=/
 
@@ -151,9 +154,9 @@ button_compiler.onclick = function(event){
   if(select_language.value == "Choose a language") return
   if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link is-loading")
   file_name = 'Test'
-  if(!makefile) fs.writeFile('codes/makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
+  if(!makefile) fs.writeFile(path_codes +'makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
   makefile = true
-  fs.writeFile('codes/' + file_name + data['language'][select_language.value]['extension'], 
+  fs.writeFile(path_codes + file_name + data['language'][select_language.value]['extension'], 
   editor.session.getValue(), 'UTF-8', function(err){console.log(err)})
   exec(data['command']['compile'], (err, stdout, stderr) => {
     if(err){
@@ -200,10 +203,10 @@ button_runner.onclick = function(event) {
 
 function applySettings(){
   // if not settings does not exist apply default
-  if(!fs.existsSync('config/settings.json'))
-    fs.writeFile('config/settings.json', JSON.stringify({"fontSize-editor":"18","fontSize-terminal":"18","tabSize-editor":"4","highlighter":"text","theme":"monokai","mode":"light","terminal-position":"right"}), 'UTF-8', function(){applySettings();})
+  if(!fs.existsSync(path_settings))
+    fs.writeFile(path_settings, JSON.stringify({"fontSize-editor":"18","fontSize-terminal":"18","tabSize-editor":"4","highlighter":"text","theme":"monokai","mode":"light","terminal-position":"right"}), 'UTF-8', function(){applySettings();})
   else{
-    var my_settings = JSON.parse(fs.readFileSync('config/settings.json'));
+    var my_settings = JSON.parse(fs.readFileSync(path_settings));
     // "mode" : "dark"
     // "terminal-position" : "right"
     editor_panel.style.fontSize = my_settings['fontSize-editor'] + "px"
@@ -263,14 +266,14 @@ function applySettings(){
 button_save_settings.onclick = function(event) {
   // Save settings modal -> settings.json
   
-  var  my_settings = JSON.parse(fs.readFileSync('config/settings.json'));
+  var  my_settings = JSON.parse(fs.readFileSync(path_settings));
   my_settings['fontSize-editor'] = input_editorFontSize.value
   my_settings['fontSize-terminal'] = input_terminalFontSize.value
   my_settings['tabSize-editor'] = input_editorTabSize.value
   my_settings['highlighter'] = select_highlighter.value
   my_settings['theme'] = select_theme.value
   my_settings['terminal-position'] = select_terminal_position.value
-  fs.writeFile('config/settings.json', JSON.stringify(my_settings), 'UTF-8', function(){applySettings();})
+  fs.writeFile(path_settings, JSON.stringify(my_settings), 'UTF-8', function(){applySettings();})
   document.getElementById("modal").setAttribute("class", "modal")
 }
 
@@ -283,7 +286,7 @@ select_language.onchange()
 
 button_settings.onclick = function() {
   // Show settings settings.json -> modal
-  var my_settings = JSON.parse(fs.readFileSync('config/settings.json'));
+  var my_settings = JSON.parse(fs.readFileSync(path_settings));
   input_editorFontSize.value = my_settings['fontSize-editor']
   input_terminalFontSize.value = my_settings['fontSize-terminal']
   input_editorTabSize.value = my_settings['tabSize-editor']
