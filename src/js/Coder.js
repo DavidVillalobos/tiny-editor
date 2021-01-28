@@ -1,12 +1,12 @@
 /* 
   File:   coder.js
   Author: Luis David Villalobos Gonzalez
-  Date:   27/01/2021
+  Date:   28/01/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
 const fs = require('fs');
-const { exec } = require('child_process')
+const { exec } = require('child_process');
 
 // =/=/=/=/=/=/=/=/ EDITOR =/=/=/=/=/=/=/=/=/
 var editor = ace.edit("editor")
@@ -55,6 +55,9 @@ var radio_mode = document.getElementById("mode");
 
 // =/=/=/=/= EDITOR PANEL =/=/=/=/=/=/=/=/=/
 var editor_panel =  document.getElementById("editor")
+editor_panel.style.position = "absolute"
+var terminal_panel =  document.getElementById("terminal")
+terminal_panel.style.position = "absolute"
 
 // =/=/=/=/=/=/= VARIABLES =/=/=/=/=/=/=/=/=/
 var compiled = false
@@ -82,7 +85,11 @@ function loadSelects(){
   for(var i in arr){
     var opt = document.createElement("option")
     opt.value = arr[i]['highlighter']
-    opt.innerHTML =  langs[i] // Use the name language
+    if(langs[i] != "Choose a language")
+      opt.innerHTML =  langs[i] // Use the name language
+      else
+      opt.innerHTML =  "Simple Text"
+
     select_highlighter.appendChild(opt)
   }
   //  Load select theme
@@ -143,7 +150,7 @@ function generate_makefile(){
 button_compiler.onclick = function(event){
   if(select_language.value == "Choose a language") return
   if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link is-loading")
-  file_name = 'Prueba'
+  file_name = 'Test'
   if(!makefile) fs.writeFile('codes/makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
   makefile = true
   fs.writeFile('codes/' + file_name + data['language'][select_language.value]['extension'], 
@@ -192,26 +199,81 @@ button_runner.onclick = function(event) {
 }
 
 function applySettings(){
-  settings = JSON.parse(fs.readFileSync('config/settings.json'));
-  
-  // "mode" : "dark"
-  // "terminal-position" : "right"
-  document.getElementById('editor').style.fontSize = settings['fontSize-editor'] + "px"
-  document.getElementById('terminal').style.fontSize = settings['fontSize-terminal'] + "px"
-  editor.session.setTabSize(settings['tabSize-editor'])
-  editor.setTheme("ace/theme/" + settings['theme'])
-  editor.session.setMode("ace/mode/" + settings['highlighter'])
+  // if not settings does not exist apply default
+  if(!fs.existsSync('config/settings.json'))
+    fs.writeFile('config/settings.json', JSON.stringify({"fontSize-editor":"18","fontSize-terminal":"18","tabSize-editor":"4","highlighter":"text","theme":"monokai","mode":"light","terminal-position":"right"}), 'UTF-8', function(){applySettings();})
+  else{
+    var my_settings = JSON.parse(fs.readFileSync('config/settings.json'));
+    // "mode" : "dark"
+    // "terminal-position" : "right"
+    editor_panel.style.fontSize = my_settings['fontSize-editor'] + "px"
+    terminal_panel.style.fontSize = my_settings['fontSize-terminal'] + "px"
+    editor.session.setTabSize(my_settings['tabSize-editor'])
+    editor.setTheme("ace/theme/" + my_settings['theme'])
+    editor.session.setMode("ace/mode/" + my_settings['highlighter'])
+    if(my_settings['terminal-position'] == 'right'){
+      terminal_panel.style.top = "52px"
+      terminal_panel.style.right = "0%"
+      terminal_panel.style.bottom = "0%"
+      terminal_panel.style.left = "60%"
+
+      editor_panel.style.top = "52px"
+      editor_panel.style.right = "40%"
+      editor_panel.style.bottom = "0%"
+      editor_panel.style.left = "0%"
+      
+    } else if(my_settings['terminal-position'] == 'left'){
+      terminal_panel.style.top = "52px"
+      terminal_panel.style.right = "60%"
+      terminal_panel.style.bottom = "0%"
+      terminal_panel.style.left = "0%"
+
+      editor_panel.style.top = "52px"
+      editor_panel.style.right = "0%"
+      editor_panel.style.bottom = "0%"
+      editor_panel.style.left = "40%"
+    } else if(my_settings['terminal-position'] == 'up'){
+      terminal_panel.style.top = "52px"
+      terminal_panel.style.right = "0%"
+      terminal_panel.style.bottom = "60%"
+      terminal_panel.style.left = "0%"
+
+      editor_panel.style.top = "40%"
+      editor_panel.style.right = "0%"
+      editor_panel.style.bottom = "0%"
+      editor_panel.style.left = "0%"
+    } else if(my_settings['terminal-position'] == 'down'){
+      terminal_panel.style.top = "60%"
+      terminal_panel.style.right = "0%"
+      terminal_panel.style.bottom = "0%"
+      terminal_panel.style.left = "0%"
+
+      editor_panel.style.top = "52px"
+      editor_panel.style.right = "0%"
+      editor_panel.style.bottom = "40%"
+      editor_panel.style.left = "0%"
+    } 
+  }
 }
+
 
 
 
 // Apply settings
 button_save_settings.onclick = function(event) {
   // Save settings modal -> settings.json
+  
+  var  my_settings = JSON.parse(fs.readFileSync('config/settings.json'));
+  my_settings['fontSize-editor'] = input_editorFontSize.value
+  my_settings['fontSize-terminal'] = input_terminalFontSize.value
+  my_settings['tabSize-editor'] = input_editorTabSize.value
+  my_settings['highlighter'] = select_highlighter.value
+  my_settings['theme'] = select_theme.value
+  my_settings['terminal-position'] = select_terminal_position.value
+  fs.writeFile('config/settings.json', JSON.stringify(my_settings), 'UTF-8', function(){applySettings();})
   document.getElementById("modal").setAttribute("class", "modal")
-  applySettings()
-
 }
+
 
 // Load current settings
 applySettings()
@@ -221,7 +283,14 @@ select_language.onchange()
 
 button_settings.onclick = function() {
   // Show settings settings.json -> modal
-  settings = JSON.parse(fs.readFileSync('config/settings.json'));
+  var my_settings = JSON.parse(fs.readFileSync('config/settings.json'));
+  input_editorFontSize.value = my_settings['fontSize-editor']
+  input_terminalFontSize.value = my_settings['fontSize-terminal']
+  input_editorTabSize.value = my_settings['tabSize-editor']
+  select_highlighter.value = my_settings['highlighter']
+  select_theme.value = my_settings['theme']
+  select_terminal_position.value = my_settings['terminal-position']  
+  // "mode" : "dark",
   document.getElementById("modal").setAttribute("class", "modal is-active")
   
 }
