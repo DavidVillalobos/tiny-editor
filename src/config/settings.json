@@ -1,9 +1,0 @@
-{
-    "fontSize-editor" : 20,
-    "fontSize-terminal" : 20,
-    "tabSize-editor" : 4,
-    "highlighter" : "text",
-    "theme" : "monokai",
-    "mode" : "dark",
-    "terminal-position" : "right"
-}

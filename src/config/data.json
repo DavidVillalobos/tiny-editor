@@ -36,7 +36,7 @@
         "Java" : {
             "extension" : ".java",
             "highlighter" : "java",
-            "example" : "import java.util.Scanner;\nimport java.io.*;\npublic class Prueba{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println(\"Thank you very much for using Tiny Editor\");\n\t\tSystem.out.println(\"Press Any Key To Continue...\");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n"
+            "example" : "import java.util.Scanner;\nimport java.io.*;\npublic class Test{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println(\"Thank you very much for using Tiny Editor\");\n\t\tSystem.out.println(\"Press Any Key To Continue...\");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n"
         },
 
         "Python" : {
