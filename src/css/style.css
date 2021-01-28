@@ -1,27 +1,11 @@
 /* 
 File: style.css
 Author: Luis David Villalobos Gonzalez
-Date: 23/01/2021
+Date: 27/01/2021
 */
 
 body{
     min-width: 70px;
-}
-
-#editor { 
-    position: absolute;
-    top: 52px;
-    right: 40%;
-    bottom: 0%;
-    left: 0%;
-}
-
-#terminal{ 
-    position: absolute;
-    top: 52px;
-    right: 0%;
-    bottom: 0%;
-    left: 60%;
 }
 
 html{
