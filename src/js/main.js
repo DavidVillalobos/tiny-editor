@@ -5,39 +5,41 @@ Date: 28/01/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 const { exec } = require('child_process')
+// Menu.setApplicationMenu(null);
 
-
-function createWindow () {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    minHeight: 500,
-    minWidth: 720,
+function createWindows () {
+  const mainwin = new BrowserWindow({
+    show: false,
+    height: 350,
+    width: 550,
+    minHeight: 350,
+    minWidth: 550,
+    frame: false,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true, 
+      enableRemoteModule: true
     }
   })
-  win.loadFile('index.html')
-  win.maximize();
-  //win.webContents.openDevTools()
-  // CD resources/app &&
-  exec('MD codes', (err, stdout, stderr) => {});
+  //mainwin.removeMenu()
+  mainwin.loadFile('index.html')
+  //mainwin.maximize();
+  mainwin.once('ready-to-show', () => {
+    mainwin.show()
+  })
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(createWindows)
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }  
-  // CD resources/app && 
-  exec('RD /S/Q codes', (err, stdout, stderr) => {});
+  app.quit()
 })
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
+    createWindows()
   }
 })
+
+

@@ -1,12 +1,16 @@
 /* 
   File:   coder.js
   Author: Luis David Villalobos Gonzalez
-  Date:   28/01/2021
+  Date: 01/02/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
+// File Module
 const fs = require('fs');
+// Exec Module
 const { exec } = require('child_process');
+// Dialog Module
+const {dialog} = require('electron').remote;
 
 // =/=/=/=/=/=/=/=/ EDITOR =/=/=/=/=/=/=/=/=/
 var editor = ace.edit("editor")
@@ -146,7 +150,7 @@ function generate_makefile(){
       "all: $(CLASSES:.java=.class)\n" + "run: \n" + "\tcls && title Tiny Editor/Run/$(MAINCLASS) && java -cp . $(MAINCLASS)\n" +
       "clean:\n" + "\tdel $(CLASSES:.java=.class)\n"
   else if (select_language.value == "Python")
-      return "all:\n" + "run:\n" + "\tcls && title Tiny Editor/Run/" + file_name + " && python " + file_name + ".py\n" + "clean:\n"
+      return "all:\n" + "run:\n" + "\tcls && title Tiny Editor/Run/" + file_name + " && python -i " + file_name + ".py\n" + "clean:\n"
 }
 
 // Compile code (Save file, create makefile and compile file)
