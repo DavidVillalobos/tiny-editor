@@ -25,7 +25,8 @@ This is a simple first simple version, now i'am working in:
 
  ▶️ [Node](https://nodejs.org/es/) Need install npm too   
  ▶️ [Mingw](https://osdn.net/projects/mingw/releases/) Need install mingw32-make.exe from all packages.  
- ▶️ [Electron](https://nodejs.org/es/) Installing in the next step    
+ ▶️ [Electron](https://nodejs.org/es/) Installed in the dependencies  
+ ▶️ [Bulma](https://bulma.io/) Installed in the dependencies  
  
 ### Optional  
 
@@ -60,22 +61,21 @@ If you have git installed, you can clone it like
 ~~~cmd
 git clone https://github.com/DavidVillalobos/Tiny_Editor
 ~~~  
-Open terminal in tinyEditor project folder  
-
-### Install Electron
+  
+### Install Depencendies
 
 ~~~cmd
-cd src
-npm install electron
+cd Tiny_Editor/src
+npm install
 ~~~
 
 ### Usage of last version
 
-Once electron is installed, go back to the root folder of the project and run the file init.bat to start TinyEditor  
+Once dependencies is installed, run the 
+next command to start TinyEditor  
 
 ~~~cmd
-cd ..
-init.bat
+npm start
 ~~~
 
 Choose a language between C++, Java and Python.  
@@ -95,7 +95,7 @@ Press Build to compile code, and run to execute!
 ### Contributing
 
 Pull requests are welcome.   
-For major changes, please open an issue first to discuss what you would like to change.
+For major changes, please open an issue first to discuss what you would like to change.  
 You can contact me at 📫 : villalobosgonzalezluisdavid@gmail.com  
 
 ## License
