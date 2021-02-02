@@ -24,7 +24,7 @@ This is a simple first simple version, now i'am working in:
 ### Pre-requirements 📋
 
  ▶️ [Node](https://nodejs.org/es/) Need install npm too   
- ▶️ [Mingw](https://osdn.net/projects/mingw/releases/) Need install mingw32-make.exe from all packages.  
+ ▶️ [Mingw](https://osdn.net/projects/mingw/releases/) Need install mingw32-make.exe from all packages. You can use [this](https://github.com/DavidVillalobos/Tiny_Editor/blob/master/doc/Install_MinGW.md) doc.  
  ▶️ [Electron](https://nodejs.org/es/) Installed in the dependencies  
  ▶️ [Bulma](https://bulma.io/) Installed in the dependencies  
  
