@@ -1,8 +1,9 @@
 # Tiny editor ✏️
 Lightweight **simple editor** for little projects and tasks.
 The purpose of this project is create a desktop application that works as a simple text editor, with the easy of running code in java, python, c++, all this without the need to save the files of program. It also gives the possibility of having an integrated console to show errors but execute code in external console.
-
 ---
+
+![Code](demo/WindowCode.png)   
 
 ### Built with 🛠️
 This project was built with:
@@ -10,7 +11,7 @@ This project was built with:
 * [Electron](https://www.electronjs.org/)
 * [Bulma](https://bulma.io/)
 * [Ace editor](https://ace.c9.io/)
-
+  
 ---
 
 ### 📃 Notes
