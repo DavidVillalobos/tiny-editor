@@ -31,7 +31,6 @@ button_simple_file.onclick = function() {
   codewin.loadFile('pages/code.html')
   //codewin.webContents.openDevTools()
   codewin.on('closed', function(){
-    mainwin.show()
     mainwin.close()
      // CD resources/app && 
     exec('rd /s/q codes', (err, stdout, stderr) => {});

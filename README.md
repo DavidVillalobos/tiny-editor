@@ -15,7 +15,7 @@ This project was built with:
 
 ### 📃 Notes
 
-This is a simple first simple version, now i'am working in:
+This is a simple first version, now i'am working in:
 * Create tutorials to install and configure, java, python and c++
 * Allow to configurate enviroment of the TinyEditor
 * Allow multiple files for edit.
