@@ -101,4 +101,4 @@ You can contact me at 📫 : villalobosgonzalezluisdavid@gmail.com
 
 ## License
 
-![License](https://img.shields.io/bower/l/bootstrap)
+![License](https://img.shields.io/apm/l/vim-mode)
