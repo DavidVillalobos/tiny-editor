@@ -1,34 +1,22 @@
 /* 
   File:   coder.js
   Author: Luis David Villalobos Gonzalez
-  Date: 01/02/2021
+  Date: 03/02/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
-// File Module
-const fs = require('fs');
-// Exec Module
-const { exec } = require('child_process');
-// Dialog Module
-const {dialog} = require('electron').remote;
+
+const fs = require('fs');// File Module
+
+const { exec } = require('child_process');// Exec Module
+
+const {dialog} = require('electron').remote;// Dialog Module
 
 // =/=/=/=/=/=/=/=/ EDITOR =/=/=/=/=/=/=/=/=/
 var editor = ace.edit("editor")
-editor.setReadOnly(false);
-editor.setHighlightActiveLine(true);
-editor.renderer.setShowGutter(true);
-editor.setAutoScrollEditorIntoView(false);
-editor.setShowPrintMargin(true);
 
 // =/=/=/=/=/=/=/ TERMINAL =/=/=/=/=/=/=/=/=/
 var terminal = ace.edit("terminal");
-terminal.setTheme("ace/theme/terminal");
-terminal.session.setMode("ace/mode/c_cpp");
-terminal.setReadOnly(true);
-terminal.setHighlightActiveLine(false);
-terminal.renderer.setShowGutter(false);
-terminal.setAutoScrollEditorIntoView(true);
-terminal.setShowPrintMargin(false);
 
 // =/=/=/=/=/=/= BUTTONS =/=/=/=/=/=/=/=/=/=/
 var button_compiler = document.getElementById("button-compiler");
@@ -36,6 +24,9 @@ var button_runner = document.getElementById("button-runner");
 var button_settings = document.getElementById("button-settings");
 var button_save_settings = document.getElementById("button-save-settings");
 var button_close_settings = document.getElementById("button-close-settings");
+
+// =/=/=/=/=/=/= LABELS =/=/=/=/=/=/=/=/=/=/
+var label_current_language = document.getElementById("current-language");
 
 // =/=/=/=/=/=/= INPUTS =/=/=/=/=/=/=/=/=/=/
 
@@ -52,8 +43,9 @@ var select_theme = document.getElementById("theme");
 var select_terminal_position = document.getElementById("terminalPosition");
 var select_language = document.getElementById("languages")
 
-// =/=/=/=/=/=/= MODE =/=/=/=/=/=/=/=/
-var radio_mode = document.getElementById("mode");
+// =/=/=/=/=/=/= CHECKBOX =/=/=/=/=/=/=/=/
+var checkbox_dark_mode = document.getElementById("dark-mode");
+var checkbox_integrated_console = document.getElementById("integrated-console");
 
 // =/=/=/=/= EDITOR PANEL =/=/=/=/=/=/=/=/=/
 var editor_panel =  document.getElementById("editor")
@@ -76,7 +68,25 @@ var data = JSON.parse(fs.readFileSync(path_data));
 
 // =/=/=/=/=/=/= FUNCTIONS =/=/=/=/=/=/=/=/
 
-function loadSelects(){
+function init_tiny_editor(){
+  // Load options
+  editor.setOptions({
+    readOnly : false,
+    autoScrollEditorIntoView : false,
+    highlightActiveLine : true,
+    showGutter : true,
+    showPrintMargin : true
+  });
+  terminal.setTheme("ace/theme/terminal");
+  terminal.session.setMode("ace/mode/javascript");
+  terminal.setOptions({
+    readOnly : true,
+    autoScrollEditorIntoView : true,
+    highlightActiveLine : false,
+    showGutter : false,
+    showPrintMargin : false
+  });
+
   //  Load select languages
   var langs = []
   for(var lang in data['language']){
@@ -115,24 +125,11 @@ function loadSelects(){
   }
 }
 
-// Load selects
-loadSelects()
+init_tiny_editor()
 
 // Onchange text in editor
 editor_panel.onchange = function(event){
   compiled = false
-}
-
-// Onchange programming language
-select_language.onchange = function(event){
-  if(select_language.value != "Choose a language") 
-    exec(data['command']['clean'], (err, stdout, stderr) => {});
-  terminal.session.setValue('')
-  compiled = makefile = false
-  editor.session.setMode("ace/mode/" + data['language'][select_language.value]['highlighter'])
-  editor.session.setValue(data['language'][select_language.value]['example'])
-  if(select_language.value == 'Python')  button_compiler.setAttribute("class", "button is-dark is-static")
-  else  button_compiler.setAttribute("class", "button is-link")
 }
 
 function generate_makefile(){
@@ -205,19 +202,38 @@ button_runner.onclick = function(event) {
   }
 }
 
+
+// Apply settings
 function applySettings(){
   // if not settings does not exist apply default
   if(!fs.existsSync(path_settings))
-    fs.writeFile(path_settings, JSON.stringify({"fontSize-editor":"18","fontSize-terminal":"18","tabSize-editor":"4","highlighter":"text","theme":"monokai","mode":"light","terminal-position":"right"}), 'UTF-8', function(){applySettings();})
-  else{
+    fs.writeFile(path_settings, JSON.stringify({"current-language":"Choose a language","fontSize-editor":18,"fontSize-terminal":18,"tabSize-editor":4,"highlighter":"text","theme":"monokai","dark-mode":true, "integrated-console":true,"terminal-position":"right"}), 'UTF-8', function(){applySettings();})
+  else{ 
     var my_settings = JSON.parse(fs.readFileSync(path_settings));
-    // "mode" : "dark"
-    // "terminal-position" : "right"
+    // "dark-mode" : "true"
+    // "integrated-console" : "true"
     editor_panel.style.fontSize = my_settings['fontSize-editor'] + "px"
     terminal_panel.style.fontSize = my_settings['fontSize-terminal'] + "px"
     editor.session.setTabSize(my_settings['tabSize-editor'])
     editor.setTheme("ace/theme/" + my_settings['theme'])
     editor.session.setMode("ace/mode/" + my_settings['highlighter'])
+    // Change language 
+    exec(data['command']['clean'], (err, stdout, stderr) => {});
+    terminal.session.setValue('')
+    compiled = makefile = false
+    editor.session.setValue(data['language'][my_settings['current-language']]['example'])
+    select_language.value = my_settings['current-language']
+    if(select_language.value == 'Python' || select_language.value == 'Choose a language')  
+      button_compiler.setAttribute("class", "button is-dark is-static")
+    else  
+      button_compiler.setAttribute("class", "button is-link")
+    if(select_language.value == 'Choose a language'){
+      button_runner.setAttribute("class", "button is-success is-static")
+      label_current_language.textContent = '' 
+    }else{  
+      button_runner.setAttribute("class", "button is-success")
+      label_current_language.textContent = my_settings['current-language']
+    }
     if(my_settings['terminal-position'] == 'right'){
       terminal_panel.style.top = "52px"
       terminal_panel.style.right = "0%"
@@ -263,13 +279,8 @@ function applySettings(){
   }
 }
 
-
-
-
-// Apply settings
+// Save settings modal -> settings.json  
 button_save_settings.onclick = function(event) {
-  // Save settings modal -> settings.json
-  
   var  my_settings = JSON.parse(fs.readFileSync(path_settings));
   my_settings['fontSize-editor'] = input_editorFontSize.value
   my_settings['fontSize-terminal'] = input_terminalFontSize.value
@@ -277,19 +288,16 @@ button_save_settings.onclick = function(event) {
   my_settings['highlighter'] = select_highlighter.value
   my_settings['theme'] = select_theme.value
   my_settings['terminal-position'] = select_terminal_position.value
+  my_settings['current-language'] = select_language.value
+  my_settings['dark-mode'] = checkbox_dark_mode.checked
+  my_settings['integrated-console'] = checkbox_integrated_console.checked
   fs.writeFile(path_settings, JSON.stringify(my_settings), 'UTF-8', function(){applySettings();})
   document.getElementById("modal").setAttribute("class", "modal")
 }
 
 
-// Load current settings
-applySettings()
-
-// Load current settings for language
-select_language.onchange()
-
+// Show settings settings.json -> modal
 button_settings.onclick = function() {
-  // Show settings settings.json -> modal
   var my_settings = JSON.parse(fs.readFileSync(path_settings));
   input_editorFontSize.value = my_settings['fontSize-editor']
   input_terminalFontSize.value = my_settings['fontSize-terminal']
@@ -297,7 +305,9 @@ button_settings.onclick = function() {
   select_highlighter.value = my_settings['highlighter']
   select_theme.value = my_settings['theme']
   select_terminal_position.value = my_settings['terminal-position']  
-  // "mode" : "dark",
+  select_language.value = my_settings['current-language']  
+  checkbox_dark_mode.checked = my_settings['dark-mode']
+  checkbox_integrated_console.checked = my_settings['integrated-console']
   document.getElementById("modal").setAttribute("class", "modal is-active")
   
 }
@@ -305,3 +315,7 @@ button_settings.onclick = function() {
 button_close_settings.onclick = function() {
 	document.getElementById("modal").setAttribute("class", "modal")
 }
+
+// Load current settings
+applySettings()
+
