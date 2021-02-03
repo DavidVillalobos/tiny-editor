@@ -1,7 +1,7 @@
 /* 
   File: admin.js
   Author: Luis David Villalobos Gonzalez
-  Date: 01/02/2021
+  Date: 03/02/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
@@ -37,8 +37,8 @@ button_simple_file.onclick = function() {
   });
   // CD resources/app &&
   codewin.once('ready-to-show', () => {
-    codewin.show()
     mainwin.hide()
+    codewin.show()
   })
   exec('md codes', (err, stdout, stderr) => {
     console.log('err: ' + err);
