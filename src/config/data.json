@@ -16,9 +16,9 @@
     "terminal-position" : [ "left", "right", "up", "down"],
 
     "command" : {
-        "clean" : "cd codes && mingw32-make clean && del makefile",
-        "compile" : "cd codes &&  mingw32-make" ,
-        "run" : "cd codes && start mingw32-make run"
+        "clean" : "mingw32-make clean && del makefile",
+        "compile" : "mingw32-make" ,
+        "run" : "start mingw32-make run"
     },
 
     "language" : {
