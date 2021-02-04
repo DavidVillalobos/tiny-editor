@@ -1,11 +1,11 @@
-# ![Title](demo/Title.png)   
+<img src="demo/Title.png" width="450" height="90">   
 
 **Lightweight simple editor** for little task and projects.
-The purpose of this project is create a desktop application that works as a simple text editor, with the easy of running code in java, python, c++, all this without the need to save the files of program. It also gives the possibility of having an integrated console to show errors but execute code in external console.
+The purpose of this project is create a desktop application that works as a simple text editor, with the easy of running code in java, python, c++. It also gives the possibility of having an integrated console to show errors but execute code in external console.
 
 ---
 
-![Code](demo/WindowCode.png)   
+<img src="demo/WindowCode.png" width="450" height="350">   
 
 ### Built with 🛠️
 This project was built with:
