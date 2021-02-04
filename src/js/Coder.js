@@ -137,7 +137,7 @@ function generate_makefile(){
       return "OBJS	= " + file_name + ".o\n" +
       "SOURCE	= " + file_name + ".cpp\n" + "HEADER	=\n"  + "OUT	= run.exe\n"  +
       "CC	 = g++\n" + "FLAGS	 = -g -c -Wall\n" + "LFLAGS	 =\n" + "all: $(OBJS)\n"  +
-      "\t$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)\n" + "Prueba.o: Prueba.cpp\n"  +
+      "\t$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)\n" + file_name + ".o: " + file_name + ".cpp\n"  +
       "\t$(CC) $(FLAGS) " + file_name + ".cpp\n" + "run:\n" +
       "\tcls && title Tiny Editor/Run/" + file_name + " && $(OUT)\n" + "clean:\n" + "\tdel $(OBJS) $(OUT)\n"
   else if (select_language.value == "Java") 
