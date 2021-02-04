@@ -1,7 +1,7 @@
 /* 
-  File: admin.js
+  File: SimpleCode.js
   Author: Luis David Villalobos Gonzalez
-  Date: 03/02/2021
+  Date: 04/02/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
@@ -32,18 +32,10 @@ button_simple_file.onclick = function() {
   //codewin.webContents.openDevTools()
   codewin.on('closed', function(){
     mainwin.close()
-     // CD resources/app && 
-    exec('rd /s/q codes', (err, stdout, stderr) => {});
   });
   // CD resources/app &&
   codewin.once('ready-to-show', () => {
     mainwin.hide()
     codewin.show()
-  })
-  exec('md codes', (err, stdout, stderr) => {
-    console.log('err: ' + err);
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
-  });
-  
+  })  
 };

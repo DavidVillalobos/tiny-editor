@@ -1,15 +1,13 @@
 /* 
   File:   coder.js
   Author: Luis David Villalobos Gonzalez
-  Date: 03/02/2021
+  Date: 04/02/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
 
 const fs = require('fs');// File Module
-
 const { exec } = require('child_process');// Exec Module
-
 const {dialog} = require('electron').remote;// Dialog Module
 
 // =/=/=/=/=/=/=/=/ EDITOR =/=/=/=/=/=/=/=/=/
@@ -19,6 +17,7 @@ var editor = ace.edit("editor")
 var terminal = ace.edit("terminal");
 
 // =/=/=/=/=/=/= BUTTONS =/=/=/=/=/=/=/=/=/=/
+var button_save = document.getElementById("button-save");
 var button_compiler = document.getElementById("button-compiler");
 var button_runner = document.getElementById("button-runner");
 var button_settings = document.getElementById("button-settings");
@@ -55,12 +54,13 @@ terminal_panel.style.position = "absolute"
 
 // =/=/=/=/=/=/= VARIABLES =/=/=/=/=/=/=/=/=/
 var compiled = false
+var on_change_language = true
 var makefile = false
 var file_name = ''
 // =/=/=/=/=/=/= PATHS =/=/=/=/=/=/=/=/=/
 // final path: resources/app/
+var path_file = ''
 var path_data = 'config/data.json'
-var path_codes = 'codes/'
 var path_settings = 'config/settings.json'
 
 // =/=/=/=/=/=/= CONFIGURATION DATA =/=/=/=/=/=/=/=/=/
@@ -150,16 +150,35 @@ function generate_makefile(){
       return "all:\n" + "run:\n" + "\tcls && title Tiny Editor/Run/" + file_name + " && python -i " + file_name + ".py\n" + "clean:\n"
 }
 
-// Compile code (Save file, create makefile and compile file)
+// Save file
+button_save.onclick = function(event){
+  var extension = data['language'][select_language.value]['extension']
+  if(path_file == ''){
+    dialog.showSaveDialog({ 
+      title: 'Select the File Path to save', 
+      defaultPath: 'C:\\Users\\' +  process.env.username + '\\Desktop\\Test', 
+      filters: [
+        { name: label_current_language.textContent, extensions: [extension.slice(1, 5)] }
+       ]
+    }).then(result => { 
+      var aux_path = result.filePath.split('\\')
+      file_name = aux_path[aux_path.length-1].split('.')[0]
+      path_file = result.filePath.split(file_name)[0]
+      fs.writeFile(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
+    });
+  }else{
+    fs.writeFile(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
+  }
+} 
+
+// Compile code (create makefile and compile file)
 button_compiler.onclick = function(event){
   if(select_language.value == "Choose a language") return
   if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link is-loading")
-  file_name = 'Test'
-  if(!makefile) fs.writeFile(path_codes +'makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
+  if(!makefile) fs.writeFile(path_file +'makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
   makefile = true
-  fs.writeFile(path_codes + file_name + data['language'][select_language.value]['extension'], 
-  editor.session.getValue(), 'UTF-8', function(err){console.log(err)})
-  exec(data['command']['compile'], (err, stdout, stderr) => {
+  button_save.click() // Save file :D
+  exec("cd " + path_file + " && " + data['command']['compile'], (err, stdout, stderr) => {
     if(err){
       console.log(stderr)
       console.log(`stderr: ${stderr}`) // this go to output and show the error
@@ -185,7 +204,7 @@ button_runner.onclick = function(event) {
   } 
   if(compiled){
     terminal.session.setValue('')
-    exec(data['command']['run'], (err, stdout, stderr) => {
+    exec("cd " + path_file + " && " + data['command']['run'], (err, stdout, stderr) => {
       if(err){
         console.error(`err: ${err}`)
         console.log(`stdout: ${stdout}`)
@@ -205,24 +224,32 @@ button_runner.onclick = function(event) {
 
 // Apply settings
 function applySettings(){
-  // if not settings does not exist apply default
+  // if settings does not exist, apply default
   if(!fs.existsSync(path_settings))
     fs.writeFile(path_settings, JSON.stringify({"current-language":"Choose a language","fontSize-editor":18,"fontSize-terminal":18,"tabSize-editor":4,"highlighter":"text","theme":"monokai","dark-mode":true, "integrated-console":true,"terminal-position":"right"}), 'UTF-8', function(){applySettings();})
   else{ 
     var my_settings = JSON.parse(fs.readFileSync(path_settings));
     // "dark-mode" : "true"
     // "integrated-console" : "true"
+    // Change Editor fontSize
     editor_panel.style.fontSize = my_settings['fontSize-editor'] + "px"
+    // Change Terminal fontSize
     terminal_panel.style.fontSize = my_settings['fontSize-terminal'] + "px"
+    // Change Editor TabSize
     editor.session.setTabSize(my_settings['tabSize-editor'])
+    // Change Theme
     editor.setTheme("ace/theme/" + my_settings['theme'])
+    // Change Highlighter
     editor.session.setMode("ace/mode/" + my_settings['highlighter'])
-    // Change language 
-    exec(data['command']['clean'], (err, stdout, stderr) => {});
-    terminal.session.setValue('')
-    compiled = makefile = false
-    editor.session.setValue(data['language'][my_settings['current-language']]['example'])
-    select_language.value = my_settings['current-language']
+    // Change language? 
+    if(on_change_language){
+      exec("cd " + path_file + " && " + data['command']['clean'], (err, stdout, stderr) => {});
+      terminal.session.setValue('') // Clean terminal
+      compiled = makefile = false
+      editor.session.setValue(data['language'][my_settings['current-language']]['example'])
+      select_language.value = my_settings['current-language']
+    }
+    
     if(select_language.value == 'Python' || select_language.value == 'Choose a language')  
       button_compiler.setAttribute("class", "button is-dark is-static")
     else  
@@ -288,6 +315,7 @@ button_save_settings.onclick = function(event) {
   my_settings['highlighter'] = select_highlighter.value
   my_settings['theme'] = select_theme.value
   my_settings['terminal-position'] = select_terminal_position.value
+  on_change_language = my_settings['current-language'] != select_language.value  
   my_settings['current-language'] = select_language.value
   my_settings['dark-mode'] = checkbox_dark_mode.checked
   my_settings['integrated-console'] = checkbox_integrated_console.checked
