@@ -1,7 +1,7 @@
 {
-  "name": "TinyEditor",
-  "version": "1.0.0",
-  "description": "Lightweight simple editor for little projects and tasks.",
+  "name": "tiny-editor-npm",
+  "version": "0.1.0",
+  "description": "Lightweight simple editor for little tasks and projects.",
   "main": "js/main.js",
   "scripts": {
     "start": "electron .",
@@ -11,7 +11,9 @@
     "run-css": "npm run css-watch"
   },
   "keywords": [
-    "text editor"
+    "text editor",
+    "electron",
+    "desktop-app"
   ],
   "author": "David Villalobos",
   "license": "ISC",
