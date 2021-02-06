@@ -48,9 +48,8 @@ var checkbox_integrated_console = document.getElementById("integrated-console");
 
 // =/=/=/=/= EDITOR PANEL =/=/=/=/=/=/=/=/=/
 var editor_panel =  document.getElementById("editor")
-editor_panel.style.position = "absolute"
 var terminal_panel =  document.getElementById("terminal")
-terminal_panel.style.position = "absolute"
+
 
 // =/=/=/=/=/=/= VARIABLES =/=/=/=/=/=/=/=/=/
 var compiled = false
@@ -70,6 +69,8 @@ var data = JSON.parse(fs.readFileSync(path_data));
 
 function init_tiny_editor(){
   // Load options
+  editor_panel.style.position = "absolute"
+  terminal_panel.style.position = "absolute"
   editor.setOptions({
     readOnly : false,
     autoScrollEditorIntoView : false,
@@ -150,60 +151,79 @@ function generate_makefile(){
       return "all:\n" + "run:\n" + "\tcls && title Tiny Editor/Run/" + file_name + " && python -i " + file_name + ".py\n" + "clean:\n"
 }
 
-// Save file
-button_save.onclick = function(event){
+function save_file(){
   var extension = data['language'][select_language.value]['extension']
   if(path_file == ''){
-    dialog.showSaveDialog({ 
+    var result = dialog.showSaveDialogSync({ 
       title: 'Select the File Path to save', 
       defaultPath: 'C:\\Users\\' +  process.env.username + '\\Desktop\\Test', 
       filters: [
         { name: label_current_language.textContent, extensions: [extension.slice(1, 5)] }
        ]
-    }).then(result => { 
-      var aux_path = result.filePath.split('\\')
-      file_name = aux_path[aux_path.length-1].split('.')[0]
-      path_file = result.filePath.split(file_name)[0]
-      fs.writeFile(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
-    });
+    })
+    if(result === undefined){
+      file_name = path_file = ''
+      return false
+    }
+    var aux_path = result.split('\\')
+    file_name = aux_path[aux_path.length-1].split('.')[0]
+    path_file = result.split(file_name)[0]
+    fs.writeFile(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
   }else{
     fs.writeFile(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
   }
+  return true
+}
+
+// Save file
+button_save.onclick = function(event){
+  file_name = path_file = ''
+  compiled = makefile = false
+  save_file()
 } 
 
 // Compile code (create makefile and compile file)
 button_compiler.onclick = function(event){
+  if(compiled) return
   if(select_language.value == "Choose a language") return
   if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link is-loading")
-  if(!makefile) fs.writeFile(path_file +'makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
-  makefile = true
-  button_save.click() // Save file :D
-  exec("cd " + path_file + " && " + data['command']['compile'], (err, stdout, stderr) => {
-    if(err){
-      console.log(stderr)
-      console.log(`stderr: ${stderr}`) // this go to output and show the error
-      terminal.session.setValue(stderr)
-      console.error(`err: ${err}`)
-      compiled = false
-    }else{
-      console.log(`stderr: ${stderr}`)
-      console.log(`stdout: ${stdout}`)
-      console.log(`stderr: ${stderr}`)
-      if(select_language.value != "Python") terminal.session.setValue('Compilation success')
-      compiled = true
-    }
-    if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link")
-  })
+  // No need save file if you want compile, except if is java, because
+  if(path_file == '' && select_language.value != 'Java'){ // file_name need be same class_name
+    file_name = 'Test'
+    path_file = 'codes\\'
+  }
+  // Save changes
+  if(save_file()){
+    // Compile code
+    if(!makefile) fs.writeFile(path_file +'makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
+    makefile = true
+    exec("cd " + path_file + " && " + data['command']['compile'], (err, stdout, stderr) => {
+      if(err){
+        console.log(stderr)
+        console.log(`stderr: ${stderr}`) // this go to output and show the error
+        terminal.session.setValue(stderr)
+        console.error(`err: ${err}`)
+        compiled = false
+      }else{
+        console.log(`stderr: ${stderr}`)
+        console.log(`stdout: ${stdout}`)
+        console.log(`stderr: ${stderr}`)
+        if(select_language.value != "Python") terminal.session.setValue('Compilation success')
+        compiled = true
+      }
+    })
+  }
+  if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link")
 }
 
 // Run code (Run makefile)
 button_runner.onclick = function(event) {
+  terminal.session.setValue('')
   if(select_language.value == "Python"){
     button_compiler.click()
     compiled = true
-  } 
+  }
   if(compiled){
-    terminal.session.setValue('')
     exec("cd " + path_file + " && " + data['command']['run'], (err, stdout, stderr) => {
       if(err){
         console.error(`err: ${err}`)
@@ -217,7 +237,7 @@ button_runner.onclick = function(event) {
       }
     });
   }else{
-    terminal.session.setValue('Need compile first!')
+    button_compiler.click()
   }
 }
 
@@ -248,6 +268,8 @@ function applySettings(){
       compiled = makefile = false
       editor.session.setValue(data['language'][my_settings['current-language']]['example'])
       select_language.value = my_settings['current-language']
+      file_name = ''
+      path_file = ''
     }
     
     if(select_language.value == 'Python' || select_language.value == 'Choose a language')  
