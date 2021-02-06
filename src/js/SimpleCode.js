@@ -32,10 +32,11 @@ button_simple_file.onclick = function() {
   //codewin.webContents.openDevTools()
   codewin.on('closed', function(){
     mainwin.close()
+    exec('rd /s/q codes', (err, stdout, stderr) => {});
   });
-  // CD resources/app &&
   codewin.once('ready-to-show', () => {
     mainwin.hide()
     codewin.show()
   })  
+  exec('md codes', (err, stdout, stderr) => {});
 };
