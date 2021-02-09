@@ -27,17 +27,9 @@ const fill = ' '
 // Server
 http.createServer( (request, response) => {
 	console.log(`New request URL : ${request.url}`.white) 
-	let html = fs.readFileSync('index.html')
-	if(html){
-		response.writeHead(200, { 'Content-Type': 'text/html', });
-		response.write(generateHTML())
-		console.log(`Request Success :D`.green)
-	}else{
-		response.writeHead(404, { 'Content-Type': 'text/html', });
-		response.write(`<h1 style="color: red;">File index not found<h1>`)
-		console.log(`File index not found`.red)
-		console.log(`Request Failed :c`.red)
-	}
+	response.writeHead(200, { 'Content-Type': 'text/html', });
+	response.write(generateHTML())
+	console.log(`Request Success :D`.green)
 	response.end();  
 }).listen(port, hostname, () => {
 	console.log(`The server was running in http://${hostname}:${port}/`.green);
