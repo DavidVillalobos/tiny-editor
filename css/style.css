@@ -1,0 +1,43 @@
+/*
+	File: style.css
+	Date: 2021/02/10
+	Author: David Villalobos
+*/
+
+li{ 
+    width: 0%; 
+}  
+.button, button:focus{ 
+    height: 5px; 
+    margin-bottom: -10px; 
+    font-size: 12px; 
+    background-color: transparent !important; 
+    color: white !important;
+}  
+.menu-label{ 
+    margin-bottom: 0px !important; 
+    margin-top: 0px !important; 
+    color: white !important;
+}  
+ul{ 
+    margin-top: -3px !important; 
+}  
+span{  
+    display: inline-block; 
+    margin-right: 5px; 
+}
+.panel{
+    width: 180px;
+}
+
+.panel-heading{
+    border-radius: 0%;
+}
+.panel-block{
+    background-color: rgb(79, 67, 67);
+}
+
+html{
+    overflow-y: hidden !important;
+    background-color: rgb(79, 67, 67);
+}
