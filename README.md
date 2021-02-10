@@ -43,20 +43,9 @@ variables in PATH** : javac, java, mingw32-make, g++ and python.
 
 ---
 
-
-### Installation pre-realease ✔️
-
-Download the first version [here](https://github.com/DavidVillalobos/Tiny_Editor/releases)
-
-### Usage pre-realease
-
-Start TinyEditor.exe from project folder  
-Choose a language between C++, Java and Python.  
-That's it, program!  
-Press Build to compile code, and run to execute!
+### There are two ways to install TinyEditor, with the latest version in development or the pre-realease
 
 ---
-
 ### Installation of last version 🔧
 
 Download code [here](https://github.com/DavidVillalobos/Tiny_Editor/archive/master.zip) and extract where you prefer  
@@ -88,8 +77,20 @@ Press Build to compile code, and run to execute!
 
 ---
 
-### Inspired by 💭
-* [vscode](https://code.visualstudio.com/)
+### Installation pre-realease ✔️
+
+Download the first version [here](https://github.com/DavidVillalobos/Tiny_Editor/releases)
+
+### Usage pre-realease
+
+Start TinyEditor.exe from project folder  
+Choose a language between C++, Java and Python.  
+That's it, program!  
+Press Build to compile code, and run to execute!
+
+---
+
+The project is inspired by [vscode](https://code.visualstudio.com/)
 
 ### Author 
 
@@ -102,5 +103,4 @@ For major changes, please open an issue first to discuss what you would like to 
 You can contact me at 📫 : villalobosgonzalezluisdavid@gmail.com  
 
 ## License
-
-![License](https://img.shields.io/apm/l/vim-mode)
+The project is licensed by  ![License](https://img.shields.io/apm/l/vim-mode)
