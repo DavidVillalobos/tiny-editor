@@ -2,9 +2,9 @@
   "name": "directory_tree_panel",
   "version": "0.1.0",
   "description": "Panel that shows the contents of the directory in the form of a tree",
-  "main": "index.js",
+  "main": "js/main.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/DavidVillalobos/directory_tree_panel#readme",
   "dependencies": {
     "colors": "^1.4.0",
-    "directory-tree": "^2.2.6"
+    "directory-tree": "^2.2.6",
+    "electron": "^11.2.3"
   }
 }
