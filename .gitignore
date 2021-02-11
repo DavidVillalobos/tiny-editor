@@ -6,4 +6,5 @@ src/node_modules
 *.java
 *.cpp
 *.py
+to_move/node_modules
 links
