@@ -58,11 +58,11 @@ function generateTreePanel(folder_path){
 	'		<li>' + printDirectoryTree(tree, [[0, true]]) + '</li>' +
 	'	</ul>'
 	}else{
-		directory_tree_panel.innerHTML += '<h1 style="color: red;">Path not found<h1>'
+		directory_tree_panel.innerHTML += '<h1 style="color: red;">Path not found -> ' + folder_path + '<h1>'
 	}
 }
 
-generateTreePanel('C:\\Users\\luisd\\repos\\Tiny_Editor\\src'); // <-- Choose a path
+generateTreePanel('C:\\Users\\luisd\\Desktop\\Test'); // <-- Choose a path
 
 function openFile(path_file){
 	other_panel.value = fs.readFileSync(path_file)
