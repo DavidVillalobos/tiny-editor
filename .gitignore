@@ -1,10 +1,5 @@
+.vscode
 src/node_modules
-.vscode/settings.json
-*.exe
-*.o
-*.class
-*.java
-*.cpp
-*.py
-to_move/node_modules
+src/codes
+src/config/settings.json
 links
