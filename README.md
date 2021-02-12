@@ -49,7 +49,7 @@ variables in PATH** : javac, java, mingw32-make, g++ and python.
 ### Installation of last version 🔧
 
 Download code [here](https://github.com/DavidVillalobos/Tiny_Editor/archive/master.zip) and extract where you prefer  
-If you have git installed, you can clone it like
+or clone like:  
 ~~~cmd
 git clone https://github.com/DavidVillalobos/Tiny_Editor
 ~~~  
