@@ -6,8 +6,7 @@
 
 const fs = require('fs');
 const dirTree = require('directory-tree');
-let directory_tree_panel = document.getElementById("directory-tree-panel");
-let other_panel = document.getElementById("other-panel");
+let explorer = document.getElementById("explorer");
 
 function getIcon(extension){
 	var result = '<span> <i class="'
@@ -51,19 +50,20 @@ function generateTreePanel(folder_path){
 	let ext = /.*/; // filtered tree
 	let tree = dirTree(folder_path, { extensions : ext } );
 	if(tree){
-		directory_tree_panel.innerHTML += '<div class="has-background-warning has-text-dark" style="margin-bottom: 8px">' +
+		explorer.innerHTML += '<div class="has-background-warning has-text-dark" style="margin-bottom: 8px">' +
 	'		' + folder_name +
 	'	</div>' +
 	'	<ul class="menu-list" id="directory-content">' +
 	'		<li>' + printDirectoryTree(tree, [[0, true]]) + '</li>' +
 	'	</ul>'
 	}else{
-		directory_tree_panel.innerHTML += '<h1 style="color: red;">Path not found -> ' + folder_path + '<h1>'
+		explorer.innerHTML += '<h1 style="color: red;">Path not found -> ' + folder_path + '<h1>'
 	}
 }
 
 generateTreePanel('C:\\Users\\luisd\\Desktop\\Test'); // <-- Choose a path
 
 function openFile(path_file){
-	other_panel.value = fs.readFileSync(path_file)
+	console.log(path_file)
+	//fs.readFileSync(path_file)
 }

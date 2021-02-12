@@ -17,6 +17,7 @@ var mainwin = remote.getCurrentWindow();
 button_simple_file.onclick = function() {
   const codewin = new BrowserWindow({
     show: false,
+    icon: 'img/feather.ico',
     width: 800,
     height: 600,
     minHeight: 500,

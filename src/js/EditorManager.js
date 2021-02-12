@@ -69,10 +69,8 @@ var data = JSON.parse(fs.readFileSync(path_data));
 // =/=/=/=/=/=/= FUNCTIONS =/=/=/=/=/=/=/=/
 
 function init_tiny_editor(){
-  // <link href="pages/Explorer.html" rel="import"/>
-  // Load options
+  //Load editor options
   editor_panel.style.position = "absolute"
-  terminal_panel.style.position = "absolute"
   editor.setOptions({
     readOnly : false,
     autoScrollEditorIntoView : false,
@@ -80,6 +78,9 @@ function init_tiny_editor(){
     showGutter : true,
     showPrintMargin : true
   });
+  
+  //Load terminal options
+  terminal_panel.style.position = "absolute"
   terminal.setTheme("ace/theme/terminal");
   terminal.session.setMode("ace/mode/javascript");
   terminal.setOptions({

@@ -12,6 +12,7 @@ const { exec } = require('child_process')
 function createWindows () {
   const mainwin = new BrowserWindow({
     show: false,
+    icon: 'img/feather.ico',
     height: 350,
     width: 550,
     minHeight: 350,

@@ -13,14 +13,13 @@
   "keywords": [
     "text editor",
     "electron",
+    "bulma",
     "desktop-app"
   ],
   "author": "David Villalobos",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
-    "bulma": "^0.7.5",
-    "electron": "^11.2.1",
-    "node-sass": "^5.0.0"
+    "electron": "^11.2.1"
   },
   "dependencies": {
     "custom-electron-titlebar": "^3.2.6",
