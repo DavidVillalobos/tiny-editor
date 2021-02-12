@@ -1,8 +1,8 @@
 {
   "name": "tiny-editor-npm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lightweight simple editor for little tasks and projects.",
-  "main": "js/main.js",
+  "main": "js/index.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,6 +23,7 @@
     "node-sass": "^5.0.0"
   },
   "dependencies": {
-    "custom-electron-titlebar": "^3.2.6"
+    "custom-electron-titlebar": "^3.2.6",
+    "tree-directory": "^0.1.0"
   }
 }
