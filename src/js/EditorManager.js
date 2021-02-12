@@ -1,7 +1,7 @@
 /* 
-  File:   coder.js
-  Author: Luis David Villalobos Gonzalez
-  Date: 04/02/2021
+    File:   EditorManager.js
+    Author: Luis David Villalobos Gonzalez
+    Date: 12/02/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
@@ -47,6 +47,7 @@ var checkbox_dark_mode = document.getElementById("dark-mode");
 var checkbox_integrated_console = document.getElementById("integrated-console");
 
 // =/=/=/=/= EDITOR PANEL =/=/=/=/=/=/=/=/=/
+var explorer_panel =  document.getElementById("explorer")
 var editor_panel =  document.getElementById("editor")
 var terminal_panel =  document.getElementById("terminal")
 
@@ -68,6 +69,7 @@ var data = JSON.parse(fs.readFileSync(path_data));
 // =/=/=/=/=/=/= FUNCTIONS =/=/=/=/=/=/=/=/
 
 function init_tiny_editor(){
+  // <link href="pages/Explorer.html" rel="import"/>
   // Load options
   editor_panel.style.position = "absolute"
   terminal_panel.style.position = "absolute"

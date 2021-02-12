@@ -1,7 +1,7 @@
 /* 
-  File: SimpleCode.js
-  Author: Luis David Villalobos Gonzalez
-  Date: 04/02/2021
+    File: Editor.js
+    Author: Luis David Villalobos Gonzalez
+    Date: 12/02/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
@@ -28,7 +28,7 @@ button_simple_file.onclick = function() {
   })
   // codewin.removeMenu()
   codewin.maximize();
-  codewin.loadFile('pages/code.html')
+  codewin.loadFile('pages/Editor.html')
   //codewin.webContents.openDevTools()
   codewin.on('closed', function(){
     mainwin.close()
