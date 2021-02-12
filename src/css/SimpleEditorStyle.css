@@ -1,0 +1,24 @@
+/*
+    File: SimpleEditorStyle.js
+    Author: Luis David Villalobos Gonzalez
+    Date: 12/02/2021
+*/
+@font-face {
+    font-family: Twiddlestix; src: url("../font/Twiddlestix/Twiddlestix.otf");
+}
+
+.title{
+    font-family: Twiddlestix;
+}
+
+
+html{
+    overflow-y: hidden !important;
+    background-color: rgb(37, 37, 37);
+}
+
+button{
+    width: 180px;
+    margin-left: 5px;
+    margin-right: 5px;
+}

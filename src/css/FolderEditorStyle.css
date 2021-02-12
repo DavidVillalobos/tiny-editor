@@ -1,0 +1,60 @@
+/*
+    File: FolderEditorStyle.js
+    Author: Luis David Villalobos Gonzalez
+    Date: 12/02/2021
+*/
+@font-face {
+    font-family: Twiddlestix; src: url("../font/Twiddlestix/Twiddlestix.otf");
+}
+
+.title{
+    font-family: Twiddlestix;
+}
+
+
+html{
+    overflow-y: hidden !important;
+    background-color: rgb(37, 37, 37);
+}
+
+button{
+    width: 180px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+button, .button, button:focus, button:hover, button:active{ 
+    height: 7px; 
+    font-size: 14px;  
+    background-color: transparent !important; 
+    border-color:  transparent !important; 
+}   
+
+ul{ 
+    margin-top: -5px !important; 
+    margin-bottom: -5px !important; 
+}
+
+i{  
+    margin-right: 5px; 
+}
+
+#directory-tree-panel{
+    width: 200px;
+    position: absolute;
+}
+#directory-content{
+    height: 640px;
+}
+#other-panel{
+    position: absolute;
+    width: 85%;
+    height: 640px;
+    margin-left: 200px;
+    color: beige;
+    font-size: 20px;
+}
+
+html{
+    overflow-y: hidden !important;
+}
