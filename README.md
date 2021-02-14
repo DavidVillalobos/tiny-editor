@@ -1,14 +1,14 @@
 <img src="demo/Title.png" width="380" height="70">   
 
 **Lightweight simple editor** for little task and projects.
-The purpose of this project is create a desktop application that works as a simple text editor, with the easy of running code in java, python, c++. It also gives the possibility of having an integrated console to show errors but execute code in external console.
+The purpose of this project is create a desktop application for windows that works as a simple text editor, with the easy of running code in java, python, c++. It also gives the possibility of having an integrated console to show errors but execute code in external console.  
+The project is oriented to be used by people who are starting in the world of programming and need a simple editor to program.
 
 ---
 
 <img src="demo/WindowCode.png" width="450" height="350">   
 
 ### Built with 🛠️
-This project was built with:
 
 * [Electron](https://www.electronjs.org/)
 * [Bulma](https://bulma.io/)
@@ -18,7 +18,7 @@ This project was built with:
 
 ### 📃 Notes
 
-This is a simple first version, now i'am working in:
+This is a first simple version, now i'am working in:
 * Create tutorials to install and configure, java, python and c++
 * Allow to configurate enviroment of the TinyEditor
 * Allow multiple files for edit.
@@ -38,6 +38,7 @@ These are needed so that you can program in them, if for example you are not goi
 ▶️ [C++](https://osdn.net/projects/mingw/releases/) You can install it from MinGW  
 ▶️ [Java](https://www.oracle.com/java/technologies/javase-downloads.html)  
 ▶️ [Python](https://www.python.org/)  
+
 Make sure that the programs **can be located from the system   
 variables in PATH** : javac, java, mingw32-make, g++ and python. 
 
