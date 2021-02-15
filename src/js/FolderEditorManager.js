@@ -417,9 +417,9 @@ function getIcon(extension){
 function printDirectoryTree(myTree, levels) {
 	let result = '';
 	for (let branch of myTree['children']) {
-		result += '<button class="button has-text-white" value="' + branch['path'] + '" onclick="openFile(this.value)">' +
+		result += '<button class="button myButtons has-text-white" value="' + branch['path'] + '" onclick="openFile(this.value)">' +
 		getIcon(branch['extension']) + branch['name'] +
-		'</button>'
+		'</button><br>'
 		if(branch['type'] == 'directory'){
 			result += '<ul class="menu-list">'
 			if(branch['children']) { // branch has child? (is a directory)
