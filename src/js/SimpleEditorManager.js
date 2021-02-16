@@ -186,10 +186,16 @@ button_save.onclick = function(event){
 
 // Compile code (create makefile and compile file)
 button_compiler.onclick = function(event){
-  if(compiled) return
-  if(select_language.value == "Choose a language") return
-  if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link is-loading")
-  // No need save file if you want compile, except if is java, because
+  if(compiled) {
+    terminal.session.setValue('The code is already compiled')
+    return
+  }
+  if(select_language.value == "Choose a language") 
+    return
+  if(select_language.value != "Python") 
+    button_compiler.setAttribute("class", "button is-link is-loading")
+    terminal.session.setValue('Compiling . . . :o')
+    // No need save file if you want compile, except if is java, because
   if(path_file == '' && select_language.value != 'Java'){ // file_name need be same class_name
     file_name = 'Test'
     path_file = 'codes\\'
@@ -203,19 +209,20 @@ button_compiler.onclick = function(event){
       if(err){
         console.log(stderr)
         console.log(`stderr: ${stderr}`) // this go to output and show the error
-        terminal.session.setValue(stderr)
+        terminal.session.setValue("Compilation error :c\n Check the following syntax for:\n" + stderr)
         console.error(`err: ${err}`)
         compiled = false
       }else{
         console.log(`stderr: ${stderr}`)
         console.log(`stdout: ${stdout}`)
         console.log(`stderr: ${stderr}`)
-        if(select_language.value != "Python") terminal.session.setValue('Compilation success')
+        if(select_language.value != "Python") terminal.session.setValue('Compilation success :D')
         compiled = true
       }
+      if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link")
     })
   }
-  if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link")
+  
 }
 
 // Run code (Run makefile)
