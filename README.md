@@ -19,28 +19,28 @@ The project is oriented to be used by people who are starting in the world of pr
 ### 📃 Notes
 
 This is a first simple version, now i'am working in:
-* Create tutorials to install and configure, java, python and c++
-* Allow to configurate enviroment of the TinyEditor
-* Allow multiple files for edit.
+* Create tutorials to install and configure, java and python
+* Allow to configurate enviroment of the TinyEditor.
+* Allow multiple files for edit and explorer (tree directory).
 * Option to configure the makefiles.  
 
 ### Pre-requirements 📋
 
  ▶️ [Node](https://nodejs.org/es/) Need install npm too   
- ▶️ [Mingw](https://osdn.net/projects/mingw/releases/) Need install mingw32-make.exe from all packages. You can use [this](https://github.com/DavidVillalobos/Tiny_Editor/blob/master/doc/Install_MinGW.md) doc.  
- ▶️ [Electron](https://nodejs.org/es/) Installed in the dependencies  
- ▶️ [Bulma](https://bulma.io/) Installed in the dependencies  
+ ▶️ [Mingw](https://osdn.net/projects/mingw/releases/)  You can use [this](https://github.com/DavidVillalobos/Tiny_Editor/blob/master/doc/Install-MinGW/Install_MinGW.md) documentation. Then need install mingw32-make.exe from all packages you can use [this](https://github.com/DavidVillalobos/Tiny_Editor/blob/master/doc/Install_MinGW32Make/Install_MinGW32Make.md) documentation  
+ ▶️ [Electron](https://nodejs.org/es/) This is installed in the dependencies  
+ ▶️ [Bulma](https://bulma.io/) This is installed in the dependencies  
  
 ### Optional  
 
 These are needed so that you can program in them, if for example you are not going to program in python you do not need to install it:  
 
-▶️ [C++](https://osdn.net/projects/mingw/releases/) You can install it from MinGW  
-▶️ [Java](https://www.oracle.com/java/technologies/javase-downloads.html)  
-▶️ [Python](https://www.python.org/)  
+▶️ [G++](https://osdn.net/projects/mingw/releases/) (Compiler of c++) You can install it from MinGW you can use [this](https://github.com/DavidVillalobos/Tiny_Editor/blob/master/doc/Install-g%2B%2B/Install_G%2B%2B.md) documentation  
+▶️ [Java](https://www.oracle.com/java/technologies/javase-downloads.html)    
+▶️ [Python](https://www.python.org/)    
 
 Make sure that the programs **can be located from the system   
-variables in PATH** : javac, java, mingw32-make, g++ and python. 
+variables in PATH** : javac, java, g++ and python. 
 
 ---
 
