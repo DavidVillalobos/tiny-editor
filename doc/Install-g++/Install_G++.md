@@ -12,7 +12,7 @@ For example, after installing MinGW we can install and configure the g ++ comman
 The g++ command also has its particular syntax that we must know and respect in order to write and execute the compilation 
 commands correctly.  
 
-First you must install MinGW see [this documentation ](../Install-MinGW/install_MinGW.md) for install MinGW
+First you must install MinGW see [this documentation ](https://github.com/DavidVillalobos/Tiny_Editor/blob/master/doc/Install-MinGW/Install_MinGW.md) for install MinGW
 
 We start the MinGW program, it probably already starts by itself, but you can search for it in Windows as "MINGW".  
 We proceed to install the C++ compiler (G++).  
