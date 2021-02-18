@@ -1,5 +1,7 @@
 .vscode
+node_modules
 src/node_modules
 src/codes
 src/config/settings.json
 links
+dist_electron
