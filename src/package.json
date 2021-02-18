@@ -19,7 +19,7 @@
   "author": "David Villalobos",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^11.2.1"
+    "electron": "^11.2.3"
   },
   "dependencies": {
     "custom-electron-titlebar": "^3.2.6",
