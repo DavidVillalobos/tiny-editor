@@ -59,8 +59,8 @@ var file_name = ''
 // =/=/=/=/=/=/= PATHS =/=/=/=/=/=/=/=/=/
 // final path: resources/app/
 var path_file = ''
-var path_data = 'config/data.json'
-var path_settings = 'config/settings.json'
+var path_data = 'src/config/data.json'
+var path_settings = 'src/config/settings.json'
 
 // =/=/=/=/=/=/= CONFIGURATION DATA =/=/=/=/=/=/=/=/=/
 var data = JSON.parse(fs.readFileSync(path_data));
@@ -163,7 +163,7 @@ function save_file(){
         { name: label_current_language.textContent, extensions: [extension.slice(1, 5)] }
        ]
     })
-    if(result === undefined){
+    if(result == undefined){
       file_name = path_file = ''
       return false
     }

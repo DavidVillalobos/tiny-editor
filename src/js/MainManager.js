@@ -19,7 +19,7 @@ var mainwin = remote.getCurrentWindow();
 button_simple_file.onclick = function() {
   const codewin = new BrowserWindow({
     show: false,
-    icon: 'img/feather.ico',
+    icon: 'src/img/feather.ico',
     width: 800,
     height: 600,
     minHeight: 500,
@@ -31,7 +31,7 @@ button_simple_file.onclick = function() {
   })
   // codewin.removeMenu()
   codewin.maximize();
-  codewin.loadFile('pages/SimpleEditor.html')
+  codewin.loadFile('src/html/SimpleEditor.html')
   //codewin.webContents.openDevTools()
   codewin.on('closed', function(){
     mainwin.close()
@@ -59,7 +59,7 @@ button_open_folder.onclick = function() {
     }
   })
   // codewin.removeMenu()
-  codewin.loadFile('pages/FolderEditor.html')
+  codewin.loadFile('src/html/FolderEditor.html')
   //codewin.webContents.openDevTools()
   codewin.on('closed', function(){
     mainwin.close()

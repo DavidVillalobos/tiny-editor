@@ -13,7 +13,7 @@ const { exec } = require('child_process')
 function createWindows () {
   const mainwin = new BrowserWindow({
     show: false,
-    icon: 'img/feather.ico',
+    icon: 'src/img/feather.ico',
     height: 350,
     width: 550,
     minHeight: 350,
@@ -25,7 +25,7 @@ function createWindows () {
     }
   })
   //mainwin.removeMenu()
-  mainwin.loadFile('index.html')
+  mainwin.loadFile('src/html/index.html')
   //mainwin.maximize();
   mainwin.once('ready-to-show', () => {
     mainwin.show()

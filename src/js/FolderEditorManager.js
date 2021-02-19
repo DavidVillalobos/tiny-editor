@@ -66,8 +66,8 @@ var file_name = ''
 // final path: resources/app/
 var path_file = ''
 var path_folder = ''
-var path_data = 'config/data.json'
-var path_settings = 'config/settings.json'
+var path_data = 'src/config/data.json'
+var path_settings = 'src/config/settings.json'
 
 // =/=/=/=/=/=/= CONFIGURATION DATA =/=/=/=/=/=/=/=/=/
 var data = JSON.parse(fs.readFileSync(path_data));
