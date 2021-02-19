@@ -1,0 +1,17 @@
+/*
+    File: style_navbar.js
+    Author: Luis David Villalobos Gonzalez
+    Date: 19/02/2021
+*/
+
+.button{
+    width: 90px;
+}
+
+#logo{
+    width: 180px;
+}
+  
+#label-language{
+    width: 110px;
+}

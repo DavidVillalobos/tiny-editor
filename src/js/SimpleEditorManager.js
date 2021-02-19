@@ -7,7 +7,7 @@
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
 
 const fs = require('fs');// File Module
-const { exec } = require('child_process');// Exec Module
+const { exec, execSync } = require('child_process');// Exec Module
 const {dialog} = require('electron').remote;// Dialog Module
 
 // =/=/=/=/=/=/=/=/ EDITOR =/=/=/=/=/=/=/=/=/
@@ -78,6 +78,28 @@ function init_tiny_editor(){
     showPrintMargin : true
   });
   
+  editor.commands.addCommand({
+    name: 'SaveAndCompile',
+    bindKey: {win: 'Ctrl-S'},
+    exec: function(editor) {
+      button_save.click()
+    }
+  });
+  editor.commands.addCommand({
+    name: 'Compile',
+    bindKey: {win: 'Ctrl-B'},
+    exec: function(editor) {
+      button_compiler.click()
+    }
+  });
+  editor.commands.addCommand({
+    name: 'Run',
+    bindKey: {win: 'Ctrl-R'},
+    exec: function(editor) {
+      button_runner.click()
+    }
+  });
+  
   //Load terminal options
   terminal_panel.style.position = "absolute"
   terminal.setTheme("ace/theme/terminal");
@@ -131,9 +153,10 @@ function init_tiny_editor(){
 init_tiny_editor()
 
 // Onchange text in editor
-editor_panel.onchange = function(event){
+editor_panel.onkeypress = function(event){
   compiled = false
 }
+
 
 function generate_makefile(){
   if(select_language.value == "C++")
@@ -170,9 +193,9 @@ function save_file(){
     var aux_path = result.split('\\')
     file_name = aux_path[aux_path.length-1].split('.')[0]
     path_file = result.split(file_name)[0]
-    fs.writeFile(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
+    fs.writeFileSync(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
   }else{
-    fs.writeFile(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
+    fs.writeFileSync(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
   }
   return true
 }

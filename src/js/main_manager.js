@@ -9,6 +9,15 @@ const { BrowserWindow } = require('electron').remote
 const { remote } = require('electron') 
 const { exec } = require('child_process');
 
+// Navbar
+const customTitlebar = require('custom-electron-titlebar');
+  new customTitlebar.Titlebar({
+   backgroundColor: customTitlebar.Color.fromHex('#252525'),
+   menu: null,
+   maximizable: false
+});
+
+
 // =/=/=/=/=/=/= BUTTONS =/=/=/=/=/=/=/=/=/=/
 var button_simple_file = document.getElementById('button-simple-file');
 var button_open_folder = document.getElementById('button-open-folder');
@@ -31,7 +40,7 @@ button_simple_file.onclick = function() {
   })
   // codewin.removeMenu()
   codewin.maximize();
-  codewin.loadFile('src/html/SimpleEditor.html')
+  codewin.loadFile('src/components/simple_editor.html')
   //codewin.webContents.openDevTools()
   codewin.on('closed', function(){
     mainwin.close()
@@ -59,7 +68,7 @@ button_open_folder.onclick = function() {
     }
   })
   // codewin.removeMenu()
-  codewin.loadFile('src/html/FolderEditor.html')
+  codewin.loadFile('src/components/folder_editor.html')
   //codewin.webContents.openDevTools()
   codewin.on('closed', function(){
     mainwin.close()

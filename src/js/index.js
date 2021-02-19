@@ -25,7 +25,7 @@ function createWindows () {
     }
   })
   //mainwin.removeMenu()
-  mainwin.loadFile('src/html/index.html')
+  mainwin.loadFile('src/components/index.html')
   //mainwin.maximize();
   mainwin.once('ready-to-show', () => {
     mainwin.show()
