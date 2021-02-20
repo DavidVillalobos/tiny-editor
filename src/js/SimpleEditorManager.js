@@ -1,7 +1,7 @@
 /* 
     File:   EditorManager.js
     Author: Luis David Villalobos Gonzalez
-    Date: 12/02/2021
+    Date: 20/02/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
@@ -9,6 +9,7 @@
 const fs = require('fs');// File Module
 const { exec, execSync } = require('child_process');// Exec Module
 const {dialog} = require('electron').remote;// Dialog Module
+const path = require('path');// Path Module
 
 // =/=/=/=/=/=/=/=/ EDITOR =/=/=/=/=/=/=/=/=/
 var editor = ace.edit("editor")
@@ -23,9 +24,6 @@ var button_runner = document.getElementById("button-runner");
 var button_settings = document.getElementById("button-settings");
 var button_save_settings = document.getElementById("button-save-settings");
 var button_close_settings = document.getElementById("button-close-settings");
-
-// =/=/=/=/=/=/= LABELS =/=/=/=/=/=/=/=/=/=/
-var label_current_language = document.getElementById("current-language");
 
 // =/=/=/=/=/=/= INPUTS =/=/=/=/=/=/=/=/=/=/
 
@@ -49,7 +47,6 @@ var checkbox_integrated_console = document.getElementById("integrated-console");
 // =/=/=/=/= EDITOR PANEL =/=/=/=/=/=/=/=/=/
 var editor_panel =  document.getElementById("editor")
 var terminal_panel =  document.getElementById("terminal")
-
 
 // =/=/=/=/=/=/= VARIABLES =/=/=/=/=/=/=/=/=/
 var compiled = false
@@ -157,6 +154,14 @@ editor_panel.onkeypress = function(event){
   compiled = false
 }
 
+editor_panel.onclick = function(event){
+  if(file_name == ''){
+    titlebar.updateTitle( 'untitled - ' + 'Tiny Editor');
+  }else{
+    let extension = data['language'][select_language.value]['extension']
+    titlebar.updateTitle(path.join(path_file + "\\" + file_name) + extension + ' - ' + 'Tiny Editor');
+  }
+}
 
 function generate_makefile(){
   if(select_language.value == "C++")
@@ -181,9 +186,9 @@ function save_file(){
   if(path_file == ''){
     var result = dialog.showSaveDialogSync({ 
       title: 'Select the File Path to save', 
-      defaultPath: process.env.userprofile + '\\Desktop', 
+      defaultPath: path.join(process.env.userprofile, 'Desktop'), 
       filters: [
-        { name: label_current_language.textContent, extensions: [extension.slice(1, 5)] }
+        { name: select_language.value, extensions: [extension.slice(1, 5)] }
        ]
     })
     if(result == undefined){
@@ -216,12 +221,12 @@ button_compiler.onclick = function(event){
   if(select_language.value == "Choose a language") 
     return
   if(select_language.value != "Python") 
-    button_compiler.setAttribute("class", "button is-link is-loading")
+    button_compiler.setAttribute("class", "button is-warning is-loading")
     terminal.session.setValue('Compiling . . . :o')
     // No need save file if you want compile, except if is java, because
   if(path_file == '' && select_language.value != 'Java'){ // file_name need be same class_name
     file_name = 'Test'
-    path_file = 'codes\\'
+    path_file = path.join(__dirname + '\\..\\..\\codes\\')
   }
   // Save changes
   if(save_file()){
@@ -242,7 +247,7 @@ button_compiler.onclick = function(event){
         if(select_language.value != "Python") terminal.session.setValue('Compilation success :D')
         compiled = true
       }
-      if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-link")
+      if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-warning")
     })
   }
   
@@ -307,37 +312,35 @@ function applySettings(){
     if(select_language.value == 'Python' || select_language.value == 'Choose a language')  
       button_compiler.setAttribute("class", "button is-dark is-static")
     else  
-      button_compiler.setAttribute("class", "button is-link")
+      button_compiler.setAttribute("class", "button is-warning")
     if(select_language.value == 'Choose a language'){
       button_runner.setAttribute("class", "button is-success is-static")
-      label_current_language.textContent = '' 
     }else{  
       button_runner.setAttribute("class", "button is-success")
-      label_current_language.textContent = my_settings['current-language']
     }
     if(my_settings['terminal-position'] == 'right'){
-      terminal_panel.style.top = "52px"
+      terminal_panel.style.top = "40px"
       terminal_panel.style.right = "0%"
       terminal_panel.style.bottom = "0%"
       terminal_panel.style.left = "60%"
 
-      editor_panel.style.top = "52px"
+      editor_panel.style.top = "40px"
       editor_panel.style.right = "40%"
       editor_panel.style.bottom = "0%"
       editor_panel.style.left = "0%"
       
     } else if(my_settings['terminal-position'] == 'left'){
-      terminal_panel.style.top = "52px"
+      terminal_panel.style.top = "40px"
       terminal_panel.style.right = "60%"
       terminal_panel.style.bottom = "0%"
       terminal_panel.style.left = "0%"
 
-      editor_panel.style.top = "52px"
+      editor_panel.style.top = "40px"
       editor_panel.style.right = "0%"
       editor_panel.style.bottom = "0%"
       editor_panel.style.left = "40%"
     } else if(my_settings['terminal-position'] == 'up'){
-      terminal_panel.style.top = "52px"
+      terminal_panel.style.top = "40px"
       terminal_panel.style.right = "0%"
       terminal_panel.style.bottom = "70%"
       terminal_panel.style.left = "0%"
@@ -352,7 +355,7 @@ function applySettings(){
       terminal_panel.style.bottom = "0%"
       terminal_panel.style.left = "0%"
 
-      editor_panel.style.top = "52px"
+      editor_panel.style.top = "40px"
       editor_panel.style.right = "0%"
       editor_panel.style.bottom = "30%"
       editor_panel.style.left = "0%"

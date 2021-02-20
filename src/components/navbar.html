@@ -1,50 +1,28 @@
 <!-- 
     File: navbar.html
     Author: Luis David Villalobos Gonzalez
-    Date: 19/02/2021
+    Date: 20/02/2021
 -->
 <link rel="stylesheet" href="../css/style_navbar.css">
-
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-  <div aria-label="menu" aria-expanded="false">
-      <div class="navbar-item">
-        <div class="buttons field is-grouped">
-          <div id="logo" class ="button is-static has-background-dark is-dark is-outlined">
-            <div class="title is-4 has-text-light">
-              <span> Tiny editor </span> 
-              <span class="fas fa-feather-alt has-text-warning"></span>
-            </div>
-          </div>
-          <div id="button-save" class="button is-primary">
-            <span>Save as</span>
-            <span class="icon">
-              <i class="fas fa-save"></i>
-            </span>
-          </div>
-          <div id="button-compiler" class="button is-link">
-            <span>Build</span>
-            <span class="icon">
-              <i class="fas fa-hammer"></i>
-            </span>
-          </div>
-          <div id="button-runner" class="button is-success">
-            <span>Run</span>
-            <span class="icon">
-              <i class="fas fa-play"></i>
-            </span>
-          </div>
-          <div id="button-settings" class="button is-warning">
-            <span>Settings</span>
-            <span class="icon">
-              <i class="fas fa-cog"></i>
-            </span>
-          </div>
-          <div id="label-language" class ="button is-static has-background-dark is-dark is-outlined">
-            <div class="title is-4 has-text-light">
-              <span id="current-language"></span>
-            </div>
-          </div>
-        </div>
-      </div>
+<nav class="navbar">
+    <div id="button-save" class="button is-link">
+      <span class="icon">
+        <i class="fas fa-save"></i>
+      </span>
     </div>
-  </nav>
+    <div id="button-compiler" class="button is-warning">
+      <span class="icon">
+        <i class="fas fa-hammer"></i>
+      </span>
+    </div>
+    <div id="button-runner" class="button is-danger">
+      <span class="icon">
+        <i class="fas fa-play"></i>
+      </span>
+    </div>
+    <div id="button-settings" class="button is-primary">
+      <span class="icon">
+        <i class="fas fa-cog"></i>
+      </span>
+    </div>
+</nav>
