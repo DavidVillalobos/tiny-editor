@@ -1,17 +1,20 @@
 /*
     File: style_navbar.js
     Author: Luis David Villalobos Gonzalez
-    Date: 19/02/2021
+    Date: 20/02/2021
 */
 
 .button{
-    width: 90px;
+    width: 50px;
+    height: 30px;
+    margin: 5px;
 }
 
-#logo{
-    width: 180px;
+nav, .navbar{
+    min-height: 40px !important;
+    background-color: #2F3129 !important;
 }
-  
-#label-language{
-    width: 110px;
+
+.navbar{
+    padding-left: 40px;
 }
