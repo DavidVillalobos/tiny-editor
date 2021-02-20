@@ -1,14 +1,11 @@
 /* 
     File: main.js
     Author: Luis David Villalobos Gonzalez
-    Date: 28/01/2021
+    Date: 20/02/2021
 */
 
-// =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
-
-const { app, BrowserWindow, Menu } = require('electron')
-const { exec } = require('child_process')
-// Menu.setApplicationMenu(null);
+const { app, BrowserWindow} = require('electron')
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 function createWindows () {
   const mainwin = new BrowserWindow({
@@ -24,9 +21,7 @@ function createWindows () {
       enableRemoteModule: true
     }
   })
-  //mainwin.removeMenu()
   mainwin.loadFile('src/components/index.html')
-  //mainwin.maximize();
   mainwin.once('ready-to-show', () => {
     mainwin.show()
   })
@@ -43,5 +38,3 @@ app.on('activate', () => {
     createWindows()
   }
 })
-
-
