@@ -4,69 +4,64 @@
     Date: 20/02/2021
 */
 
-// =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
+// ================ REQUIREMENTS ============
 
 const fs = require('fs');// File Module
-const { exec, execSync } = require('child_process');// Exec Module
+const { execSync } = require('child_process');// Exec Module
 const {dialog} = require('electron').remote;// Dialog Module
 const path = require('path');// Path Module
 
-// =/=/=/=/=/=/=/=/ EDITOR =/=/=/=/=/=/=/=/=/
-var editor = ace.edit("editor")
+// ================ EDITOR ==================
+var editor = ace.edit('editor')
 
-// =/=/=/=/=/=/=/ TERMINAL =/=/=/=/=/=/=/=/=/
-var terminal = ace.edit("terminal");
+// ============== TERMINAL ==================
+var terminal = ace.edit('terminal');
 
-// =/=/=/=/=/=/= BUTTONS =/=/=/=/=/=/=/=/=/=/
-var button_save = document.getElementById("button-save");
-var button_compiler = document.getElementById("button-compiler");
-var button_runner = document.getElementById("button-runner");
-var button_settings = document.getElementById("button-settings");
-var button_save_settings = document.getElementById("button-save-settings");
-var button_close_settings = document.getElementById("button-close-settings");
+// ============= BUTTONS ====================
+var button_save = document.getElementById('button-save');
+var button_compiler = document.getElementById('button-compiler');
+var button_runner = document.getElementById('button-runner');
+var button_settings = document.getElementById('button-settings');
+var button_save_settings = document.getElementById('button-save-settings');
+var button_close_settings = document.getElementById('button-close-settings');
 
-// =/=/=/=/=/=/= INPUTS =/=/=/=/=/=/=/=/=/=/
+// ============= SETTINGS ================
+// =========== NUMBERS ================
+var input_editorFontSize = document.getElementById('editorFontSize');
+var input_terminalFontSize = document.getElementById('terminalFontSize');
+var input_editorTabSize = document.getElementById('editorTabSize');
+// =========== SELECTS ================
+var select_highlighter = document.getElementById('highlighter');
+var select_theme = document.getElementById('theme');
+var select_terminal_position = document.getElementById('terminalPosition');
+var select_language = document.getElementById('languages')
+// ============= CHECKBOX ================
+var checkbox_dark_mode = document.getElementById('dark-mode');
+var checkbox_integrated_console = document.getElementById('integrated-console');
 
-// =/=/=/=/=/=/= SETTINGS =/=/=/=/=/=/=/=/
-
-// =/=/=/=/=/= NUMBERS =/=/=/=/=/=/=/=/
-var input_editorFontSize = document.getElementById("editorFontSize");
-var input_terminalFontSize = document.getElementById("terminalFontSize");
-var input_editorTabSize = document.getElementById("editorTabSize");
-
-// =/=/=/=/=/= SELECTS =/=/=/=/=/=/=/=/
-var select_highlighter = document.getElementById("highlighter");
-var select_theme = document.getElementById("theme");
-var select_terminal_position = document.getElementById("terminalPosition");
-var select_language = document.getElementById("languages")
-
-// =/=/=/=/=/=/= CHECKBOX =/=/=/=/=/=/=/=/
-var checkbox_dark_mode = document.getElementById("dark-mode");
-var checkbox_integrated_console = document.getElementById("integrated-console");
-
-// =/=/=/=/= EDITOR PANEL =/=/=/=/=/=/=/=/=/
-var editor_panel =  document.getElementById("editor")
-var terminal_panel =  document.getElementById("terminal")
-
-// =/=/=/=/=/=/= VARIABLES =/=/=/=/=/=/=/=/=/
+// ========= EDITOR PANEL ==================
+var editor_panel =  document.getElementById('editor')
+var terminal_panel =  document.getElementById('terminal')
+// ============= VARIABLES ==================
 var compiled = false
+var clean = true
 var on_change_language = true
-var makefile = false
 var file_name = ''
-// =/=/=/=/=/=/= PATHS =/=/=/=/=/=/=/=/=/
+
+// ============= PATHS ==================
 // final path: resources/app/
 var path_file = ''
 var path_data = 'src/config/data.json'
 var path_settings = 'src/config/settings.json'
 
-// =/=/=/=/=/=/= CONFIGURATION DATA =/=/=/=/=/=/=/=/=/
+// ============= CONFIGURATION DATA ==================
 var data = JSON.parse(fs.readFileSync(path_data));
 
-// =/=/=/=/=/=/= FUNCTIONS =/=/=/=/=/=/=/=/
+// ============= FUNCTIONS ================
 
-function init_tiny_editor(){
+function init_simple_editor(){
   //Load editor options
-  editor_panel.style.position = "absolute"
+  editor_panel.style.position = 'absolute'
   editor.setOptions({
     readOnly : false,
     autoScrollEditorIntoView : false,
@@ -98,9 +93,9 @@ function init_tiny_editor(){
   });
   
   //Load terminal options
-  terminal_panel.style.position = "absolute"
-  terminal.setTheme("ace/theme/terminal");
-  terminal.session.setMode("ace/mode/javascript");
+  terminal_panel.style.position = 'absolute'
+  terminal.setTheme('ace/theme/terminal');
+  terminal.session.setMode('ace/mode/javascript');
   terminal.setOptions({
     readOnly : true,
     autoScrollEditorIntoView : true,
@@ -112,7 +107,7 @@ function init_tiny_editor(){
   //  Load select languages
   var langs = []
   for(var lang in data['language']){
-    var opt = document.createElement("option")
+    var opt = document.createElement('option')
     opt.value= lang
     opt.innerHTML = lang
     select_language.appendChild(opt)
@@ -122,32 +117,32 @@ function init_tiny_editor(){
   //  Load select highlighter
   var arr = Object.values(data['language'])
   for(var i in arr){
-    var opt = document.createElement("option")
+    var opt = document.createElement('option')
     opt.value = arr[i]['highlighter']
-    if(langs[i] != "Choose a language")
+    if(langs[i] != 'Choose a language')
       opt.innerHTML =  langs[i] // Use the name language
       else
-      opt.innerHTML =  "Simple Text"
+      opt.innerHTML =  'Simple Text'
 
     select_highlighter.appendChild(opt)
   }
   //  Load select theme
   for(var theme of data['themes']){
-    var opt = document.createElement("option")
+    var opt = document.createElement('option')
     opt.value = theme
     opt.innerHTML = theme
     select_theme.appendChild(opt)
   }
   //  Load select position of terminal
   for(var pos of data['terminal-position']){
-    var opt = document.createElement("option")
+    var opt = document.createElement('option')
     opt.value = pos
     opt.innerHTML = pos
     select_terminal_position.appendChild(opt)
   }
 }
 
-init_tiny_editor()
+init_simple_editor()
 
 // Onchange text in editor
 editor_panel.onkeypress = function(event){
@@ -159,32 +154,19 @@ editor_panel.onclick = function(event){
     titlebar.updateTitle( 'untitled - ' + 'Tiny Editor');
   }else{
     let extension = data['language'][select_language.value]['extension']
-    titlebar.updateTitle(path.join(path_file + "\\" + file_name) + extension + ' - ' + 'Tiny Editor');
+    titlebar.updateTitle(path.join(path_file + '\\' + file_name) + extension + ' - ' + 'Tiny Editor');
   }
 }
 
-function generate_makefile(){
-  if(select_language.value == "C++")
-      return "OBJS	= " + file_name + ".o\n" +
-      "SOURCE	= " + file_name + ".cpp\n" + "HEADER	=\n"  + "OUT	= run.exe\n"  +
-      "CC	 = g++\n" + "FLAGS	 = -g -c -Wall\n" + "LFLAGS	 =\n" + "all: $(OBJS)\n"  +
-      "\t$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)\n" + file_name + ".o: " + file_name + ".cpp\n"  +
-      "\t$(CC) $(FLAGS) " + file_name + ".cpp\n" + "run:\n" +
-      "\tcls && title Tiny Editor/Run/" + file_name + " && $(OUT)\n" + "clean:\n" + "\tdel $(OBJS) $(OUT)\n"
-  else if (select_language.value == "Java") 
-      return "JFLAGS = -g\n" + "JC = javac \n" + ".SUFFIXES: .java .class\n" +
-      ".java.class:\n" + "\t$(JC) $(JFLAGS) $*.java\n" + "CLASSES = \\\n" +
-      "\t" + file_name + ".java \n" + "MAINCLASS = \\\n" + "\t" + file_name + "\n" + 
-      "all: $(CLASSES:.java=.class)\n" + "run: \n" + "\tcls && title Tiny Editor/Run/$(MAINCLASS) && java -cp . $(MAINCLASS)\n" +
-      "clean:\n" + "\tdel $(CLASSES:.java=.class)\n"
-  else if (select_language.value == "Python")
-      return "all:\n" + "run:\n" + "\tcls && title Tiny Editor/Run/" + file_name + " && python -i " + file_name + ".py\n" + "clean:\n"
-}
-
 function save_file(){
-  var extension = data['language'][select_language.value]['extension']
+  // No need save file if you want compile, except if is java, because
+  if(path_file == '' && select_language.value != 'Java'){ // file_name need be same class_name
+    file_name = 'Test' + data['language'][select_language.value]['extension']
+    path_file = path.join(__dirname + '\\..\\..\\codes')
+  }
+  let extension = data['language'][select_language.value]['extension']
   if(path_file == ''){
-    var result = dialog.showSaveDialogSync({ 
+    let result = dialog.showSaveDialogSync({ 
       title: 'Select the File Path to save', 
       defaultPath: path.join(process.env.userprofile, 'Desktop'), 
       filters: [
@@ -195,12 +177,12 @@ function save_file(){
       file_name = path_file = ''
       return false
     }
-    var aux_path = result.split('\\')
-    file_name = aux_path[aux_path.length-1].split('.')[0]
-    path_file = result.split(file_name)[0]
-    fs.writeFileSync(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
+    let aux_path = result.split('\\');
+    file_name = aux_path[aux_path.length - 1];
+    path_file = result.split('\\' + file_name)[0]
+    fs.writeFileSync(path_file + '\\' + file_name , editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'})
   }else{
-    fs.writeFileSync(path_file + file_name + extension, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, function(err){console.log(err)})
+    fs.writeFileSync(path_file + '\\' +  file_name, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'})
   }
   return true
 }
@@ -208,73 +190,69 @@ function save_file(){
 // Save file
 button_save.onclick = function(event){
   file_name = path_file = ''
-  compiled = makefile = false
+  compiled = false
   save_file()
 } 
 
-// Compile code (create makefile and compile file)
+// Compile code (compile file)
 button_compiler.onclick = function(event){
   if(compiled) {
     terminal.session.setValue('The code is already compiled')
     return
   }
-  if(select_language.value == "Choose a language") 
+  if(select_language.value == 'Choose a language') 
     return
-  if(select_language.value != "Python") 
-    button_compiler.setAttribute("class", "button is-warning is-loading")
+  if(select_language.value != 'Python') 
+    button_compiler.setAttribute('class', 'button is-warning is-loading')
     terminal.session.setValue('Compiling . . . :o')
-    // No need save file if you want compile, except if is java, because
-  if(path_file == '' && select_language.value != 'Java'){ // file_name need be same class_name
-    file_name = 'Test'
-    path_file = path.join(__dirname + '\\..\\..\\codes\\')
-  }
   // Save changes
   if(save_file()){
     // Compile code
-    if(!makefile) fs.writeFile(path_file +'makefile', generate_makefile(), 'UTF-8', function(err){console.log(err)})
-    makefile = true
-    exec("cd " + path_file + " && " + data['command']['compile'], (err, stdout, stderr) => {
-      if(err){
-        console.log(stderr)
-        console.log(`stderr: ${stderr}`) // this go to output and show the error
-        terminal.session.setValue("Compilation error :c\n Check the following syntax for:\n" + stderr)
-        console.error(`err: ${err}`)
-        compiled = false
-      }else{
-        console.log(`stderr: ${stderr}`)
-        console.log(`stdout: ${stdout}`)
-        console.log(`stderr: ${stderr}`)
-        if(select_language.value != "Python") terminal.session.setValue('Compilation success :D')
-        compiled = true
+    try{
+      var compiler = data['language'][select_language.value]['compiler'] + ' ' + file_name;
+      if(select_language.value == 'C++'){
+        compiler += ' -o ' + file_name.split('.')[0];
       }
-      if(select_language.value != "Python") button_compiler.setAttribute("class", "button is-warning")
-    })
+      let stdout = execSync('cd ' + path_file + ' && ' + compiler);
+      console.log(`stdout: ${stdout}`)
+      if(select_language.value != 'Python') 
+        terminal.session.setValue('Compilation success :D')
+      compiled = true
+      clean = false
+    }catch(stderr){
+      console.log(`stderr: ${stderr}`) 
+      terminal.session.setValue('Compilation error :c\n Check the following syntax for:\n' + stderr)
+      compiled = false
+    }
+    if(select_language.value != 'Python') 
+      button_compiler.setAttribute('class', 'button is-warning')
   }
-  
 }
 
 // Run code (Run makefile)
 button_runner.onclick = function(event) {
   terminal.session.setValue('')
-  if(select_language.value == "Python"){
+  if(select_language.value == 'Python'){
     button_compiler.click()
     compiled = true
   }
-  if(compiled){
-    exec("cd " + path_file + " && " + data['command']['run'], (err, stdout, stderr) => {
-      if(err){
-        console.error(`err: ${err}`)
-        console.log(`stdout: ${stdout}`)
-        console.log(`stderr: ${stderr}`) // this go to output and show the error
-        terminal.session.setValue(stdout)
-      }else{
-        console.log(`stdout: ${stdout}`)
-        console.log(`stderr: ${stderr}`)
-        terminal.session.setValue(stdout)
-      }
-    });
-  }else{
+  if(!compiled)
     button_compiler.click()
+  if(compiled){
+    try {
+      let runner = data['language'][select_language.value]['runner'] + ' ';
+      if(select_language.value == 'C++'){
+        runner += file_name.split('.')[0];
+      }else{
+        runner += file_name
+      }
+      let stdout = execSync('cd ' + path_file + ' && start ' + runner)
+      console.log(`stdout: ${stdout}`)
+      terminal.session.setValue(stdout) // this go to terminal 
+    } catch (stderr) {
+      console.log(`stderr: ${stderr}`)
+      terminal.session.setValue(stderr) // this go to terminal
+    }
   }
 }
 
@@ -282,25 +260,27 @@ button_runner.onclick = function(event) {
 // Apply settings
 function applySettings(){
   // if settings does not exist, apply default settings
-  if(!fs.existsSync(path_settings))
-    fs.writeFile(path_settings, JSON.stringify({"current-language":"Choose a language","fontSize-editor":18,"fontSize-terminal":18,"tabSize-editor":4,"highlighter":"text","theme":"monokai","dark-mode":true, "integrated-console":true,"terminal-position":"right"}), 'UTF-8', function(){applySettings();})
-  else{ 
+  if(!fs.existsSync(path_settings)){
+    fs.writeFileSync(path_settings, JSON.stringify({'current-language':'Choose a language','fontSize-editor':18,'fontSize-terminal':18,'tabSize-editor':4,'highlighter':'text','theme':'monokai','dark-mode':true, 'integrated-console':true,'terminal-position':'right'}), 'UTF-8');
+    applySettings();
+  } else { 
     var my_settings = JSON.parse(fs.readFileSync(path_settings));
-    // "dark-mode" : "true"
-    // "integrated-console" : "true"
-    // Change Editor fontSize
-    editor_panel.style.fontSize = my_settings['fontSize-editor'] + "px"
-    // Change Terminal fontSize
-    terminal_panel.style.fontSize = my_settings['fontSize-terminal'] + "px"
-    // Change Editor TabSize
+    // 'dark-mode' : 'true'
+    // 'integrated-console' : 'true'
+    editor_panel.style.fontSize = my_settings['fontSize-editor'] + 'px'
+    terminal_panel.style.fontSize = my_settings['fontSize-terminal'] + 'px'
     editor.session.setTabSize(my_settings['tabSize-editor'])
-    // Change Theme
-    editor.setTheme("ace/theme/" + my_settings['theme'])
-    // Change Highlighter
-    editor.session.setMode("ace/mode/" + my_settings['highlighter'])
-    // Change language? 
+    editor.setTheme('ace/theme/' + my_settings['theme'])
+    editor.session.setMode('ace/mode/' + my_settings['highlighter'])
     if(on_change_language){
-      exec("cd " + path_file + " && " + data['command']['clean'], (err, stdout, stderr) => {});
+      if(!clean){
+        try {
+          let stdout = execSync('cd ' + path_file + ' && del' + file_name);
+          console.log(`stdout: ${stdout}`)
+        } catch (stderr) {
+          console.log(`stderr: ${stderr}`)
+        }
+      }
       terminal.session.setValue('') // Clean terminal
       compiled = makefile = false
       editor.session.setValue(data['language'][my_settings['current-language']]['example'])
@@ -310,55 +290,55 @@ function applySettings(){
     }
     
     if(select_language.value == 'Python' || select_language.value == 'Choose a language')  
-      button_compiler.setAttribute("class", "button is-dark is-static")
+      button_compiler.setAttribute('class', 'button is-dark is-static')
     else  
-      button_compiler.setAttribute("class", "button is-warning")
+      button_compiler.setAttribute('class', 'button is-warning')
     if(select_language.value == 'Choose a language'){
-      button_runner.setAttribute("class", "button is-success is-static")
+      button_runner.setAttribute('class', 'button is-success is-static')
     }else{  
-      button_runner.setAttribute("class", "button is-success")
+      button_runner.setAttribute('class', 'button is-success')
     }
     if(my_settings['terminal-position'] == 'right'){
-      terminal_panel.style.top = "40px"
-      terminal_panel.style.right = "0%"
-      terminal_panel.style.bottom = "0%"
-      terminal_panel.style.left = "60%"
+      terminal_panel.style.top = '40px'
+      terminal_panel.style.right = '0%'
+      terminal_panel.style.bottom = '0%'
+      terminal_panel.style.left = '60%'
 
-      editor_panel.style.top = "40px"
-      editor_panel.style.right = "40%"
-      editor_panel.style.bottom = "0%"
-      editor_panel.style.left = "0%"
+      editor_panel.style.top = '40px'
+      editor_panel.style.right = '40%'
+      editor_panel.style.bottom = '0%'
+      editor_panel.style.left = '0%'
       
     } else if(my_settings['terminal-position'] == 'left'){
-      terminal_panel.style.top = "40px"
-      terminal_panel.style.right = "60%"
-      terminal_panel.style.bottom = "0%"
-      terminal_panel.style.left = "0%"
+      terminal_panel.style.top = '40px'
+      terminal_panel.style.right = '60%'
+      terminal_panel.style.bottom = '0%'
+      terminal_panel.style.left = '0%'
 
-      editor_panel.style.top = "40px"
-      editor_panel.style.right = "0%"
-      editor_panel.style.bottom = "0%"
-      editor_panel.style.left = "40%"
+      editor_panel.style.top = '40px'
+      editor_panel.style.right = '0%'
+      editor_panel.style.bottom = '0%'
+      editor_panel.style.left = '40%'
     } else if(my_settings['terminal-position'] == 'up'){
-      terminal_panel.style.top = "40px"
-      terminal_panel.style.right = "0%"
-      terminal_panel.style.bottom = "70%"
-      terminal_panel.style.left = "0%"
+      terminal_panel.style.top = '40px'
+      terminal_panel.style.right = '0%'
+      terminal_panel.style.bottom = '70%'
+      terminal_panel.style.left = '0%'
 
-      editor_panel.style.top = "30%"
-      editor_panel.style.right = "0%"
-      editor_panel.style.bottom = "0%"
-      editor_panel.style.left = "0%"
+      editor_panel.style.top = '30%'
+      editor_panel.style.right = '0%'
+      editor_panel.style.bottom = '0%'
+      editor_panel.style.left = '0%'
     } else if(my_settings['terminal-position'] == 'down'){
-      terminal_panel.style.top = "70%"
-      terminal_panel.style.right = "0%"
-      terminal_panel.style.bottom = "0%"
-      terminal_panel.style.left = "0%"
+      terminal_panel.style.top = '70%'
+      terminal_panel.style.right = '0%'
+      terminal_panel.style.bottom = '0%'
+      terminal_panel.style.left = '0%'
 
-      editor_panel.style.top = "40px"
-      editor_panel.style.right = "0%"
-      editor_panel.style.bottom = "30%"
-      editor_panel.style.left = "0%"
+      editor_panel.style.top = '40px'
+      editor_panel.style.right = '0%'
+      editor_panel.style.bottom = '30%'
+      editor_panel.style.left = '0%'
     } 
   }
 }
@@ -376,8 +356,9 @@ button_save_settings.onclick = function(event) {
   my_settings['current-language'] = select_language.value
   my_settings['dark-mode'] = checkbox_dark_mode.checked
   my_settings['integrated-console'] = checkbox_integrated_console.checked
-  fs.writeFile(path_settings, JSON.stringify(my_settings), 'UTF-8', function(){applySettings();})
-  document.getElementById("modal").setAttribute("class", "modal")
+  fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8')
+  applySettings()
+  document.getElementById('modal').setAttribute('class', 'modal')
 }
 
 
@@ -393,12 +374,11 @@ button_settings.onclick = function() {
   select_language.value = my_settings['current-language']  
   checkbox_dark_mode.checked = my_settings['dark-mode']
   checkbox_integrated_console.checked = my_settings['integrated-console']
-  document.getElementById("modal").setAttribute("class", "modal is-active")
-  
+  document.getElementById('modal').setAttribute('class', 'modal is-active')
 }
 
 button_close_settings.onclick = function() {
-	document.getElementById("modal").setAttribute("class", "modal")
+	document.getElementById('modal').setAttribute('class', 'modal')
 }
 
 // Load current settings
