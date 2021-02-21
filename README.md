@@ -99,8 +99,7 @@ The project is inspired by [vscode](https://code.visualstudio.com/)
 
 ### Contributing
 
-Pull requests are welcome.   
-For major changes, please open an issue first to discuss what you would like to change.  
+For new changes, please open an issue first to discuss what you would like to change.  
 You can contact me at 📫 : villalobosgonzalezluisdavid@gmail.com  
 
 ## License
