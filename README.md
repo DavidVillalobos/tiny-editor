@@ -52,7 +52,7 @@ variables in PATH** : javac, java, g++ and python.
 Download code [here](https://github.com/DavidVillalobos/Tiny_Editor/archive/master.zip) and extract where you prefer  
 or clone like:  
 ~~~cmd
-git clone https://github.com/DavidVillalobos/Tiny_Editor
+git clone https://github.com/DavidVillalobos/tiny-editor
 ~~~  
   
 ### Install Depencendies
