@@ -1,13 +1,12 @@
 /* 
     File: MainManager.js
     Author: Luis David Villalobos Gonzalez
-    Date: 20/02/2021
+    Date: 21/02/2021
 */
 
 // =/=/=/=/=/=/=/=/ REQUIREMENTS =/=/=/=/=/=/
 const { BrowserWindow } = require('electron').remote
 const { remote } = require('electron') 
-const { exec } = require('child_process');
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
@@ -26,12 +25,13 @@ let folder_editor_win;
 let settings_win;
 let about_win;
 
-function generate_window(path_to_html){
+function generate_window(path_to_html, my_width, my_height){
   let win = new BrowserWindow({
     show: false,
+    parent: mainwin,
     icon: 'src/img/feather.ico',
-    width: 800,
-    height: 600,
+    width: my_width, 
+    height: my_height, 
     minHeight: 400,
     minWidth: 400,  
     frame: false,
@@ -43,7 +43,6 @@ function generate_window(path_to_html){
   win.loadFile(path_to_html);
   //win.webContents.openDevTools()
   win.once('ready-to-show', () => {
-    win.maximize();
     win.show()
     mainwin.hide()
   })  
@@ -51,17 +50,17 @@ function generate_window(path_to_html){
 }
 
 button_simple_file.onclick = function() {
-  exec('md codes', (err, stdout, stderr) => {});
-  simple_editor_win = generate_window('src/components/simple_editor.html');
+  simple_editor_win = generate_window('src/components/simple_editor.html', 800, 600);
   simple_editor_win.on('closed', function(){
     mainwin.close();
     simple_editor_win = null;
   });
+  simple_editor_win.maximize();
 };
 
 
 button_open_folder.onclick = function() {  
-  folder_editor_win = generate_window('src/components/folder_editor.html'); 
+  folder_editor_win = generate_window('src/components/folder_editor.html', 800, 600); 
   folder_editor_win.on('closed', function(){
     mainwin.close();
     folder_editor_win = null;
@@ -69,7 +68,7 @@ button_open_folder.onclick = function() {
 };
 
 button_new_folder.onclick = function() {  
-  folder_editor_win = generate_window('src/components/folder_editor.html'); 
+  folder_editor_win = generate_window('src/components/folder_editor.html', 800, 600); 
   folder_editor_win.on('closed', function(){
     mainwin.close();
     folder_editor_win = null;
@@ -77,7 +76,8 @@ button_new_folder.onclick = function() {
 };
 
 button_settings.onclick = function() {  
-  settings_win = generate_window('src/components/settings.html'); 
+  settings_win = generate_window('src/components/settings.html', 800, 440); 
+  settings_win.setResizable(false);
   settings_win.on('closed', function(){
     settings_win = null;
     mainwin.show();
@@ -85,7 +85,7 @@ button_settings.onclick = function() {
 };
 
 button_about.onclick = function() {  
-  about_win = generate_window('src/components/about.html'); 
+  about_win = generate_window('src/components/about.html', 500, 500); 
   about_win.on('closed', function(){
     about_win = null;
     mainwin.show();
