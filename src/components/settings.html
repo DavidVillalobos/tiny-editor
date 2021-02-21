@@ -1,22 +1,33 @@
 <!-- 
     File: settings.html
     Author: Luis David Villalobos Gonzalez
-    Date: 19/02/2021
+    Date: 21/02/2021
 -->
-
-<div id="modal" class="modal"> 
-    <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-            <div class="modal-card-title">
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <!-- Bulma -->
+    <link rel="stylesheet" href="../css/bulma.css">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <!-- favicon -->  
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+    <!-- style -->  
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style_settings.css">
+</head>
+<body>
+    <div class="message is-info">
+        <div class="message-header">
+            <div class="title has-text-dark">
                 Settings
-            </div>
-            <span class="icon">
                 <i class="fas fa-cog"></i>
-            </span>
-        </header>
-        <section class="modal-card-body">
-            <div class="columns">
+            </div>
+        </div>
+        <div class="message-body has-background-dark has-text-light">
+            <div class="columns is-centered">
                 <div class="column is-2">
                     Language
                     <span class="icon">
@@ -40,8 +51,8 @@
                     </div>
                 </div>
             </div>
-                
-            <div class="columns">
+            
+            <div class="columns is-centered">
                 <div class="column is-2">
                     Highlighter
                     <span class="icon">
@@ -65,7 +76,8 @@
                     </div>
                 </div>
             </div>
-            <div class="columns">
+            
+            <div class="columns is-centered">
                 <div class="column is-2">
                     Theme
                     <span class="icon">
@@ -89,7 +101,8 @@
                     </div>
                 </div>   
             </div>    
-            <div class="columns">
+            
+            <div class="columns is-centered">
                 <div class="column is-2">
                     Terminal position
                     <span class="icon">
@@ -113,10 +126,17 @@
                     <input id="integrated-console" type="checkbox" checked>
                 </div>
             </div>
-        </section>
-        <footer class="modal-card-foot">
-            <button id="button-save-settings" class="button is-success" >Save changes</button>
-            <button id="button-close-settings" class="button is-danger">Cancel</button>
-        </footer>
+            <div class="columns is-centered">
+                <div class="column">
+                    <button id="button-save-settings" class="button is-link" >Save changes</button>
+                    <button id="button-close-settings" class="button is-danger">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
+</div>    
 </div>
+</body>
+</html>
+<script src='../js/title_bar.js'></script>
+<script src='../js/settings.js'></script>
