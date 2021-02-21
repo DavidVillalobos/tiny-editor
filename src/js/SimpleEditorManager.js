@@ -112,11 +112,6 @@ editor_panel.onclick = function(event){
 }
 
 function save_file(){
-  // No need save file if you want compile, except if is java, because
-  if(path_file == '' && language != 'Java'){ // file_name need be same class_name
-    file_name = 'Test' + data['language'][language]['extension']
-    path_file = path.join(__dirname + '\\..\\..\\codes')
-  }
   let extension = data['language'][language]['extension']
   if(path_file == ''){
     let result = dialog.showSaveDialogSync({ 
@@ -158,6 +153,11 @@ button_compiler.onclick = function(event){
   if(language != 'Python') 
     button_compiler.setAttribute('class', 'button is-warning is-loading')
     terminal.session.setValue('Compiling . . . :o')
+  // No need save file if you want compile, except if is java, because
+  if(path_file == '' && language != 'Java'){ // file_name need be same class_name
+    file_name = 'Test' + data['language'][language]['extension']
+    path_file = path.join(__dirname + '\\..\\..\\codes')
+  }
   // Save changes
   if(save_file()){
     // Compile code
