@@ -1,4 +1,4 @@
-<img src="demo/Title.png" width="380" height="70">   
+# Tiny Editor 
 
 **Lightweight simple editor** for little task and projects.
 The purpose of this project is create a desktop application for windows that works as a simple text editor, with the easy of running code in java, python, c++. It also gives the possibility of having an integrated console to show errors but execute code in external console.  
@@ -6,7 +6,7 @@ The project is oriented to be used by people who are starting in the world of pr
 
 ---
 
-<img src="demo/WindowCode.png" width="450" height="350">   
+<img src="demo/WindowCode.png" width="450">   
 
 ### Built with 🛠️
 
