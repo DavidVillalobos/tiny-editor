@@ -28,7 +28,6 @@ let about_win;
 function generate_window(path_to_html, my_width, my_height){
   let win = new BrowserWindow({
     show: false,
-    parent: mainwin,
     icon: 'src/img/feather.ico',
     width: my_width, 
     height: my_height, 

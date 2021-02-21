@@ -13,10 +13,7 @@ function createWindows () {
     icon: 'src/img/feather.ico',
     height: 350,
     width: 550,
-    minHeight: 350,
-    minWidth: 550,
-    maxHeight: 350,
-    maxWidth: 550,
+    resizable: false,
     frame: false,
     webPreferences: {
       nodeIntegration: true, 

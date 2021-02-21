@@ -33,7 +33,6 @@ var terminal_panel =  document.getElementById('terminal')
 // ============= VARIABLES ==================
 var compiled = false
 var clean = true
-var on_change_language = true
 var file_name = ''
 var language = ''
 
@@ -167,7 +166,7 @@ button_compiler.onclick = function(event){
       if(language == 'C++'){
         compiler += ' -o ' + file_name.split('.')[0];
       }
-      let stdout = execSync('cd ' + path_file + ' && ' + compiler);
+      let stdout = execSync('cd ' + path_file + ' & ' + compiler);
       console.log(`stdout: ${stdout}`)
       if(language != 'Python') 
         terminal.session.setValue('Compilation success :D')
@@ -200,7 +199,7 @@ button_runner.onclick = function(event) {
       }else{
         runner += file_name
       }
-      let stdout = execSync('cd ' + path_file + ' && start ' + runner)
+      let stdout = execSync('cd ' + path_file + ' & start ' + runner)
       console.log(`stdout: ${stdout}`)
       terminal.session.setValue(stdout) // this go to terminal 
     } catch (stderr) {
@@ -247,10 +246,10 @@ function applySettings(){
   editor.session.setTabSize(my_settings['tabSize-editor'])
   editor.setTheme('ace/theme/' + my_settings['theme'])
   editor.session.setMode('ace/mode/' + my_settings['highlighter'])
-  if(on_change_language){
+  if(language != my_settings['current-language']){
     /*if(!clean){
         try {
-          let stdout = execSync('cd ' + path_file + ' && del ' + file_name);
+          let stdout = execSync('cd ' + path_file + ' & del ' + file_name);
           console.log(`stdout: ${stdout}`)
         } catch (stderr) {
           console.log(`stderr: ${stderr}`)
