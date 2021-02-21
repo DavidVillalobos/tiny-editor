@@ -1,0 +1,19 @@
+/*
+    File: style.js
+    Author: Luis David Villalobos Gonzalez
+    Date: 19/02/2021
+*/
+
+@font-face {
+    font-family: Twiddlestix; src: url("../fonts/Twiddlestix/Twiddlestix.otf");
+}
+
+.title{
+    font-family: Twiddlestix;
+}
+
+
+html{
+    overflow-y: hidden !important;
+    background-color: rgb(37, 37, 37);
+}

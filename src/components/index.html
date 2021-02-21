@@ -1,0 +1,46 @@
+<!-- 
+    File: index.html
+    Author: Luis David Villalobos Gonzalez
+    Date: 21/02/2021
+-->
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+  <!-- Bulma -->
+  <link rel="stylesheet" href="../css/bulma.css">
+  <!-- Fontawesome -->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <!-- styles -->  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style_menu.css">
+  <!-- favicon -->  
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+</head>
+<body>
+  <div class="has-text-centered">
+    <div class ="button is-large is-static is-dark is-outlined">
+        <div class="title is-1 has-text-light">
+            <span> Tiny editor </span> 
+            <span class="fas fa-feather-alt has-text-warning"></span>
+        </div>
+    </div>
+    <div class="has-text-centered">
+      <div class="column">
+          <button id="button-simple-file" class="button is-medium is-success"> Simple File </button>
+          <button id="button-open-folder" class="button is-medium is-danger" disabled> Open Folder </button>
+      </div>
+      <div class="column"> 
+          <button id="button-new-folder" class="button is-medium is-warning" disabled> New Folder </button>
+          <button id="button-settings" class="button is-medium is-link"> Settings </button>
+      </div>
+      <div class="column">
+          <button id="button-about" class="button is-medium is-primary" disabled> About </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<script src='../js/title_bar.js'></script>
+<script src='../js/main_manager.js'></script>
