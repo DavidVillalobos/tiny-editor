@@ -29,6 +29,7 @@ var button_settings = document.getElementById('button-settings');
 
 // ========= EDITOR PANEL ==================
 var editor_panel =  document.getElementById('editor')
+
 var terminal_panel =  document.getElementById('terminal')
 // ============= VARIABLES ==================
 var compiled = false
@@ -79,7 +80,7 @@ function init_simple_editor(){
       button_runner.click()
     }
   });
-  
+
   //Load terminal options
   terminal_panel.style.position = 'absolute'
   terminal.setTheme('ace/theme/terminal');
@@ -91,25 +92,49 @@ function init_simple_editor(){
     showGutter : false,
     showPrintMargin : false
   });
-
+  // EVENTS
+  // onchange in editor
+  editor_panel.onclick = function(event){
+    compiled = false
+  }
   
+  editor_panel.addEventListener("mousewheel", event => {
+    if(event.ctrlKey == true){
+      event.preventDefault();
+      let actual = parseInt(editor_panel.style.fontSize.split('px')[0], 10);
+      if(event.deltaY > 0) {
+        actual--;
+      } else {
+        actual++;
+      }
+      editor_panel.style.fontSize = actual + 'px'
+      let my_settings = JSON.parse(fs.readFileSync(path_settings));
+      my_settings['fontSize-editor'] = actual;
+      fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8')
+    }
+  }, { passive: false });
+ 
+  terminal_panel.addEventListener("mousewheel", event => {
+    if(event.ctrlKey == true){
+      event.preventDefault();
+      let actual = parseInt(terminal_panel.style.fontSize.split('px')[0], 10);
+      if(event.deltaY > 0) {
+        actual--;
+      } else {
+        actual++;
+      }
+      terminal_panel.style.fontSize = actual + 'px'
+      let my_settings = JSON.parse(fs.readFileSync(path_settings));
+      my_settings['fontSize-terminal'] = actual;
+      fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8')
+    }
+  }, { passive: false });
+
 }
 
 init_simple_editor()
 
-// Onchange text in editor
-editor_panel.onkeypress = function(event){
-  compiled = false
-}
 
-editor_panel.onclick = function(event){
-  if(file_name == ''){
-    titlebar.updateTitle( 'untitled - ' + 'Tiny Editor');
-  }else{
-    let extension = data['language'][language]['extension']
-    titlebar.updateTitle(path.join(path_file + '\\' + file_name) + extension + ' - ' + 'Tiny Editor');
-  }
-}
 
 function save_file(){
   let extension = data['language'][language]['extension']
@@ -131,6 +156,11 @@ function save_file(){
     fs.writeFileSync(path_file + '\\' + file_name , editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'})
   }else{
     fs.writeFileSync(path_file + '\\' +  file_name, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'})
+  }
+  if(file_name == ''){
+    titlebar.updateTitle( 'untitled - ' + 'Tiny Editor');
+  }else{
+    titlebar.updateTitle(path.join(path_file + '\\' + file_name) + ' - ' + 'Tiny Editor');
   }
   return true
 }
@@ -209,31 +239,32 @@ button_runner.onclick = function(event) {
   }
 }
 
+let settings_win = undefined;
+
 button_settings.onclick = function(event){
-  let settings_win = new BrowserWindow({
-    show: false,
-    icon: 'src/img/feather.ico',
-    width: 800, 
-    height: 440, 
-    minWidth: 800,  
-    minHeight: 440,
-    maxWidth: 800,  
-    maxHeight: 440,
-    frame: false,
-    alwaysOnTop : true,
-    webPreferences: {
-      nodeIntegration: true, 
-      enableRemoteModule: true
-    }
-  }); 
-  settings_win.loadFile('src/components/settings.html');
-  settings_win.once('ready-to-show', () => {
-    settings_win.show()
-  })  
-  settings_win.on('closed', function(){
-    settings_win = null;
-    applySettings()
-  });
+  if(!settings_win){
+    settings_win = new BrowserWindow({
+      show: false,
+      icon: 'src/img/feather.ico',
+      width: 800, 
+      height: 430,
+      resizable : false,
+      frame: false,
+      alwaysOnTop : true,
+      webPreferences: {
+        nodeIntegration: true, 
+        enableRemoteModule: true
+      }
+    }); 
+    settings_win.loadFile('src/components/settings.html');
+    settings_win.once('ready-to-show', () => {
+      settings_win.show()
+    })  
+    settings_win.on('closed', function(){
+      settings_win = null;
+      applySettings()
+    });
+  }
 }
 
 // Apply settings

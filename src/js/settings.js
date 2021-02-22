@@ -76,7 +76,7 @@ function load_settings(){
     if(!fs.existsSync(path_settings)){
         fs.writeFileSync(path_settings, JSON.stringify({'current-language':'Choose a language','fontSize-editor':18,'fontSize-terminal':18,'tabSize-editor':4,'highlighter':'text','theme':'monokai','dark-mode':true, 'integrated-console':true,'terminal-position':'right'}), 'UTF-8');
     } 
-    var my_settings = JSON.parse(fs.readFileSync(path_settings));
+    let my_settings = JSON.parse(fs.readFileSync(path_settings));
     console.log(path_settings)
     console.log(my_settings)
     input_editorFontSize.value = my_settings['fontSize-editor']
@@ -95,7 +95,7 @@ load_settings()
 
 // Save settings   
 button_save_settings.onclick = function(event) {
-    var my_settings = JSON.parse(fs.readFileSync(path_settings));
+    let my_settings = JSON.parse(fs.readFileSync(path_settings));
     my_settings['fontSize-editor'] = input_editorFontSize.value
     my_settings['fontSize-terminal'] = input_terminalFontSize.value
     my_settings['tabSize-editor'] = input_editorTabSize.value
@@ -109,7 +109,6 @@ button_save_settings.onclick = function(event) {
     fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8')
     settings_win.close();
 }
-
 button_close_settings.onclick = function(event){
     settings_win.close();
 }

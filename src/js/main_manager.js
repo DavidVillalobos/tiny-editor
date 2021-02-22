@@ -75,7 +75,7 @@ button_new_folder.onclick = function() {
 };
 
 button_settings.onclick = function() {  
-  settings_win = generate_window('src/components/settings.html', 800, 440); 
+  settings_win = generate_window('src/components/settings.html', 800, 430); 
   settings_win.setResizable(false);
   settings_win.on('closed', function(){
     settings_win = null;
