@@ -1,7 +1,7 @@
 /* 
     File:   EditorManager.js
     Author: Luis David Villalobos Gonzalez
-    Date: 23/02/2021
+    Date: 24/02/2021
 */
 
 // ================ REQUIREMENTS ============
@@ -27,6 +27,7 @@ var button_save = document.getElementById('button-save');
 var button_compiler = document.getElementById('button-compiler');
 var button_runner = document.getElementById('button-runner');
 var button_settings = document.getElementById('button-settings');
+var button_new_file = document.getElementById('button-new-file');
 
 // ========= FILETABS ==================
 var file_tabs = document.getElementById("filetabs")
@@ -165,14 +166,39 @@ function init_simple_editor(){
 
 init_simple_editor()
 
+button_new_file.onclick = function(event){
+  let result = dialog.showSaveDialogSync({ 
+    title: 'Selecciona la ubicacion para guardar el archivo', 
+    defaultPath: path.join(process.env.userprofile, 'Desktop'), 
+    filters: [
+      { name: 'untitled', extensions: data['language'][files[file_active]['language']]['extension']}
+     ]
+  });
+  if(result != undefined){ 
+    let aux_path = result.split('\\');    
+    files.push({
+      active: false, 
+      name: aux_path[aux_path.length - 1],
+      path: result.split('\\' + aux_path[aux_path.length - 1])[0], 
+      compiled : false, 
+      save_changes : false, 
+      language: 'Choose a language', 
+      highlighter: 'text', 
+      text: '' 
+    });
+    loadFileTabs()
+    showFile(files.length - 1); 
+  }
+}
+
 function save_file(){
   let extension = data['language'][files[file_active]['language']]['extension']
   if(files[file_active]['path'] == ''){
     let result = dialog.showSaveDialogSync({ 
-      title: 'Select the File Path to save', 
+      title: 'Selecciona la ubicacion para guardar el archivo', 
       defaultPath: path.join(process.env.userprofile, 'Desktop'), 
       filters: [
-        { name: files[file_active]['file'], extensions: [extension.slice(1, 5)] }
+        { name: 'untitled', extensions: [extension.slice(1, 5)] }
        ]
     });
     if(result == undefined){
