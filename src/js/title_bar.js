@@ -13,5 +13,3 @@ var titlebar = new customTitlebar.Titlebar({
     icon : '../img/feather.ico',
     titleHorizontalAlignment: 'left'
 });
-
-titlebar.updateTitle('Tiny Editor');
