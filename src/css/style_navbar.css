@@ -4,17 +4,19 @@
     Date: 20/02/2021
 */
 
-.button{
+#navbars > #buttons > .button{
     width: 50px;
     height: 30px;
-    margin: 5px;
+    margin-left: 5px;
 }
 
-nav, .navbar{
-    min-height: 40px !important;
-    background-color: #2F3129 !important;
+#navbars > #buttons{
+    min-height: 35px !important;
+    background-color: #252525 !important;
 }
 
-.navbar{
-    padding-left: 40px;
+#title{
+    width: 210px !important;
+    border: 0px;
+    background-color: #252525 !important;
 }

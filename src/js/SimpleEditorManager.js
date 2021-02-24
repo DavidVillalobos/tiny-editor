@@ -11,36 +11,79 @@ const { execSync } = require('child_process');// Exec Module
 const {dialog} = require('electron').remote;// Dialog Module
 const path = require('path');// Path Module
 const { remote } = require('electron'); 
+
 // ================ WINDOWS ==================
 var win = remote.getCurrentWindow();
 let settings_win = undefined;
-// ================ EDITOR ==================
+
+// ================ ACE EDITOR ==================
 var editor = ace.edit('editor');
+
 // ============== TERMINAL ==================
 var terminal = ace.edit('terminal');
+
 // ============= BUTTONS ====================
 var button_save = document.getElementById('button-save');
 var button_compiler = document.getElementById('button-compiler');
 var button_runner = document.getElementById('button-runner');
 var button_settings = document.getElementById('button-settings');
+
+// ========= FILETABS ==================
+var file_tabs = document.getElementById("filetabs")
+
 // ========= EDITOR PANEL ==================
 var editor_panel =  document.getElementById('editor');
 var terminal_panel =  document.getElementById('terminal');
+
 // ============= VARIABLES ==================
-var compiled = false;
-var clean = true;
-var save_changes = false;
-var file_name = '';
-var language = '';
+var file_active = 0; // position
+var files = []
+
 // ============= PATHS ==================
 // final path: resources/app/
-var path_file = ''
 var path_data = 'src/config/data.json'
 var path_settings = 'src/config/settings.json'
+
 // ============= SETTINGS DATA ==================
 var data = JSON.parse(fs.readFileSync(path_data));
 // ============= FUNCTIONS ================
+
+function showFile(new_active_file){
+  files[file_active]['active'] = false;
+  files[file_active]['text'] = editor.session.getValue(); // save preview data
+  //console.log(files[new_active_file]);
+  editor.session.setMode('ace/mode/' + files[file_active]['highlighter'])
+  editor.session.setValue(files[new_active_file]['text'])
+  files[new_active_file]['active'] = true;
+  file_active = new_active_file;
+}
+
+function getIcon(lang){
+	var result = '<span> <i class="'
+	if(lang == undefined) {
+		result += 'fas fa-folder-open'
+	} else if(lang == 'C++'){
+		result += 'fab fa-cuttlefish'
+	} else if(lang == 'Python'){ 
+		result += 'fab fa-python'
+	} else if(lang == 'Java'){ 
+		result += 'fab fa-java'
+	} else {
+		result += 'fas fa-file'
+	}
+	result += '"> </i> </span>'
+	return result	
+}
+
+function loadFileTabs(){
+  file_tabs.innerHTML = '';
+  for(let i in files){
+    file_tabs.innerHTML +=  '<button class="button is-dark" value="' + i + '" onClick="showFile(this.value)">' + getIcon(files[i]['language']) + '&nbsp;' + files[i]['name'] + '</button>';
+  }
+}
+
 function init_simple_editor(){
+  loadFileTabs();
   //Load editor options
   editor_panel.style.position = 'absolute'
   editor.setOptions({
@@ -123,27 +166,27 @@ function init_simple_editor(){
 init_simple_editor()
 
 function save_file(){
-  let extension = data['language'][language]['extension']
-  if(path_file == ''){
+  let extension = data['language'][files[file_active]['language']]['extension']
+  if(files[file_active]['path'] == ''){
     let result = dialog.showSaveDialogSync({ 
       title: 'Select the File Path to save', 
       defaultPath: path.join(process.env.userprofile, 'Desktop'), 
       filters: [
-        { name: language, extensions: [extension.slice(1, 5)] }
+        { name: files[file_active]['file'], extensions: [extension.slice(1, 5)] }
        ]
     });
     if(result == undefined){
-      file_name = path_file = ''
-      save_changes = false;
+      files[file_active]['file'] = files[file_active]['path'] = ''
+      files[file_active]['save_changes'] = false;
     }
     let aux_path = result.split('\\');
-    file_name = aux_path[aux_path.length - 1];
-    path_file = result.split('\\' + file_name)[0];
+    files[file_active]['name'] = aux_path[aux_path.length - 1];
+    files[file_active]['path'] = result.split('\\' + file_name)[0];
   }
-  fs.writeFileSync(path_file + '\\' +  file_name, editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'})
-  if(file_name == '') titlebar.updateTitle( 'untitled - ' + 'Tiny Editor');
-  else titlebar.updateTitle(path.join(path_file + '\\' + file_name) + ' - ' + 'Tiny Editor');
-  save_changes = true
+  fs.writeFileSync(files[file_active]['path'] + '\\' +  files[file_active]['name'], editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'})
+  if(files[file_active]['name'] == '') titlebar.updateTitle( 'untitled - ' + 'Tiny Editor');
+  else titlebar.updateTitle(path.join(files[file_active]['path'] + '\\' + files[file_active]['name']) + ' - ' + 'Tiny Editor');
+  files[file_active]['save_changes'] = true
 }
 
 // Save file
@@ -155,25 +198,25 @@ button_save.onclick = function(event){
 
 // Compile code (compile file)
 button_compiler.onclick = function(event){
-  if(compiled) {
+  if(files[file_active]['compiled']) {
     terminal.session.setValue('The code is already compiled')
     return;
   }
   // No need save file if you want compile, except if is java, because
-  if(path_file == '' && language != 'Java'){ // the file_name need be same class_name
-    file_name = 'Test' + data['language'][language]['extension'] // default name
-    path_file = path.join(__dirname + '\\..\\..\\codes') // default location
+  if(files[file_active]['path'] == '' && files[file_active]['language'] != 'Java'){ // the file_name need be same class_name
+    files[file_active]['name'] = 'Test' + data['language'][files[file_active]['language']]['extension'] // default name
+    files[file_active]['path'] = path.join(__dirname + '\\..\\..\\codes') // default location
   }
   button_compiler.setAttribute('class', 'button is-warning is-loading')
   button_runner.setAttribute('class', 'button is-success is-static')
   save_file();
   // Compile code
-  if(save_changes && language != 'Python'){ // Save changes
-    var compiler = data['language'][language]['compiler'] + ' ' + file_name;
-    if(language == 'C++') compiler += ' -o ' + file_name.split('.')[0] + '.exe';
+  if(files[file_active]['save_changes'] && files[file_active]['language'] != 'Python'){ // Save changes
+    var compiler = data['language'][files[file_active]['language']]['compiler'] + ' ' + files[file_active]['name'];
+    if(files[file_active]['language'] == 'C++') compiler += ' -o ' + files[file_active]['name'].split('.')[0] + '.exe';
     try{
       terminal.session.setValue('Compiling . . . :o')
-      execSync(compiler, {cwd: path_file});
+      execSync(compiler, {cwd: files[file_active]['path']});
       terminal.session.setValue(compiler + '\nCompilation success :D')
       compiled = true
       clean = false
@@ -189,13 +232,13 @@ button_compiler.onclick = function(event){
 // Run code
 button_runner.onclick = function(event) {
   button_compiler.click()
-  if(language == 'Python') compiled = true
+  if(files[file_active]['language'] == 'Python') compiled = true
   if(compiled){
-    let runner = 'start ' + data['language'][language]['runner'] + ' ';
-    runner += (language != 'C++')? file_name : file_name.split('.')[0] + '.exe';
+    let runner = 'start ' + data['language'][files[file_active]['language']]['runner'] + ' ';
+    runner += (files[file_active]['language'] != 'C++')? files[file_active]['name'] : files[file_active]['name'].split('.')[0] + '.exe';
     terminal.session.setValue("Run code with command:\n" + runner)
     try {
-      execSync(runner, {cwd: path_file});
+      execSync(runner, {cwd: files[file_active]['path']});
     } catch (stderr) {
       console.log(`stderr: ${stderr}`)
     }
@@ -240,35 +283,34 @@ function applySettings(){
   terminal_panel.style.fontSize = my_settings['fontSize-terminal'] + 'px'
   editor.session.setTabSize(my_settings['tabSize-editor'])
   editor.setTheme('ace/theme/' + my_settings['theme'])
-  editor.session.setMode('ace/mode/' + my_settings['highlighter'])
-  if(language != my_settings['current-language']){
-    /*if(!clean){
-        try {
-          let stdout = execSync('del ' + file_name, {cwd: path_file});
-          console.log(`stdout: ${stdout}`)
-        } catch (stderr) {
-          console.log(`stderr: ${stderr}`)
-        }
-    }*/
-    terminal.session.setValue('') // Clean terminal
-    compiled = makefile = false
-    editor.session.setValue(data['language'][my_settings['current-language']]['example'])
-    language = my_settings['current-language']
-    file_name = ''
-    path_file = ''
+  if(files.length == 0){ // not files in editor 
+    files.push({ // load default example
+      active: true, 
+      name: 'Test' + data['language'][my_settings['current-language']]['extension'],
+      path: '', 
+      compiled : false, 
+      save_changes : false, 
+      language: undefined, 
+      highlighter: undefined, 
+      text: data['language'][my_settings['current-language']]['example'] 
+    });
+    editor.session.setValue(files[file_active]['text']);
   }
-
-  if(language == 'Python' || language == 'Choose a language')  
+  files[file_active]['language'] = my_settings['current-language'], 
+  files[file_active]['highlighter'] = my_settings['highlighter'], 
+  loadFileTabs(); // load new tab
+  showFile(file_active);
+  if(files[file_active]['language'] == 'Python' || files[file_active]['language'] == 'Choose a language')  
     button_compiler.setAttribute('class', 'button is-dark is-static')
   else  
     button_compiler.setAttribute('class', 'button is-warning')
-  if(language == 'Choose a language'){
+  if(files[file_active]['language'] == 'Choose a language'){
     button_runner.setAttribute('class', 'button is-success is-static')
   }else{  
     button_runner.setAttribute('class', 'button is-success')
   }
 
-  terminal_panel.style.top = editor_panel.style.top = '40px'
+  terminal_panel.style.top = editor_panel.style.top = '60px'
   terminal_panel.style.bottom = editor_panel.style.bottom = '0%'
   terminal_panel.style.left = terminal_panel.style.right = '0%'
   editor_panel.style.left = editor_panel.style.right = '0%'
