@@ -230,6 +230,9 @@ button_settings.onclick = function(event){
 
 // Apply settings
 function applySettings(){
+  if(!fs.existsSync(path_settings)){
+    fs.writeFileSync(path_settings, JSON.stringify({'current-language':'Choose a language','fontSize-editor':18,'fontSize-terminal':18,'tabSize-editor':4,'highlighter':'text','theme':'monokai','dark-mode':true, 'integrated-console':true,'terminal-position':'right'}), 'UTF-8');
+  } 
   let my_settings = JSON.parse(fs.readFileSync(path_settings));
   // 'dark-mode' : 'true'
   // 'integrated-console' : 'true'

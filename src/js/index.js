@@ -1,7 +1,7 @@
 /* 
     File: main.js
     Author: Luis David Villalobos Gonzalez
-    Date: 20/02/2021
+    Date: 24/02/2021
 */
 
 const { app, BrowserWindow} = require('electron')
@@ -11,8 +11,8 @@ function createWindows () {
   const mainwin = new BrowserWindow({
     show: false,
     icon: 'src/img/feather.ico',
-    height: 350,
-    width: 550,
+    height: 800,
+    width: 600,
     resizable: false,
     frame: false,
     webPreferences: {
@@ -22,6 +22,7 @@ function createWindows () {
   })
   mainwin.loadFile('src/components/index.html')
   mainwin.once('ready-to-show', () => {
+    mainwin.maximize()
     mainwin.show()
   })
 }
