@@ -1,0 +1,19 @@
+/*
+    File: style_filetabs.js
+    Author: Luis David Villalobos Gonzalez
+    Date: 24/02/2021
+*/
+
+#navbars > #filetabs > .button{
+    height: 25px;
+    border-radius: 0%;
+    background-color: #252525;
+}
+#navbars > #filetabs > .button:hover{
+    background-color: #282938; 
+}
+
+#navbars > #filetabs{
+    min-height: 25px !important;
+    background-color: #252525;
+}
