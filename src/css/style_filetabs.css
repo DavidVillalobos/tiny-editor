@@ -7,13 +7,17 @@
 #navbars > #filetabs > .button{
     height: 25px;
     border-radius: 0%;
+    border: 0px;
     background-color: #252525;
+    color: aliceblue;
 }
+
 #navbars > #filetabs > .button:hover{
-    background-color: #282938; 
+    background-color: #1d285b;
 }
 
 #navbars > #filetabs{
     min-height: 25px !important;
     background-color: #252525;
 }
+

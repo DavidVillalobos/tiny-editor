@@ -28,11 +28,12 @@ var button_compiler = document.getElementById('button-compiler');
 var button_runner = document.getElementById('button-runner');
 var button_settings = document.getElementById('button-settings');
 var button_new_file = document.getElementById('button-new-file');
+var button_open_file = document.getElementById('button-open-file');
 
 // ========= FILETABS ==================
 var file_tabs = document.getElementById("filetabs")
 
-// ========= EDITOR PANEL ==================
+// ========= EDITOR AND TERMINAL PANEL ==================
 var editor_panel =  document.getElementById('editor');
 var terminal_panel =  document.getElementById('terminal');
 
@@ -47,30 +48,35 @@ var path_settings = 'src/config/settings.json'
 
 // ============= SETTINGS DATA ==================
 var data = JSON.parse(fs.readFileSync(path_data));
-// ============= FUNCTIONS ================
 
-function showFile(new_active_file){
-  files[file_active]['active'] = false;
+// ============= FUNCTIONS ================
+function showFile(index){
   files[file_active]['text'] = editor.session.getValue(); // save preview data
   //console.log(files[new_active_file]);
+  file_active = index;
+  editor.session.setValue(files[file_active]['text'])
   editor.session.setMode('ace/mode/' + files[file_active]['highlighter'])
-  editor.session.setValue(files[new_active_file]['text'])
-  files[new_active_file]['active'] = true;
-  file_active = new_active_file;
+  if(files[file_active]['path'] == '') titlebar.updateTitle( 'untitled - ' + 'Tiny Editor');
+  else titlebar.updateTitle(path.join(files[file_active]['path'] + '\\' + files[file_active]['name']) + ' - ' + 'Tiny Editor');
+  files[file_active]['save_changes'] = true
+}
+
+function closeFile(index){
+  console.log(`You want to close file in index -> ${index} contain ${files[index]} :D`);
 }
 
 function getIcon(lang){
-	var result = '<span> <i class="'
+  var result = '<span> <i class="'
 	if(lang == undefined) {
 		result += 'fas fa-folder-open'
 	} else if(lang == 'C++'){
-		result += 'fab fa-cuttlefish'
+    result += 'fab fa-cuttlefish'
 	} else if(lang == 'Python'){ 
-		result += 'fab fa-python'
+    result += 'fab fa-python'
 	} else if(lang == 'Java'){ 
-		result += 'fab fa-java'
+    result += 'fab fa-java'
 	} else {
-		result += 'fas fa-file'
+    result += 'fas fa-file'
 	}
 	result += '"> </i> </span>'
 	return result	
@@ -79,7 +85,8 @@ function getIcon(lang){
 function loadFileTabs(){
   file_tabs.innerHTML = '';
   for(let i in files){
-    file_tabs.innerHTML +=  '<button class="button is-dark" value="' + i + '" onClick="showFile(this.value)">' + getIcon(files[i]['language']) + '&nbsp;' + files[i]['name'] + '</button>';
+    file_tabs.innerHTML +=  '<button class="button" value="' + i + '" onClick="showFile(this.value)">' + getIcon(files[i]['language']) + '&nbsp;' + files[i]['name'] + '</button>'
+    file_tabs.innerHTML +=  '<button class="button" value="' + i + '" onClick="closeFile(this.value)"><i class="fas fa-times"></i></button>';
   }
 }
 
@@ -95,7 +102,7 @@ function init_simple_editor(){
     showPrintMargin : true
   });
   editor.commands.addCommand({
-    name: 'SaveAndCompile',
+    name: 'Save',
     bindKey: {win: 'Ctrl-S'},
     exec: function(editor) {
       button_save.click()
@@ -161,6 +168,37 @@ function init_simple_editor(){
       fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8')
     }
   }, { passive: false });
+  
+  // DRAG AND DROP FILE
+  document.addEventListener('drop', (event) => { 
+    event.preventDefault(); 
+    event.stopPropagation(); 
+    for (const f of event.dataTransfer.files) { 
+        // Using the path attribute to get absolute file path 
+        //console.log('File Path of dragged files: ', f.path)  
+        let index = already_is_open(f['path'], f['name'])
+        if(index != -1){
+          showFile(index);
+          break;
+        }
+        files.push({ // add file to editor (session file)
+          name: f['name'],
+          path: f['path'], 
+          compiled : false, 
+          save_changes : false, 
+          language: 'Choose a language', 
+          highlighter: 'text', 
+          text: fs.readFileSync(f['path'], { encoding : 'UTF-8'}) // content
+        });
+        loadFileTabs()
+        showFile(files.length - 1); 
+    } 
+  });
+
+  document.addEventListener('dragover', (e) => { 
+    e.preventDefault(); 
+    e.stopPropagation(); 
+  }); 
 
 }
 
@@ -177,7 +215,6 @@ button_new_file.onclick = function(event){
   if(result != undefined){ 
     let aux_path = result.split('\\');    
     files.push({
-      active: false, 
       name: aux_path[aux_path.length - 1],
       path: result.split('\\' + aux_path[aux_path.length - 1])[0], 
       compiled : false, 
@@ -188,6 +225,45 @@ button_new_file.onclick = function(event){
     });
     loadFileTabs()
     showFile(files.length - 1); 
+  }
+}
+
+function already_is_open(file_path, file_name){
+  for(let i in files){
+    if(files[i]['name'] == file_name && files[i]['path'] ==  file_path){
+      return i;
+    }
+  }
+  return -1;
+}
+button_open_file.onclick = function(event){
+  let result = dialog.showOpenDialogSync({ 
+    title: 'Selecciona la ubicacion del archivo', 
+    defaultPath: path.join(process.env.userprofile, 'Desktop'),
+    properties : ['multiSelections']
+  });
+  if(result != undefined){
+    for(let file of result){
+      let aux_path = file.split('\\');
+      let file_name = aux_path[aux_path.length - 1];
+      let file_path = file.split('\\' + file_name)[0];
+      let index = already_is_open(file_path, file_name)
+      if(index != -1){
+        showFile(index);
+        break;
+      }
+      files.push({ // add file to editor (session file)
+        name: file_name,
+        path: file_path, 
+        compiled : false, 
+        save_changes : false, 
+        language: 'Choose a language', 
+        highlighter: 'text', 
+        text: fs.readFileSync(file_path + '\\' + file_name, { encoding : 'UTF-8'}) // content
+      });
+      loadFileTabs()
+      showFile(files.length - 1); 
+    }
   }
 }
 
@@ -210,9 +286,6 @@ function save_file(){
     files[file_active]['path'] = result.split('\\' + file_name)[0];
   }
   fs.writeFileSync(files[file_active]['path'] + '\\' +  files[file_active]['name'], editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'})
-  if(files[file_active]['name'] == '') titlebar.updateTitle( 'untitled - ' + 'Tiny Editor');
-  else titlebar.updateTitle(path.join(files[file_active]['path'] + '\\' + files[file_active]['name']) + ' - ' + 'Tiny Editor');
-  files[file_active]['save_changes'] = true
 }
 
 // Save file
@@ -311,7 +384,6 @@ function applySettings(){
   editor.setTheme('ace/theme/' + my_settings['theme'])
   if(files.length == 0){ // not files in editor 
     files.push({ // load default example
-      active: true, 
       name: 'Test' + data['language'][my_settings['current-language']]['extension'],
       path: '', 
       compiled : false, 
