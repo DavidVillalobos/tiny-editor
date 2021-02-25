@@ -31,7 +31,7 @@
         "C++" : {
             "extension" : ".cpp",
             "highlighter" : "c_cpp",
-            "example" : "#include<iostream>\nusing namespace std;\nint main(){\n\tcout<<\"Thank you very much for using Tiny Editor\"<<endl;\n\tsystem(\"pause\");\n}\n",
+            "example" : "#include<iostream>\nusing namespace std;\nint main(){\n\tcout<<\"Thank you very much for using Tiny Editor\"<<endl;\n}\n",
             "compiler" : "g++",
             "runner" : ""
         },
@@ -39,17 +39,17 @@
         "Java" : {
             "extension" : ".java",
             "highlighter" : "java",
-            "example" : "import java.util.Scanner;\nimport java.io.*;\npublic class Test{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println(\"Thank you very much for using Tiny Editor\");\n\t\tSystem.out.println(\"Press Any Key To Continue...\");\n\t\tnew java.util.Scanner(System.in).nextLine();\n\t}\n}\n",
+            "example" : "public class Test{\n\tpublic static void main(String[] args){\n\t\tSystem.out.println(\"Thank you very much for using Tiny Editor\");\n\t}\n}\n",
             "compiler" : "javac",
-            "runner" : "java"
+            "runner" : "java "
         },
 
         "Python" : {
             "extension" : ".py",
             "highlighter" : "python",
-            "example" : "print(\"Thank you very much for using Tiny Editor\")\ninput(\"Press Any Key To Continue...\")\n",
+            "example" : "print(\"Thank you very much for using Tiny Editor\")\n",
             "compiler" : "",
-            "runner" : "python"
+            "runner" : "python "
         }
 
     }
