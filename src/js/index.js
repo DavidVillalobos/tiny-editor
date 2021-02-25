@@ -5,7 +5,9 @@
 */
 
 const { app, BrowserWindow} = require('electron')
+const { execSync } = require('child_process');// Exec Module
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
+
 
 function createWindows () {
   const mainwin = new BrowserWindow({
@@ -21,7 +23,7 @@ function createWindows () {
       enableRemoteModule: true
     }
   })
-  mainwin.loadFile('src/components/index.html')
+  mainwin.loadFile('src/html/index.html')
   mainwin.once('ready-to-show', () => {
     mainwin.maximize()
     mainwin.show()
@@ -39,3 +41,6 @@ app.on('activate', () => {
     createWindows()
   }
 })
+
+// Default folder for codes
+execSync("md codes");

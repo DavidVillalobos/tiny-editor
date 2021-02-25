@@ -1,0 +1,84 @@
+<!-- 
+  File: SimpleEditor.html
+  Author: Luis David Villalobos Gonzalez
+  Date: 24/02/2021
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+  <!-- Metadata -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+  <!-- Bulma -->
+  <link rel="stylesheet" href="../css/bulma.css">
+  <!-- Fontawesome -->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <!-- styles -->  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style_navbar.css">
+  <link rel="stylesheet" href="../css/style_filetabs.css">
+  <!-- favicon -->  
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+  </head>
+  <body>
+    <div id="navbars">
+      <nav id="buttons" class="navbar">
+        <div id="title" class="button is-static">
+          <div class="title has-text-light">
+              Tiny Editor
+          </div>
+        </div>
+        <div id="button-open-file" class="button is-grey">
+          <span class="icon tooltip">
+            <span class="tooltiptext">Open File (Ctrl + O)</span>
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <div id="button-new-file" class="button is-danger">
+          <span class="icon tooltip">
+            <span class="tooltiptext">New File (Ctrl + N)</span>
+            <i class="fas fa-file-medical"></i>
+          </span>
+        </div>
+        <div id="button-save" class="button is-primary">
+          <span class="icon tooltip">
+            <span class="tooltiptext">Save (Ctrl + S)</span>
+            <i class="fas fa-save"></i>
+          </span>
+        </div>
+        <div id="button-save-as" class="button is-info">
+          <span class="icon tooltip">
+            <span class="tooltiptext">Save as (Ctrl + G)</span>
+            <i class="far fa-save"></i>
+          </span>
+        </div>
+        <div id="button-compiler" class="button is-warning">
+          <span class="icon tooltip">
+            <span class="tooltiptext">Compiler (Ctrl + B)</span>
+            <i class="fas fa-hammer"></i>
+          </span>
+        </div>
+        <div id="button-runner" class="button is-success">
+          <span class="icon tooltip">
+            <span class="tooltiptext">Run (Ctrl + R)</span>
+            <i class="fas fa-play"></i>
+          </span>
+        </div>
+        <div id="button-settings" class="button is-link">
+          <span class="icon tooltip">
+            <span class="tooltiptext">Settings (Ctrl + W)</span>
+            <i class="fas fa-cog"></i>
+          </span>
+        </div>
+      </nav>
+      <nav id="filetabs" class="navbar"></nav>
+    </div>
+    <div id="editor"></div>
+    <div id="terminal"></div>
+  </body>
+</html>
+<script src="../js/ace-editor/ace.js"></script>
+<script src='../js/title_bar.js'></script>
+<script src="../js/navbar.js"></script>
+<script src="../js/editor.js"></script>  
