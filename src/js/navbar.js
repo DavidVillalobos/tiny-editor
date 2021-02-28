@@ -171,7 +171,7 @@ button_save.onclick = function(event){
 
 // Save as file
 button_save_as.onclick = function(event){
-    file_name = path_file = ''
+    files[file_active]['name'] = files[file_active]['path'] = ''
     save_file();
 }
 
@@ -204,6 +204,8 @@ async function compile_code(){
             terminal.session.setValue(compiler + '\nCompilation success :D')
             return true;
         }catch(err){
+            button_compiler.setAttribute('class', 'button is-warning');
+            button_runner.setAttribute('class', 'button is-success');
             terminal.session.setValue(compiler + '\nCompilation error :c\n Check the following syntax for:\n' + err)
             return false;
         }
