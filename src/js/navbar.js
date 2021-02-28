@@ -1,11 +1,11 @@
 /* 
     File:   navbar.js
     Author: Luis David Villalobos Gonzalez
-    Date: 24/02/2021
+    Date: 28/02/2021
 */
 // ================ REQUIREMENTS ============
 const { BrowserWindow } = require('electron').remote;
-const { execSync } = require('child_process');// Exec Module
+const { exec, execSync } = require('child_process');// Exec Module
 const {dialog} = require('electron').remote;// Dialog Module
 const path = require('path');// Path Module
 const { remote } = require('electron'); 
@@ -33,7 +33,6 @@ function showFile(index){
     editor.session.setMode('ace/mode/' + files[file_active]['highlighter'])
     if(files[file_active]['path'] == '') titlebar.updateTitle( 'untitled - ' + 'Tiny Editor');
     else titlebar.updateTitle(path.join(files[file_active]['path'] + '\\' + files[file_active]['name']) + ' - ' + 'Tiny Editor');
-    files[file_active]['save_changes'] = true
 }
   
 function closeFile(index){
@@ -44,8 +43,6 @@ function closeFile(index){
         files.push({ // load welcome file
           name: 'Tiny_Editor.txt',
           path: path.join(__dirname + '\\..\\..\\codes'), // default location, 
-          compiled : false, 
-          save_changes : false, 
           language: undefined, 
           highlighter: 'text', 
           text: "\n\n\t\tWelcome to Tiny Editor\n" +
@@ -108,8 +105,6 @@ button_new_file.onclick = function(event){
         files.push({
             name: aux_path[aux_path.length - 1],
             path: result.split('\\' + aux_path[aux_path.length - 1])[0], 
-            compiled : false, 
-            save_changes : false, 
             language: 'Choose a language', 
             highlighter: 'text', 
             text: '' 
@@ -138,8 +133,6 @@ button_open_file.onclick = function(event){
             files.push({ // add file to editor (session file)
             name: file_name,
             path: file_path, 
-            compiled : false, 
-            save_changes : false, 
             language: 'Choose a language', 
             highlighter: 'text', 
             text: fs.readFileSync(file_path + '\\' + file_name, { encoding : 'UTF-8'}) // content
@@ -149,8 +142,8 @@ button_open_file.onclick = function(event){
         }
     }
 }
-  
-function save_file(){
+
+async function save_file(){
     let extension = data['language'][files[file_active]['language']]['extension']
     if(files[file_active]['path'] == ''){
         let result = dialog.showSaveDialogSync({ 
@@ -160,14 +153,15 @@ function save_file(){
             { name: 'untitled', extensions: [extension.slice(1, 5)] }
             ]
         });
-        if(result == undefined) return;
+        if(result == undefined) return false;
         let aux_path = result.split('\\');
         files[file_active]['name'] = aux_path[aux_path.length - 1];
         files[file_active]['path'] = result.split('\\' + files[file_active]['name'])[0];
     }
-    fs.writeFileSync(files[file_active]['path'] + '\\' +  files[file_active]['name'], editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'})
+    await fs.writeFile(files[file_active]['path'] + '\\' +  files[file_active]['name'], editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, ()=>{})
     loadFileTabs()
     showFile(file_active)
+    return true;
 }
 
 // Save file
@@ -175,76 +169,84 @@ button_save.onclick = function(event){
     save_file()
 } 
 
+// Save as file
 button_save_as.onclick = function(event){
     file_name = path_file = ''
-    compiled = false
     save_file();
 }
-  
-// Compile code (compile file)
-button_compiler.onclick = function(event){
-    if(files[file_active]['compiled']) {
-        terminal.session.setValue('The code is already compiled')
-        return;
-    }
+
+function wait(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+async function compile_code(){
     // No need save file if you want compile, except if is java, because
     if(files[file_active]['path'] == '' && files[file_active]['language'] != 'Java'){ // the file_name need be same class_name
         files[file_active]['name'] = 'Test' + data['language'][files[file_active]['language']]['extension'] // default name
         files[file_active]['path'] = path.join(__dirname + '\\..\\..\\codes') // default location
     }
-    button_compiler.setAttribute('class', 'button is-warning is-loading')
-    button_runner.setAttribute('class', 'button is-success is-static')
-    save_file();
+    if(files[file_active]['language'] != 'Python'){
+        button_compiler.setAttribute('class', 'button is-warning is-loading')
+        button_runner.setAttribute('class', 'button is-success is-static')
+    }
     // Compile code
-    if(files[file_active]['save_changes'] && files[file_active]['language'] != 'Python'){ // Save changes
+    let save_changes = await save_file();
+    if(save_changes){ // Save changes
+        if(files[file_active]['language'] == 'Python') return true;
         var compiler = data['language'][files[file_active]['language']]['compiler'] + ' ' + files[file_active]['name'];
         if(files[file_active]['language'] == 'C++') compiler += ' -o ' + files[file_active]['name'].split('.')[0] + '.exe';
+        terminal.session.setValue('Compiling . . . :o');
         try{
-        terminal.session.setValue('Compiling . . . :o')
-        execSync(compiler, {cwd: files[file_active]['path']});
-        terminal.session.setValue(compiler + '\nCompilation success :D')
-        compiled = true
-        clean = false
-        }catch(stderr){
-        terminal.session.setValue(compiler + '\nCompilation error :c\n Check the following syntax for:\n' + stderr)
-        compiled = false
+            await wait(100);
+            execSync(compiler, {cwd: files[file_active]['path']});
+            button_compiler.setAttribute('class', 'button is-warning');
+            button_runner.setAttribute('class', 'button is-success');
+            terminal.session.setValue(compiler + '\nCompilation success :D')
+            return true;
+        }catch(err){
+            terminal.session.setValue(compiler + '\nCompilation error :c\n Check the following syntax for:\n' + err)
+            return false;
         }
     }
-    button_compiler.setAttribute('class', 'button is-warning');
-    button_runner.setAttribute('class', 'button is-success');
+}
+  
+// Compile code (compile file)
+button_compiler.onclick = function(event){
+    compile_code();
 }
 
 // Run code
-button_runner.onclick = function(event) {
-    button_compiler.click()
-    if(files[file_active]['language'] == 'Python') compiled = true
-    if(compiled){
-        let runner = 'start "Tiny Editor" cmd /c "' + data['language'][files[file_active]['language']]['runner'];
+button_runner.onclick = async function(event) {
+    let compiled = await compile_code();
+    if(files[file_active]['language'] == 'Python' || compiled){
+        let runner = data['language'][files[file_active]['language']]['runner'];
         runner += (files[file_active]['language'] != 'C++')? files[file_active]['name'] : files[file_active]['name'].split('.')[0] + '.exe';
-        runner += ' & pause"' // feature optional
         terminal.session.setValue("Run code with command:\n" + runner)
-        try {
-        execSync(runner, {cwd: files[file_active]['path']});
-        } catch (stderr) {
-        console.log(`stderr: ${stderr}`)
-        }
+        // runner += '"' if no want pause
+        runner += ' & cd ' + path.join(__dirname + '\\..\\config') + ' & pause.exe "' // feature optional
+        await wait(100);
+        exec('start "Tiny Editor" cmd /c "' + runner, {cwd: files[file_active]['path']},(error, stdout, stderr) => {
+            if(error){
+                console.log(`stderr: ${stderr}`)
+            }
+        });
     }
 }
   
 button_settings.onclick = function(event){
     if(!settings_win){
         settings_win = new BrowserWindow({
-        show: false,
-        icon: 'src/img/feather.ico',
-        width: 800, 
-        height: 430,
-        resizable : false,
-        frame: false,
-        alwaysOnTop : true,
-        webPreferences: {
-            nodeIntegration: true, 
-            enableRemoteModule: true
-        }
+            show: false,
+            icon: 'src/img/feather.ico',
+            width: 800, 
+            height: 430,
+            resizable : false,
+            frame: false,
+            alwaysOnTop : true,
+            webPreferences: {
+                nodeIntegration: true, 
+                enableRemoteModule: true
+            }
         }); 
         settings_win.loadFile('src/html/settings.html');
         settings_win.once('ready-to-show', () => {

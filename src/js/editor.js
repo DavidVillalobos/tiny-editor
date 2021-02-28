@@ -1,7 +1,7 @@
 /* 
     File:   editor.js
     Author: Luis David Villalobos Gonzalez
-    Date: 24/02/2021
+    Date: 28/02/2021
 */
 
 // ================ REQUIREMENTS ============
@@ -105,9 +105,6 @@ function init_editor(){
   });
   // EVENTS
   
-  // onchange in editor
-  editor.session.on('change', function(event){ save_changes = compiled = false });
-  
   // editor mousewheel
   editor_panel.addEventListener("mousewheel", event => {
     if(event.ctrlKey == true){
@@ -156,8 +153,6 @@ function init_editor(){
         files.push({ // add file to editor (session file)
           name: f['name'],
           path: f['path'], 
-          compiled : false, 
-          save_changes : false, 
           language: 'Choose a language', 
           highlighter: 'text', 
           text: fs.readFileSync(f['path'], { encoding : 'UTF-8'}) // content
@@ -192,8 +187,6 @@ function applySettings(){
     files.push({ // load default example
       name: 'Test' + data['language'][my_settings['current-language']]['extension'],
       path: '', 
-      compiled : false, 
-      save_changes : false, 
       language: undefined, 
       highlighter: undefined, 
       text: data['language'][my_settings['current-language']]['example'] 
