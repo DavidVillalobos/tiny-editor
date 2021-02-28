@@ -1,7 +1,7 @@
 /* 
     File: main.js
     Author: Luis David Villalobos Gonzalez
-    Date: 24/02/2021
+    Date: 25/02/2021
 */
 
 const { app, BrowserWindow} = require('electron')
@@ -41,6 +41,3 @@ app.on('activate', () => {
     createWindows()
   }
 })
-
-// Default folder for codes
-execSync("md codes");
