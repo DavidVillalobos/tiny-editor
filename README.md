@@ -6,7 +6,7 @@ The project is oriented to be used by people who are starting in the world of pr
 
 ---
 
-<img src="demo/WindowCode.png" width="450">   
+<img src="demo/WindowCode.png" width="700">   
 
 ### Built with 🛠️
 
@@ -19,9 +19,8 @@ The project is oriented to be used by people who are starting in the world of pr
 ### 📃 Notes
 
 This is a first simple version, now i'am working in:
-* Create tutorials to install and configure, java and python
-* Allow to configurate enviroment of the TinyEditor.
-* Allow multiple files for edit and explorer (tree directory).
+* Create tutorials to install and configure java and python
+* Allow to configurate enviroment of Tiny Editor.
 * Option to configure the makefiles.  
 
 ### Pre-requirements 📋
