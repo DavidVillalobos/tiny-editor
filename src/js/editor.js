@@ -37,10 +37,10 @@ function init_editor(){
   editor_panel.style.position = 'absolute'
   editor.setOptions({
     readOnly : false,
-    autoScrollEditorIntoView : false,
+    autoScrollEditorIntoView : true,
     highlightActiveLine : true,
     showGutter : true,
-    showPrintMargin : true
+    showPrintMargin : false
   });
   editor.commands.addCommand({
     name: 'Save',
