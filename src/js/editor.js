@@ -1,7 +1,7 @@
 /* 
     File:   editor.js
     Author: Luis David Villalobos Gonzalez
-    Date: 28/02/2021
+    Date: 01/03/2021
 */
 
 // ================ REQUIREMENTS ============
@@ -26,9 +26,9 @@ var relative_path = '' //'resources/app/' // when package app
 var path_data = relative_path + 'src/config/data.json'
 var path_settings = relative_path + 'src/config/settings.json'
 
-// ============= SETTINGS DATA ==================
+// ============= SETTINGS AND DATA ==================
 var data = JSON.parse(fs.readFileSync(path_data));
-
+var my_settings = JSON.parse(fs.readFileSync(path_settings));
 // ============= FUNCTIONS ================
 
 function init_editor(){
@@ -116,7 +116,7 @@ function init_editor(){
         actual++;
       }
       editor_panel.style.fontSize = actual + 'px'
-      let my_settings = JSON.parse(fs.readFileSync(path_settings));
+      my_settings = JSON.parse(fs.readFileSync(path_settings));
       my_settings['fontSize-editor'] = actual;
       fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8')
     }
@@ -132,7 +132,7 @@ function init_editor(){
         actual++;
       }
       terminal_panel.style.fontSize = actual + 'px'
-      let my_settings = JSON.parse(fs.readFileSync(path_settings));
+      my_settings = JSON.parse(fs.readFileSync(path_settings));
       my_settings['fontSize-terminal'] = actual;
       fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8')
     }
@@ -176,7 +176,7 @@ function applySettings(){
   if(!fs.existsSync(path_settings)){
     fs.writeFileSync(path_settings, JSON.stringify({'current-language':'Choose a language','fontSize-editor':18,'fontSize-terminal':18,'tabSize-editor':4,'highlighter':'text','theme':'monokai','dark-mode':true, 'integrated-console':true,'terminal-position':'right'}), 'UTF-8');
   } 
-  let my_settings = JSON.parse(fs.readFileSync(path_settings));
+  my_settings = JSON.parse(fs.readFileSync(path_settings));
   // 'dark-mode' : 'true'
   // 'integrated-console' : 'true'
   editor_panel.style.fontSize = my_settings['fontSize-editor'] + 'px'

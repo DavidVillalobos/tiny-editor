@@ -1,15 +1,16 @@
 /* 
-    File:   EditorManager.js
+    File:   settings.js
     Author: Luis David Villalobos Gonzalez
-    Date: 21/02/2021
+    Date: 01/03/2021
 */
+
 // ================ REQUIREMENTS ============
-const fs = require('fs');// File Module
+const fs = require('fs');
 const { remote } = require('electron') 
 
 var settings_win = remote.getCurrentWindow();
 
-// ============= PATH'S FILE ==================
+// ============= PATH'S ==================
 var path_settings = 'src/config/settings.json'
 var path_data = 'src/config/data.json'
 
@@ -33,6 +34,7 @@ var select_language = document.getElementById('languages')
 // ============= CHECKBOX ================
 var checkbox_dark_mode = document.getElementById('dark-mode');
 var checkbox_integrated_console = document.getElementById('integrated-console');
+var checkbox_pause_end = document.getElementById('pause-end');
 
 
 function load_settings(){  
@@ -72,13 +74,24 @@ function load_settings(){
         select_terminal_position.appendChild(opt)
     }
     // Load settings from settings.json
-    // if settings does not exist, apply default settings
+    // if settings does not exist, create default settings
     if(!fs.existsSync(path_settings)){
-        fs.writeFileSync(path_settings, JSON.stringify({'current-language':'Choose a language','fontSize-editor':18,'fontSize-terminal':18,'tabSize-editor':4,'highlighter':'text','theme':'monokai','dark-mode':true, 'integrated-console':true,'terminal-position':'right'}), 'UTF-8');
+        fs.writeFileSync(path_settings, JSON.stringify({
+            'current-language' : 'Choose a language',
+            'fontSize-editor' : 18,
+            'fontSize-terminal' : 18,
+            'tabSize-editor' : 4,
+            'highlighter' : 'text',
+            'theme' : 'monokai',
+            'dark-mode' : true, 
+            'integrated-console' : true,
+            'terminal-position' : 'right',
+            'pause-end' : true,
+        }), 'UTF-8');
     } 
     let my_settings = JSON.parse(fs.readFileSync(path_settings));
-    console.log(path_settings)
-    console.log(my_settings)
+    //console.log(path_settings)
+    //console.log(my_settings)
     input_editorFontSize.value = my_settings['fontSize-editor']
     input_terminalFontSize.value = my_settings['fontSize-terminal']
     input_editorTabSize.value = my_settings['tabSize-editor']
@@ -88,27 +101,30 @@ function load_settings(){
     select_language.value = my_settings['current-language']  
     checkbox_dark_mode.checked = my_settings['dark-mode']
     checkbox_integrated_console.checked = my_settings['integrated-console']
+    checkbox_pause_end.checked = my_settings['pause-end']
 }
 
 // load settings 
-load_settings()
+load_settings();
 
 // Save settings   
 button_save_settings.onclick = function(event) {
     let my_settings = JSON.parse(fs.readFileSync(path_settings));
-    my_settings['fontSize-editor'] = input_editorFontSize.value
-    my_settings['fontSize-terminal'] = input_terminalFontSize.value
-    my_settings['tabSize-editor'] = input_editorTabSize.value
-    my_settings['highlighter'] = select_highlighter.value
-    my_settings['theme'] = select_theme.value
-    my_settings['terminal-position'] = select_terminal_position.value
-    on_change_language = my_settings['current-language'] != select_language.value  
-    my_settings['current-language'] = select_language.value
-    my_settings['dark-mode'] = checkbox_dark_mode.checked
-    my_settings['integrated-console'] = checkbox_integrated_console.checked
-    fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8')
+    my_settings['fontSize-editor'] = input_editorFontSize.value;
+    my_settings['fontSize-terminal'] = input_terminalFontSize.value;
+    my_settings['tabSize-editor'] = input_editorTabSize.value;
+    my_settings['highlighter'] = select_highlighter.value;
+    my_settings['theme'] = select_theme.value;
+    my_settings['terminal-position'] = select_terminal_position.value;
+    on_change_language = my_settings['current-language'] != select_language.value ; 
+    my_settings['current-language'] = select_language.value;
+    my_settings['dark-mode'] = checkbox_dark_mode.checked;
+    my_settings['integrated-console'] = checkbox_integrated_console.checked;
+    my_settings['pause-end'] = checkbox_pause_end.checked;
+    fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8');
     settings_win.close();
 }
+
 button_close_settings.onclick = function(event){
     settings_win.close();
 }
