@@ -1,7 +1,7 @@
 /* 
     File:   navbar.js
     Author: Luis David Villalobos Gonzalez
-    Date: 28/02/2021
+    Date: 01/03/2021
 */
 // ================ REQUIREMENTS ============
 const { BrowserWindow } = require('electron').remote;
@@ -194,7 +194,7 @@ async function compile_code(){
     if(save_changes){ // Save changes
         if(files[file_active]['language'] == 'Python') return true;
         var compiler = data['language'][files[file_active]['language']]['compiler'] + ' ' + files[file_active]['name'];
-        if(files[file_active]['language'] == 'C++') compiler += ' -o ' + files[file_active]['name'].split('.')[0] + '.exe';
+        if(files[file_active]['language'] == 'C++') compiler += ' -o ' + files[file_active]['name'].split('.')[0];
         terminal.session.setValue('Compiling . . . :o');
         try{
             await wait(100);
@@ -222,10 +222,13 @@ button_runner.onclick = async function(event) {
     let compiled = await compile_code();
     if(files[file_active]['language'] == 'Python' || compiled){
         let runner = data['language'][files[file_active]['language']]['runner'];
-        runner += (files[file_active]['language'] != 'C++')? files[file_active]['name'] : files[file_active]['name'].split('.')[0] + '.exe';
+        runner += (files[file_active]['language'] != 'C++')? files[file_active]['name'] : files[file_active]['name'].split('.')[0];
         terminal.session.setValue("Run code with command:\n" + runner)
-        // runner += '"' if no want pause
-        runner += ' & cd ' + path.join(__dirname + '\\..\\config') + ' & pause.exe "' // feature optional
+        if(my_settings['pause-end']) {
+            runner += ' & cd ' + path.join(__dirname + '\\..\\config') + ' & pause.exe "'
+        } else {
+            runner += '"' 
+        }
         await wait(100);
         exec('start "Tiny Editor" cmd /c "' + runner, {cwd: files[file_active]['path']},(error, stdout, stderr) => {
             if(error){
@@ -252,11 +255,11 @@ button_settings.onclick = function(event){
         }); 
         settings_win.loadFile('src/html/settings.html');
         settings_win.once('ready-to-show', () => {
-        settings_win.show()
+            settings_win.show()
         })  
         settings_win.on('closed', function(){
-        settings_win = null;
-        applySettings()
+            settings_win = undefined;
+            applySettings()
         });
     }
 }

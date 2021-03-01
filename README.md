@@ -46,7 +46,8 @@ variables in PATH** : javac, java, g++ and python.
 ### There are two ways to install TinyEditor, with the latest version in development or the pre-realease
 
 ---
-### Installation of last version 🔧
+
+## Installation of last version 🔧
 
 Download code [here](https://github.com/DavidVillalobos/Tiny_Editor/archive/master.zip) and extract where you prefer  
 or clone like:  
@@ -57,11 +58,20 @@ git clone https://github.com/DavidVillalobos/tiny-editor
 ### Install Depencendies
 
 ~~~cmd
-cd Tiny_Editor/src
 npm install
 ~~~
 
-### Usage of last version
+### Install Ace editor
+
+The Ace editor must be installed inside the tiny editor project  
+Download code [here](https://github.com/ajaxorg/ace-builds/archive/master.zip) and extract inside the folder tiny-editor
+or clone like:  
+~~~cmd
+cd tiny-editor
+git clone https://github.com/ajaxorg/ace-builds
+~~~  
+
+## Usage of last version
 
 Once dependencies is installed, run the 
 next command to start TinyEditor  
@@ -77,11 +87,11 @@ Press Build to compile code, and run to execute!
 
 ---
 
-### Installation pre-realease ✔️
+## Installation pre-realease ✔️
 
 Download the first version [here](https://github.com/DavidVillalobos/Tiny_Editor/releases)
 
-### Usage pre-realease
+## Usage pre-realease
 
 Start TinyEditor.exe from project folder  
 Choose a language between C++, Java and Python.  
