@@ -152,7 +152,7 @@ function init_editor(){
         }
         files.push({ // add file to editor (session file)
           name: f['name'],
-          path: f['path'], 
+          path: f['path'].split(f['name'])[0],
           language: 'Choose a language', 
           highlighter: 'text', 
           text: fs.readFileSync(f['path'], { encoding : 'UTF-8'}) // content
