@@ -11,8 +11,9 @@ const { remote } = require('electron')
 var settings_win = remote.getCurrentWindow();
 
 // ============= PATH'S ==================
-var path_settings = 'src/config/settings.json'
-var path_data = 'src/config/data.json'
+var relative_path = '' //'resources/app/' // when package app
+var path_settings = relative_path + 'src/config/settings.json'
+var path_data = relative_path + 'src/config/data.json'
 
 // ============= DATA =================
 var data = JSON.parse(fs.readFileSync(path_data));
