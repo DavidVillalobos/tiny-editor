@@ -43,7 +43,20 @@ variables in PATH** : javac, java, g++ and python.
 
 ---
 
-### There are two ways to install TinyEditor, with the latest version in development or the pre-realease
+#### There are two ways to install TinyEditor, with first realease or the latest version in development.
+
+---
+
+## Installation first realease ✔️
+
+Download the **First release Tiny Editor** version [here](https://github.com/DavidVillalobos/Tiny_Editor/releases)
+
+## Usage pre-realease
+
+Start TinyEditor.exe from project folder  
+Choose a language between C++, Java and Python.  
+That's it, program!  
+Press Build to compile code, and run to execute!
 
 ---
 
@@ -83,19 +96,6 @@ npm start
 Choose a language between C++, Java and Python.  
 That's it, program!  
 
-Press Build to compile code, and run to execute!
-
----
-
-## Installation pre-realease ✔️
-
-Download the first version [here](https://github.com/DavidVillalobos/Tiny_Editor/releases)
-
-## Usage pre-realease
-
-Start TinyEditor.exe from project folder  
-Choose a language between C++, Java and Python.  
-That's it, program!  
 Press Build to compile code, and run to execute!
 
 ---
