@@ -1,7 +1,7 @@
 /*
     File: style.js
     Author: Luis David Villalobos Gonzalez
-    Date: 19/02/2021
+    Date: 02/03/2021
 */
 
 @font-face {
@@ -15,5 +15,4 @@
 
 html{
     overflow-y: hidden !important;
-    background-color: rgb(37, 37, 37);
 }

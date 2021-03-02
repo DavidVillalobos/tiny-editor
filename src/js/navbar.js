@@ -1,7 +1,7 @@
 /* 
     File:   navbar.js
     Author: Luis David Villalobos Gonzalez
-    Date: 01/03/2021
+    Date: 02/03/2021
 */
 // ================ REQUIREMENTS ============
 const { BrowserWindow } = require('electron').remote;
@@ -53,6 +53,7 @@ function closeFile(index){
     else if (file_active != 0) file_active--;
     showFile(file_active);
     loadFileTabs();
+    applySettings();
 }
   
 function getIcon(lang){
@@ -75,9 +76,9 @@ function getIcon(lang){
 function loadFileTabs(){
     file_tabs.innerHTML = '';
     for(let i in files){
-        file_tabs.innerHTML +=  '<button class="button" value="' + i + '" onClick="showFile(this.value)">' + getIcon(files[i]['language']) + '&nbsp;' + files[i]['name'] + '</button>'
-        file_tabs.innerHTML +=  '<button class="button" value="' + i + '" onClick="closeFile(this.value)"><i class="fas fa-times"></i></button>';
-    }
+        file_tabs.innerHTML +=  '<button class="button filetab" value="' + i + '" onClick="showFile(this.value)">' + getIcon(files[i]['language']) + '&nbsp;' + files[i]['name'] + '</button>'
+        file_tabs.innerHTML +=  '<button class="button filetab" value="' + i + '" onClick="closeFile(this.value)"><i class="fas fa-times"></i></button>';
+    }   
 }
 
 function already_is_open(file_path, file_name){
@@ -146,6 +147,7 @@ button_open_file.onclick = function(event){
             });
             loadFileTabs();
             showFile(files.length - 1); 
+            applySettings();
         }
     }
 }

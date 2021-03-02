@@ -1,7 +1,7 @@
 /* 
     File:   editor.js
     Author: Luis David Villalobos Gonzalez
-    Date: 01/03/2021
+    Date: 02/03/2021
 */
 
 // ================ REQUIREMENTS ============
@@ -174,6 +174,7 @@ function init_editor(){
         loadFileTabs()
         showFile(files.length - 1); 
     } 
+    applySettings();
   });
 
   document.addEventListener('dragover', (e) => { 
@@ -202,12 +203,7 @@ function applySettings(){
     }), 'UTF-8');
   } 
   my_settings = JSON.parse(fs.readFileSync(path_settings));
-  // 'dark-mode' : 'true'
-  // 'integrated-console' : 'true'
-  editor_panel.style.fontSize = my_settings['fontSize-editor'] + 'px'
-  terminal_panel.style.fontSize = my_settings['fontSize-terminal'] + 'px'
-  editor.session.setTabSize(my_settings['tabSize-editor'])
-  editor.setTheme('ace/theme/' + my_settings['theme'])
+
   if(files.length == 0){ // not files in editor 
     files.push({ // load default example
       name: 'Test' + data['language'][my_settings['current-language']]['extension'],
@@ -231,6 +227,46 @@ function applySettings(){
   }else{  
     button_runner.setAttribute('class', 'button is-success')
   }
+  
+  // 'integrated-console' : 'true'
+  let bgColor = '#ECF0F1';
+  let textColor = '#252525';
+  if(my_settings['dark-mode']){
+    bgColor = '#252525';
+    textColor = '#ECF0F1';
+  }
+  document.body.style.backgroundColor = bgColor;
+  document.getElementById('title').style.backgroundColor = bgColor;
+  document.getElementById('title').getElementsByClassName('title')[0].style.color = textColor;
+  
+  document.getElementById('buttons').style.backgroundColor = bgColor; 
+  document.getElementById('filetabs').style.backgroundColor = bgColor;
+  document.getElementById('filetabs').style.color = textColor;
+
+  var tab = document.getElementById('filetabs').getElementsByClassName('button');
+  for(let i = 0; i < tab.length; i++) {
+    tab[i].style.backgroundColor = bgColor;
+    tab[i].style.color = textColor;
+  }
+  /*
+  tab = document.getElementsByClassName('tooltip');
+  for(let i = 0; i < tab.length; i++) {
+    tab[i].style.backgroundColor = bgColor;
+    tab[i].style.color = textColor;
+  }
+   */
+  tab = document.getElementsByClassName('tooltiptext');
+  for(let i = 0; i < tab.length; i++) {
+    tab[i].style.backgroundColor = bgColor;
+    tab[i].style.color = textColor;
+  }
+ 
+  titlebar.updateBackground(customTitlebar.Color.fromHex(bgColor));
+
+  editor_panel.style.fontSize = my_settings['fontSize-editor'] + 'px'
+  terminal_panel.style.fontSize = my_settings['fontSize-terminal'] + 'px'
+  editor.session.setTabSize(my_settings['tabSize-editor'])
+  editor.setTheme('ace/theme/' + my_settings['theme'])
   
   terminal_panel.style.top = editor_panel.style.top = '60px'
   terminal_panel.style.bottom = editor_panel.style.bottom = '0%'

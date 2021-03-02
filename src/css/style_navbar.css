@@ -1,7 +1,7 @@
 /*
     File: style_navbar.js
     Author: Luis David Villalobos Gonzalez
-    Date: 20/02/2021
+    Date: 02/03/2021
 */
 
 #navbars > #buttons > .button{
@@ -12,13 +12,11 @@
 
 #navbars > #buttons{
     min-height: 35px !important;
-    background-color: #252525 !important;
 }
 
 #title{
     width: 210px !important;
     border: 0px;
-    background-color: #252525 !important;
 }
 
 .tooltip {
@@ -29,8 +27,6 @@
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 200px;
-    color: white;
-    background-color: rgb(40, 40, 42);
     font-family: Twiddlestix;
     text-align: center;
     border-radius: 5%;
