@@ -43,15 +43,15 @@ variables in PATH** : javac, java, g++ and python.
 
 ---
 
-#### There are two ways to install TinyEditor, with first realease or the latest version in development.
+#### There are two ways to install TinyEditor, with first release or the latest version in development.
 
 ---
 
-## Installation first realease ✔️
+## Installation first release ✔️
 
 Download the **First release Tiny Editor** version [here](https://github.com/DavidVillalobos/Tiny_Editor/releases)
 
-## Usage pre-realease
+## Usage first release
 
 Start TinyEditor.exe from project folder  
 Choose a language between C++, Java and Python.  
