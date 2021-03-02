@@ -41,7 +41,7 @@ function closeFile(index){
     files.splice(index, 1);
     if(files.length == 0){ // not files in editor 
         files.push({ // load welcome file
-          name: 'TinyEditor.txt',
+          name: 'Test.txt',
           path: path.join(__dirname + '\\..\\..\\codes'), // default location, 
           language: undefined, 
           highlighter: 'text', 
@@ -124,17 +124,27 @@ button_open_file.onclick = function(event){
             let file_path = file.split('\\' + file_name)[0];
             let index = already_is_open(file_path, file_name)
             if(index != -1){
-            showFile(index);
-            break;
+                showFile(index);
+                break;
             }
-            files.push({ // add file to editor (session file)
-            name: file_name,
-            path: file_path, 
-            language: 'Choose a language', 
-            highlighter: 'text', 
-            text: fs.readFileSync(file_path + '\\' + file_name, { encoding : 'UTF-8'}) // content
+            let lang = undefined;
+            let highligh = 'text';
+            for(let i in data['language']){
+                if(data['language'][i]['extension'] == '.' + file_name.split('.')[1]){
+                    lang = i;
+                    highligh = data['language'][i]['highlighter'];
+                    break;
+                }
+            }
+            // Add file to editor (session file)
+            files.push({ 
+                name: file_name,
+                path: file_path, 
+                language: lang, 
+                highlighter: highligh, 
+                text: fs.readFileSync(file_path + '\\' + file_name, { encoding : 'UTF-8'}) // content
             });
-            loadFileTabs()
+            loadFileTabs();
             showFile(files.length - 1); 
         }
     }

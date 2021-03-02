@@ -150,11 +150,25 @@ function init_editor(){
           showFile(index);
           break;
         }
+        let lang = undefined;
+        let highligh = 'text';
+        if(f['name'].split('.')[1] == 'h'){
+          lang = 'C++';
+          highligh = data['language']['C++']['highlighter'];
+        } else {
+          for(let i in data['language']){
+              if(data['language'][i]['extension'] == '.' + f['name'].split('.')[1]){
+                  lang = i;
+                  highligh = data['language'][i]['highlighter'];
+                  break;
+              }
+          }
+        }
         files.push({ // add file to editor (session file)
           name: f['name'],
           path: f['path'].split(f['name'])[0],
-          language: 'Choose a language', 
-          highlighter: 'text', 
+          language: lang, 
+          highlighter: highligh, 
           text: fs.readFileSync(f['path'], { encoding : 'UTF-8'}) // content
         });
         loadFileTabs()
