@@ -11,7 +11,7 @@ int fibonacci(int lim){
 }
 
 int main(){
-	cout << "Fibonacci(10): " << fibonacci(10) << endl;
+	cout << "Fibonacci(10): " << fibonacci(10) << endl
 }
 
 
