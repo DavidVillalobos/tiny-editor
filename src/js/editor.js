@@ -28,7 +28,7 @@ var path_settings = relative_path + 'src/config/settings.json'
 
 // ============= SETTINGS AND DATA ==================
 var data = JSON.parse(fs.readFileSync(path_data));
-var my_settings = JSON.parse(fs.readFileSync(path_settings));
+var my_settings = undefined;
 // ============= FUNCTIONS ================
 
 function init_editor(){
@@ -174,7 +174,18 @@ function init_editor(){
 // Apply settings
 function applySettings(){
   if(!fs.existsSync(path_settings)){
-    fs.writeFileSync(path_settings, JSON.stringify({'current-language':'Choose a language','fontSize-editor':18,'fontSize-terminal':18,'tabSize-editor':4,'highlighter':'text','theme':'monokai','dark-mode':true, 'integrated-console':true,'terminal-position':'right'}), 'UTF-8');
+    fs.writeFileSync(path_settings, JSON.stringify({
+        'current-language' : 'Choose a language',
+        'fontSize-editor' : 18,
+        'fontSize-terminal' : 18,
+        'tabSize-editor' : 4,
+        'highlighter' : 'text',
+        'theme' : 'monokai',
+        'dark-mode' : true, 
+        'integrated-console' : true,
+        'terminal-position' : 'right',
+        'pause-end' : true,
+    }), 'UTF-8');
   } 
   my_settings = JSON.parse(fs.readFileSync(path_settings));
   // 'dark-mode' : 'true'

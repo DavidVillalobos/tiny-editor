@@ -58,23 +58,23 @@ git clone https://github.com/DavidVillalobos/tiny-editor
 ### Install Depencendies
 
 ~~~cmd
+cd tiny-editor
 npm install
 ~~~
 
 ### Install Ace editor
 
-The Ace editor must be installed inside the tiny editor project  
-Download code [here](https://github.com/ajaxorg/ace-builds/archive/master.zip) and extract inside the folder tiny-editor
+The Ace editor must be installed inside the tiny-editor folder  
+Download code [here](https://github.com/ajaxorg/ace-builds/archive/master.zip) and extract inside the tiny-editor folder 
 or clone like:  
 ~~~cmd
-cd tiny-editor
 git clone https://github.com/ajaxorg/ace-builds
 ~~~  
 
 ## Usage of last version
 
 Once dependencies is installed, run the 
-next command to start TinyEditor  
+next command to start TinyEditor inside the tiny-editor folder 
 
 ~~~cmd
 npm start

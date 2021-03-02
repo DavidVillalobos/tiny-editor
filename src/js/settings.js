@@ -36,6 +36,7 @@ var checkbox_dark_mode = document.getElementById('dark-mode');
 var checkbox_integrated_console = document.getElementById('integrated-console');
 var checkbox_pause_end = document.getElementById('pause-end');
 
+titlebar.updateTitle('Settings - Tiny Editor');
 
 function load_settings(){  
     //  Load select languages

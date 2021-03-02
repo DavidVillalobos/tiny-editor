@@ -41,14 +41,11 @@ function closeFile(index){
     files.splice(index, 1);
     if(files.length == 0){ // not files in editor 
         files.push({ // load welcome file
-          name: 'Tiny_Editor.txt',
+          name: 'TinyEditor.txt',
           path: path.join(__dirname + '\\..\\..\\codes'), // default location, 
           language: undefined, 
           highlighter: 'text', 
-          text: "\n\n\t\tWelcome to Tiny Editor\n" +
-          "\t* Press CTRL + N to create a new file\n" + 
-          "\t* Press CTRL + O to open a existing file\n" + 
-          "\t* Press CTRL + W to open settings\n"
+          text: data['language']['Choose a language']['example']
        });
         editor.session.setValue(files[file_active]['text']);
     }

@@ -25,7 +25,7 @@
         "Choose a language" : {
             "extension" : ".txt",
             "highlighter" : "text",
-            "example" : "thank you very much for using tiny editor, choose a\nlanguage in settings, write code, build and run :D",
+            "example" : "\n\t\t\tWelcome to Tiny Editor\n\t* Press CTRL + N to create a new file\n\t* Press CTRL + O to open a existing file\n\t* Press CTRL + W to open settings\n",
             "compile" : ""
         },
         "C++" : {
