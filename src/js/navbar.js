@@ -109,6 +109,7 @@ button_new_file.onclick = function(event){
         });
         loadFileTabs()
         showFile(files.length - 1); 
+        applySettings();
     }
 }
   
@@ -119,6 +120,8 @@ button_open_file.onclick = function(event){
     properties : ['multiSelections']
     });
     if(result != undefined){
+        let lang = 'Choose a language';
+        let highligh = 'text';
         for(let file of result){
             let aux_path = file.split('\\');
             let file_name = aux_path[aux_path.length - 1];
@@ -128,8 +131,6 @@ button_open_file.onclick = function(event){
                 showFile(index);
                 break;
             }
-            let lang = undefined;
-            let highligh = 'text';
             for(let i in data['language']){
                 if(data['language'][i]['extension'] == '.' + file_name.split('.')[1]){
                     lang = i;
@@ -147,8 +148,12 @@ button_open_file.onclick = function(event){
             });
             loadFileTabs();
             showFile(files.length - 1); 
-            applySettings();
         }
+        my_settings = JSON.parse(fs.readFileSync(path_settings));
+        my_settings['current-language'] = lang;
+        my_settings['highlighter'] = highligh;
+        fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8')
+        applySettings();
     }
 }
 
@@ -166,9 +171,10 @@ async function save_file(){
         let aux_path = result.split('\\');
         files[file_active]['name'] = aux_path[aux_path.length - 1];
         files[file_active]['path'] = result.split('\\' + files[file_active]['name'])[0];
+        loadFileTabs();
+        applySettings();
     }
     await fs.writeFile(files[file_active]['path'] + '\\' +  files[file_active]['name'], editor.session.getValue(), {encoding : 'UTF-8', flag: 'w'}, ()=>{})
-    loadFileTabs()
     showFile(file_active)
     return true;
 }

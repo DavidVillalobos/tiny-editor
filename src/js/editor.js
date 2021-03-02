@@ -142,6 +142,8 @@ function init_editor(){
   document.addEventListener('drop', (event) => { 
     event.preventDefault(); 
     event.stopPropagation(); 
+    let lang = 'Choose a language';
+    let highligh = 'text';
     for (const f of event.dataTransfer.files) { 
         // Using the path attribute to get absolute file path 
         //console.log('File Path of dragged files: ', f.path)  
@@ -150,8 +152,6 @@ function init_editor(){
           showFile(index);
           break;
         }
-        let lang = undefined;
-        let highligh = 'text';
         if(f['name'].split('.')[1] == 'h'){
           lang = 'C++';
           highligh = data['language']['C++']['highlighter'];
@@ -174,6 +174,10 @@ function init_editor(){
         loadFileTabs()
         showFile(files.length - 1); 
     } 
+    my_settings = JSON.parse(fs.readFileSync(path_settings));
+    my_settings['current-language'] = lang;
+    my_settings['highlighter'] = highligh;
+    fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8')
     applySettings();
   });
 
@@ -216,8 +220,10 @@ function applySettings(){
   }
   files[file_active]['language'] = my_settings['current-language'], 
   files[file_active]['highlighter'] = my_settings['highlighter'], 
+  
   loadFileTabs(); // load new tab
   showFile(file_active);
+
   if(files[file_active]['language'] == 'Python' || files[file_active]['language'] == 'Choose a language')  
   button_compiler.setAttribute('class', 'button is-dark is-static')
   else  
@@ -248,13 +254,7 @@ function applySettings(){
     tab[i].style.backgroundColor = bgColor;
     tab[i].style.color = textColor;
   }
-  /*
-  tab = document.getElementsByClassName('tooltip');
-  for(let i = 0; i < tab.length; i++) {
-    tab[i].style.backgroundColor = bgColor;
-    tab[i].style.color = textColor;
-  }
-   */
+
   tab = document.getElementsByClassName('tooltiptext');
   for(let i = 0; i < tab.length; i++) {
     tab[i].style.backgroundColor = bgColor;
