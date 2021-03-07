@@ -1,7 +1,7 @@
 /* 
     File:   settings.js
     Author: Luis David Villalobos Gonzalez
-    Date: 01/03/2021
+    Date: 01/06/2021
 */
 
 // ================ REQUIREMENTS ============
@@ -34,7 +34,7 @@ var select_language = document.getElementById('languages')
 
 // ============= CHECKBOX ================
 var checkbox_dark_mode = document.getElementById('dark-mode');
-var checkbox_integrated_console = document.getElementById('integrated-console');
+// var checkbox_integrated_console = document.getElementById('integrated-console');
 var checkbox_pause_end = document.getElementById('pause-end');
 
 titlebar.updateTitle('Settings - Tiny Editor');
@@ -102,7 +102,7 @@ function load_settings(){
     select_terminal_position.value = my_settings['terminal-position']  
     select_language.value = my_settings['current-language']  
     checkbox_dark_mode.checked = my_settings['dark-mode']
-    checkbox_integrated_console.checked = my_settings['integrated-console']
+    // checkbox_integrated_console.checked = my_settings['integrated-console']
     checkbox_pause_end.checked = my_settings['pause-end']
 }
 
@@ -121,7 +121,7 @@ button_save_settings.onclick = function(event) {
     on_change_language = my_settings['current-language'] != select_language.value ; 
     my_settings['current-language'] = select_language.value;
     my_settings['dark-mode'] = checkbox_dark_mode.checked;
-    my_settings['integrated-console'] = checkbox_integrated_console.checked;
+    // my_settings['integrated-console'] = checkbox_integrated_console.checked;
     my_settings['pause-end'] = checkbox_pause_end.checked;
     fs.writeFileSync(path_settings, JSON.stringify(my_settings), 'UTF-8');
     settings_win.close();
