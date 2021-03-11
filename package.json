@@ -1,6 +1,6 @@
 {
   "name": "tiny-editor-npm",
-  "version": "0.1.3",
+  "version": "1.1.0",
   "description": "Lightweight simple editor for little tasks and projects.",
   "main": "src/js/index.js",
   "scripts": {
@@ -9,9 +9,10 @@
   },
   "keywords": [
     "text editor",
+	"desktop-app",
     "electron",
     "bulma",
-    "desktop-app"
+    "ace editor"
   ],
   "author": "David Villalobos",
   "license": "MIT",
