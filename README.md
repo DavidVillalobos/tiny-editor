@@ -6,7 +6,7 @@ The project is oriented to be used by people who are starting in the world of pr
 
 ---
 
-<img src="demo/WindowCode.png" width="700">   
+<img src="demo/demo.gif" width="700">   
 
 ### Built with 🛠️
 
