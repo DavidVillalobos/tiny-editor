@@ -68,7 +68,7 @@ or clone like:
 git clone https://github.com/DavidVillalobos/tiny-editor
 ~~~  
   
-### Install Depencendies
+### Install dependencies 
 
 ~~~cmd
 cd tiny-editor
